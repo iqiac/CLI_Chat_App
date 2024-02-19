@@ -1,0 +1,17 @@
+{
+  "name": "C++ CLI Chat App",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "cli-chat",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools-extension-pack",
+        "phind.phind",
+        "vscodevim.vim"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "overrideCommand": true,
+  "workspaceFolder": "/workspace"
+}

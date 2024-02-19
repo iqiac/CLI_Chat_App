@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  cli-chat:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: dev
+    volumes:
+      - .:/workspace
+      - type: bind
+        source: /home/${USER}/.ssh
+        target: /root/.ssh
+        consistency: cached
