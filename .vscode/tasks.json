@@ -2,11 +2,11 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build and Run Tests",
+      "label": "Build Tests",
       "type": "shell",
-      "command": "cmake --build .",
+      "command": "cmake --build --preset debug",
       "options": {
-        "cwd": "${workspaceFolder}/build"
+        "cwd": "${workspaceFolder}"
       },
       "group": {
         "kind": "build",

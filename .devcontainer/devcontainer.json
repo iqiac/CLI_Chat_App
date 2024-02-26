@@ -1,7 +1,7 @@
 {
-  "name": "C++ CLI Chat App",
+  "name": "C++ Text Editor",
   "dockerComposeFile": "../docker-compose.yml",
-  "service": "cli-chat",
+  "service": "editor",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -11,6 +11,7 @@
       ]
     }
   },
+  "postCreateCommand": "git config --global --add safe.directory /workspace",
   "remoteUser": "root",
   "overrideCommand": true,
   "workspaceFolder": "/workspace"

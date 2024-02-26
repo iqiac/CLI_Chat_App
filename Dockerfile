@@ -3,6 +3,7 @@ FROM ubuntu:latest as base
 FROM base as builder
 
 RUN apt update && apt install -y \
+  vim \
   build-essential \
   cmake \
   ccache
@@ -16,7 +17,9 @@ RUN apt update && apt install -y \
   gdb \
   clang-format \
   cppcheck \
-  git
+  git \
+  libncurses5-dev \
+  libncursesw5-dev
 
 RUN apt upgrade -y && rm -rf /var/lib/apt/lists/*
 

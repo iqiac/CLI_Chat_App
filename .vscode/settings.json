@@ -9,4 +9,5 @@
   "files.trimTrailingWhitespace": true,
   "C_Cpp.clang_format_path": "/usr/bin/clang-format",
   "C_Cpp.clang_format_style": "file",
+  "cmake.useCMakePresets": "auto"
 }

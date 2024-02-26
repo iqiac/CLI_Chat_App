@@ -3,8 +3,8 @@
   "configurePresets": [
     {
       "name": "dev",
-      "displayName": "Unit Tests",
-      "description": "build with unit-tests",
+      "displayName": "Debug Mode",
+      "description": "build with debug information",
       "generator": "Unix Makefiles",
       "binaryDir": "${sourceDir}/build",
       "cacheVariables": {
@@ -12,6 +12,15 @@
         "CMAKE_C_COMPILER": "/bin/gcc",
         "CMAKE_CXX_COMPILER": "/bin/g++"
       }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "debug",
+      "description": "",
+      "displayName": "",
+      "configurePreset": "dev",
+      "jobs": 12
     }
   ]
 }

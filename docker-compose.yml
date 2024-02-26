@@ -1,12 +1,13 @@
 version: '3.8'
 services:
-  cli-chat:
+  editor:
     build:
       context: .
       dockerfile: ./Dockerfile
       target: dev
     volumes:
       - .:/workspace
+      - ~/.bashrc:/root/.bashrc
       - type: bind
         source: /home/${USER}/.ssh
         target: /root/.ssh
