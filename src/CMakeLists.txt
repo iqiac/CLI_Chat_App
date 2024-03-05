@@ -1,4 +1,5 @@
 # Setup libraries from subdirectories
+add_library(TextBuffer SHARED TextBuffer/TextBuffer.cpp)
 
 # Setup main executable
 add_executable(${CMAKE_PROJECT_NAME})
@@ -9,6 +10,7 @@ target_sources(
 
 target_include_directories(
   ${CMAKE_PROJECT_NAME} PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/TextBuffer
 )
 
 # Setup testing
@@ -20,10 +22,12 @@ add_executable(${TEST_NAME})
 target_sources(
   ${TEST_NAME} PRIVATE
   test_main.cpp
+  TextBuffer/TextBufferTest.cpp
 )
 
 target_link_libraries(
   ${TEST_NAME} PRIVATE
+  TextBuffer
   GTest::gtest_main
 )
 
