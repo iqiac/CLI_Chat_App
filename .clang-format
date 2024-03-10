@@ -91,15 +91,15 @@ DerivePointerAlignment: false
 # Empty lines
 EmptyLineBeforeAccessModifier: Always
 KeepEmptyLinesAtTheStartOfBlocks: true
-MaxEmptyLinesToKeep: 2
+MaxEmptyLinesToKeep: 1
 
 # Sorting
 IncludeBlocks: Regroup
 IncludeCategories:
   - Priority: 1
-    Regex: '^<(.+)>$'
-  - Priority: 2
     Regex: '^\"(.+)\"$'
+  - Priority: 2
+    Regex: '^<(.+)>$'
 SortIncludes: true
 SortUsingDeclarations: true
 
