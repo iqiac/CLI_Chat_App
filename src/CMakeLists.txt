@@ -29,6 +29,7 @@ target_link_libraries(
   ${TEST_NAME} PRIVATE
   TextBuffer
   GTest::gtest_main
+  GTest::gmock_main
 )
 
 include(GoogleTest)
