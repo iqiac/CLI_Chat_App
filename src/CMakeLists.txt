@@ -21,10 +21,12 @@ target_link_libraries(
   ${CMAKE_PROJECT_NAME} PRIVATE
   TextBuffer
   CursorManager
+  ScreenRenderer
 )
 
 target_include_directories(
   ${CMAKE_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/TextBuffer
   ${CMAKE_CURRENT_SOURCE_DIR}/CursorManager
+  ${CMAKE_CURRENT_SOURCE_DIR}/ScreenRenderer
 )
