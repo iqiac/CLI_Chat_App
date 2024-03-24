@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ITextBuffer.h"
+#include "ObserverPattern.h"
 
-class TextBuffer : public ITextBuffer {
+class TextBuffer : public ITextBuffer, ISubject {
 public:
   TextBuffer();
   TextBuffer(const Line& line);
@@ -26,6 +27,10 @@ public:
   Line              GetLine(const Index rowIndex) const override;
   std::vector<Line> GetAllLines() const override;
   void              ClearAllLines() override;
+
+  void Attach(IObserver& observer) override;
+  void Detach(IObserver& observer) override;
+  void Notify() override;
 
 private:
   std::vector<Line> _allLines;

@@ -2,10 +2,11 @@
 
 #include "ICursorManager.h"
 #include "ITextBuffer.h"
+#include "ObserverPattern.h"
 
 #include <utility>
 
-class CursorManager : public ICursorManager {
+class CursorManager : public ICursorManager, ISubject {
 public:
   explicit CursorManager(const ITextBuffer& textBuffer) : _textBuffer(textBuffer) {}
 
@@ -17,6 +18,10 @@ public:
   void SetCursorPosition(const Position position) override;
 
   Position GetCursorPosition() const override;
+
+  void Attach(IObserver& observer) override;
+  void Detach(IObserver& observer) override;
+  void Notify() override;
 
 private:
   std::size_t        _rowIndex;
