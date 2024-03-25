@@ -38,3 +38,9 @@ void CursorManager::SetCursorPosition(const Position position) {
 Position CursorManager::GetCursorPosition() const {
   return {_rowIndex, _colIndex};
 }
+
+void CursorManager::Attach(IObserver& observer) {}
+
+void CursorManager::Detach(IObserver& observer) {}
+
+void CursorManager::Notify() {}

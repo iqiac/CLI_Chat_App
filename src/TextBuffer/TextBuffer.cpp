@@ -81,3 +81,9 @@ void TextBuffer::ClearAllLines() {
   _allLines.clear();
   _allLines.push_back("");
 }
+
+void TextBuffer::Attach(IObserver& observer) {}
+
+void TextBuffer::Detach(IObserver& observer) {}
+
+void TextBuffer::Notify() {}

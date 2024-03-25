@@ -38,15 +38,9 @@ int main(int argc, char* argv[]) {
   file.close();
 
   // Initialize the components
-  std::shared_ptr<TextBuffer> textBuffer_ptr{std::make_shared<TextBuffer>()};
-
-  std::shared_ptr<ITextBufferInfo> textBufferInfo_ptr{std::static_pointer_cast<ITextBufferInfo>(textBuffer_ptr)};
-  std::shared_ptr<CursorManager>   cursorManager_ptr{std::make_shared<CursorManager>(textBufferInfo_ptr)};
-
-  std::shared_ptr<ITextBufferContent> textBufferContent_ptr{std::static_pointer_cast<ITextBufferContent>(textBuffer_ptr)};
-  std::shared_ptr<ICursorManagerInfo> cursorManagerInfo_ptr{std::static_pointer_cast<ICursorManagerInfo>(cursorManager_ptr)};
-  std::shared_ptr<ScreenRenderer> screenRenderer_ptr{
-      std::make_shared<ScreenRenderer>(textBufferContent_ptr, cursorManagerInfo_ptr)};
+  const auto     textBuffer{std::make_shared<TextBuffer>(lines)};
+  const auto     cursorManager{std::make_shared<CursorManager>(textBuffer)};
+  ScreenRenderer screenRenderer{textBuffer, cursorManager};
 
   return 0;
 }

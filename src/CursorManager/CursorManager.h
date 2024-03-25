@@ -4,6 +4,7 @@
 #include "ITextBuffer.h"
 #include "ObserverPattern.h"
 
+#include <memory>
 #include <utility>
 
 class CursorManager : public ICursorManager, ISubject {

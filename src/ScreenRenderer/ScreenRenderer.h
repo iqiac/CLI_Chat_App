@@ -4,9 +4,12 @@
 #include "ObserverPattern.h"
 #include "TextBufferInterfaces.h"
 
+#include <memory>
+
 class ScreenRenderer : public IObserver {
 public:
-  ScreenRenderer(ITextBufferContent& textBufferContent, ICursorManagerInfo& cursorManagerInfo) :
+  ScreenRenderer(std::shared_ptr<ITextBufferContent> textBufferContent,
+                 std::shared_ptr<ICursorManagerInfo> cursorManagerInfo) :
   _textBufferContent(textBufferContent),
   _cursorManagerInfo(cursorManagerInfo) {}
 
@@ -16,6 +19,6 @@ private:
   void RenderText();
   void RenderCursor();
 
-  ITextBufferContent& _textBufferContent;
-  ICursorManagerInfo& _cursorManagerInfo;
+  std::shared_ptr<ITextBufferContent> _textBufferContent;
+  std::shared_ptr<ICursorManagerInfo> _cursorManagerInfo;
 };
