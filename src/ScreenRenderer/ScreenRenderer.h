@@ -21,4 +21,5 @@ private:
 
   std::shared_ptr<ITextBufferContent> _textBufferContent;
   std::shared_ptr<ICursorManagerInfo> _cursorManagerInfo;
+  std::string                         _observerName{"ScreenRenderer"};
 };

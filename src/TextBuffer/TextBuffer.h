@@ -3,6 +3,7 @@
 #include "ITextBuffer.h"
 #include "ObserverPattern.h"
 
+#include <map>
 class TextBuffer : public ITextBuffer, ISubject {
 public:
   TextBuffer();
@@ -28,9 +29,9 @@ public:
   std::vector<Line> GetAllLines() const override;
   void              ClearAllLines() override;
 
-  void Attach(IObserver& observer) override;
-  void Detach(IObserver& observer) override;
-  void Notify() override;
+  void Attach(const std::string observerName, const std::function<void()> updateFunction) override;
+  void Detach(const std::string observerName) override;
+  void Notify() const override;
 
 private:
   std::vector<Line> _allLines;

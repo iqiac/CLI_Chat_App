@@ -1,4 +1,6 @@
 #pragma once
+#include <functional>
+#include <string>
 
 class IObserver {
 public:
@@ -11,7 +13,7 @@ class ISubject {
 public:
   virtual ~ISubject() = default;
 
-  virtual void Attach(IObserver& observer) = 0;
-  virtual void Detach(IObserver& observer) = 0;
-  virtual void Notify()                    = 0;
+  virtual void Attach(const std::string observerName, const std::function<void()> updateFunction) = 0;
+  virtual void Detach(const std::string observerName)                                             = 0;
+  virtual void Notify() const                                                                     = 0;
 };

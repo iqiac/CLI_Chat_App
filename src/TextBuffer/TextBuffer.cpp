@@ -82,8 +82,16 @@ void TextBuffer::ClearAllLines() {
   _allLines.push_back("");
 }
 
-void TextBuffer::Attach(IObserver& observer) {}
+void TextBuffer::Attach(const std::string observerName, const std::function<void()> updateFunction) {
+  _observerUpdateFunctions.insert(std::make_pair(observerName, updateFunction));
+}
 
-void TextBuffer::Detach(IObserver& observer) {}
+void TextBuffer::Detach(const std::string observerName) {
+  _observerUpdateFunctions.erase(observerName);
+}
 
-void TextBuffer::Notify() {}
+void TextBuffer::Notify() const {
+  for (const auto& [_, updateFunction] : _observerUpdateFunctions) {
+    updateFunction();
+  }
+}

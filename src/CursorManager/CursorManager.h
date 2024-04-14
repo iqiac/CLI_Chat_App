@@ -4,6 +4,7 @@
 #include "ITextBuffer.h"
 #include "ObserverPattern.h"
 
+#include <map>
 #include <memory>
 #include <utility>
 
@@ -20,12 +21,13 @@ public:
 
   Position GetCursorPosition() const override;
 
-  void Attach(IObserver& observer) override;
-  void Detach(IObserver& observer) override;
-  void Notify() override;
+  void Attach(const std::string observerName, std::function<void()> updateFunction) override;
+  void Detach(const std::string observerName) override;
+  void Notify() const override;
 
 private:
-  std::size_t        _rowIndex;
-  std::size_t        _colIndex;
-  const ITextBuffer& _textBuffer;
+  std::size_t                                  _rowIndex;
+  std::size_t                                  _colIndex;
+  const ITextBuffer&                           _textBuffer;
+  std::map<std::string, std::function<void()>> _observerUpdateFunctions;
 };

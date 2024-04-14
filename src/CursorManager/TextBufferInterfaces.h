@@ -15,7 +15,7 @@ class ITextBufferContent {
 public:
   virtual ~ITextBufferContent() = default;
 
-  virtual std::vector<std::string> GetTextBuffer() const = 0;
+  virtual std::vector<std::string> GetAllLines() const = 0;
 };
 
 class ITextBufferModification {
@@ -41,5 +41,5 @@ public:
   virtual void ReplaceLine(const std::size_t rowIndex, const std::string& line) = 0;
 
   virtual std::string GetLine(const std::size_t rowIndex) const = 0;
-  virtual void        ClearTextBuffer()                         = 0;
+  virtual void        ClearAllLines()                           = 0;
 };

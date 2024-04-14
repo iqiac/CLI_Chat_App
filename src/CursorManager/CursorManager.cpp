@@ -39,8 +39,16 @@ Position CursorManager::GetCursorPosition() const {
   return {_rowIndex, _colIndex};
 }
 
-void CursorManager::Attach(IObserver& observer) {}
+void CursorManager::Attach(const std::string observerName, const std::function<void()> updateFunction) {
+  _observerUpdateFunctions.insert(std::make_pair(observerName, updateFunction));
+}
 
-void CursorManager::Detach(IObserver& observer) {}
+void CursorManager::Detach(const std::string observerName) {
+  _observerUpdateFunctions.erase(observerName);
+}
 
-void CursorManager::Notify() {}
+void CursorManager::Notify() const {
+  for (const auto& [_, updateFunction] : _observerUpdateFunctions) {
+    updateFunction();
+  }
+}
