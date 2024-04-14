@@ -30,9 +30,9 @@ public:
   std::size_t              GetNumberOfLines() const override;
   std::size_t              GetLineLength(const std::size_t rowIndex) const override;
   std::string              GetLine(const std::size_t rowIndex) const override;
-  std::vector<std::string> GetTextBuffer() const override;
-  void                     ClearTextBuffer() override;
+  std::vector<std::string> GetAllLines() const override;
+  void                     ClearAllLines() override;
 
 private:
-  std::vector<std::string> _textBuffer;
+  std::vector<std::string> _allLines;
 };
