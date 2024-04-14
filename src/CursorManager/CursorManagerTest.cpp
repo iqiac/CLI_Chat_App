@@ -37,14 +37,22 @@ TEST_F(CursorManagerTests, SetPosition_ValidIndices_SetsPosition) {
   EXPECT_THAT(cursorManager.GetCursorPosition(), Pair(validRowIndex, validColIndex));
 }
 
-TEST_F(CursorManagerTests, SetPosition_InvalidRowIndex_ThrowsException) {
-  EXPECT_CALL(textBufferInfoMock, GetNumberOfLines()).Times(1);
-  EXPECT_THROW(cursorManager.SetCursorPosition(invalidRowIndex, validColIndex), std::invalid_argument);
+TEST_F(CursorManagerTests, SetPosition_OutOfBoundsRowIndex_PositionedAtLastRowIndex) {
+  cursorManager.SetCursorPosition(invalidRowIndex, validColIndex);
+
+  EXPECT_THAT(cursorManager.GetCursorPosition(), Pair(numRows - 1, validColIndex));
 }
 
-TEST_F(CursorManagerTests, SetPosition_InvalidColIndex_ThrowsException) {
-  EXPECT_CALL(textBufferInfoMock, GetLineLength(_)).Times(1);
-  EXPECT_THROW(cursorManager.SetCursorPosition(validRowIndex, invalidColIndex), std::invalid_argument);
+TEST_F(CursorManagerTests, SetPosition_OutOfBoundsColIndex_PositionedAtLineLengthIndex) {
+  cursorManager.SetCursorPosition(validRowIndex, invalidColIndex);
+
+  EXPECT_THAT(cursorManager.GetCursorPosition(), Pair(validRowIndex, numCols));
+}
+
+TEST_F(CursorManagerTests, SetPosition_OutOfBoundsRowAndColIndex_PositionedAtLastPossibleRowAndCol) {
+  cursorManager.SetCursorPosition(invalidRowIndex, invalidColIndex);
+
+  EXPECT_THAT(cursorManager.GetCursorPosition(), Pair(numRows - 1, numCols));
 }
 
 TEST_F(CursorManagerTests, MoveCursorUp_CursorIsAtFirstRow_RowIndexStays) {
@@ -131,7 +139,7 @@ TEST_F(CursorManagerTests, MoveCursorLeft_CursorIsAtFirstColumn_ColIndexStays) {
   EXPECT_THAT(cursorManager.GetCursorPosition(), Pair(0, 0));
 }
 
-TEST_F(CursorManagerTests, MoveCursorLeft_CursorIsatRightOfFirstColumn_ColIndexDecrements) {
+TEST_F(CursorManagerTests, MoveCursorLeft_CursorIsAtRightOfFirstColumn_ColIndexDecrements) {
   cursorManager.SetCursorPosition(0, validColIndex);
 
   cursorManager.MoveCursorLeft();
@@ -140,12 +148,12 @@ TEST_F(CursorManagerTests, MoveCursorLeft_CursorIsatRightOfFirstColumn_ColIndexD
 }
 
 TEST_F(CursorManagerTests, MoveCursorRight_CursorIsAtLastColumn_ColIndexStays) {
-  cursorManager.SetCursorPosition(0, numCols - 1);
+  cursorManager.SetCursorPosition(0, numCols);
   EXPECT_CALL(textBufferInfoMock, GetLineLength(_)).Times(1);
 
   cursorManager.MoveCursorRight();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Pair(0, numCols - 1));
+  EXPECT_THAT(cursorManager.GetCursorPosition(), Pair(0, numCols));
 }
 
 TEST_F(CursorManagerTests, MoveCursorRight_CursorIsAtLeftOfLastColumn_ColIndexIncrements) {

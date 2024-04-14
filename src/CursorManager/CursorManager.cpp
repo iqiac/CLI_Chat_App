@@ -6,41 +6,33 @@ void CursorManager::MoveCursorUp() {
   if (_rowIndex == 0) {
     return;
   }
-  _rowIndex--;
-  _colIndex = std::min(_colIndex, _textBufferInfo.GetLineLength(_rowIndex));
+  SetCursorPosition(_rowIndex - 1, _colIndex);
 }
 
 void CursorManager::MoveCursorDown() {
-  if (_rowIndex == _textBufferInfo.GetNumberOfLines() - 1) {
-    return;
-  }
-  _rowIndex++;
-  _colIndex = std::min(_colIndex, _textBufferInfo.GetLineLength(_rowIndex));
+  SetCursorPosition(_rowIndex + 1, _colIndex);
 }
 
 void CursorManager::MoveCursorLeft() {
   if (_colIndex == 0) {
     return;
   }
-  _colIndex--;
+  SetCursorPosition(_rowIndex, _colIndex - 1);
 }
 
 void CursorManager::MoveCursorRight() {
-  if (_colIndex == _textBufferInfo.GetLineLength(_rowIndex) - 1) {
-    return;
-  }
-  _colIndex++;
+  SetCursorPosition(_rowIndex, _colIndex + 1);
 }
 
 void CursorManager::SetCursorPosition(const std::size_t rowIndex, const std::size_t colIndex) {
-  if (rowIndex > _textBufferInfo.GetNumberOfLines()) {
-    throw std::invalid_argument("Row index must be in range.");
-  }
-  if (colIndex > _textBufferInfo.GetLineLength(rowIndex)) {
-    throw std::invalid_argument("Column index must be in range.");
-  }
-  _rowIndex = rowIndex;
-  _colIndex = colIndex;
+  const auto numberOfLines{_textBufferInfo.GetNumberOfLines()};
+  const auto validRowIndex{std::min(rowIndex, numberOfLines - 1)};
+
+  const auto numberOfCols{_textBufferInfo.GetLineLength(validRowIndex)};
+  const auto validColIndex{std::min(colIndex, numberOfCols)};
+
+  _rowIndex = validRowIndex;
+  _colIndex = validColIndex;
 }
 
 std::pair<std::size_t, std::size_t> CursorManager::GetCursorPosition() const {

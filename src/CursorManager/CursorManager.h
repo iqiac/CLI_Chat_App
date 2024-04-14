@@ -7,7 +7,7 @@
 
 class CursorManager : public ICursorManagerInfo, ICursorManagerMovement {
 public:
-  CursorManager(ITextBufferInfo& textBuffer) : _textBufferInfo(textBuffer) {}
+  explicit CursorManager(ITextBufferInfo& textBuffer) : _textBufferInfo(textBuffer) {}
 
   void MoveCursorUp() override;
   void MoveCursorDown() override;
