@@ -16,19 +16,19 @@ const std::vector<std::string> lines{line1, line2, line3};
 TEST(TextBufferConstructor, TextBuffer_NoArguments_HasVectorOfSizeOneWithEmptyString) {
   const TextBuffer textBuffer{};
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), AllOf(SizeIs(1), Contains("")));
+  EXPECT_THAT(textBuffer.GetAllLines(), AllOf(SizeIs(1), Contains("")));
 }
 
 TEST(TextBufferConstructor, TextBuffer_StringArgument_HasVectorOfSizeOneWithGivenString) {
   const TextBuffer textBuffer{line1};
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), AllOf(SizeIs(1), Contains(line1)));
+  EXPECT_THAT(textBuffer.GetAllLines(), AllOf(SizeIs(1), Contains(line1)));
 }
 
 TEST(TextBufferConstructor, TextBuffer_VectorWithStringsArgument_HasSameVectorOfStrings) {
   const TextBuffer textBuffer{lines};
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), ContainerEq(lines));
+  EXPECT_THAT(textBuffer.GetAllLines(), ContainerEq(lines));
 }
 
 TEST(TextBufferConstructor, TextBuffer_EmptyVectorArgument_ThrowsException) {
@@ -155,19 +155,19 @@ TEST_F(TextBufferMultiLine, GetLine_InvalidRowIndex_ThrowsException) {
 TEST_F(TextBufferMultiLine, InsertLine_InsertAtBeginning_LineInserted) {
   textBuffer.InsertLine(0, line);
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(line).Times(1));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InsertAtEnd_LineInserted) {
   textBuffer.InsertLine(textBuffer.GetNumberOfLines(), line);
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(line).Times(1));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InsertAtValidIndex_LineInserted) {
   textBuffer.InsertLine(validRowIndex, line);
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(line).Times(1));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InvalidRowIndex_ThrowsException) {
@@ -177,32 +177,32 @@ TEST_F(TextBufferMultiLine, InsertLine_InvalidRowIndex_ThrowsException) {
 TEST_F(TextBufferMultiLine, DeleteLine_DeleteAtBeginning_LineDeleted) {
   textBuffer.DeleteLine(0);
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(line1).Times(0));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line1).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, DeleteLine_DeletetAtEnd_LineDeleted) {
   textBuffer.DeleteLine(textBuffer.GetNumberOfLines());
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(line3).Times(0));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line3).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, DeleteLine_DeleteAtValidIndex_LineDeleted) {
   textBuffer.DeleteLine(validRowIndex);
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(lines.at(validRowIndex)).Times(0));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(lines.at(validRowIndex)).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, DeleteLine_InvalidRowIndex_LineDeletedAtEnd) {
   textBuffer.DeleteLine(invalidRowIndex);
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(line3).Times(0));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line3).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, ReplaceLine_ValidRowIndex_LineReplaced) {
   textBuffer.ReplaceLine(validRowIndex, line);
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(lines.at(validRowIndex)).Times(0));
-  EXPECT_THAT(textBuffer.GetTextBuffer(), Contains(line).Times(1));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(lines.at(validRowIndex)).Times(0));
+  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, ReplaceLine_InvalidRowIndex_ThrowsException) {
@@ -210,7 +210,7 @@ TEST_F(TextBufferMultiLine, ReplaceLine_InvalidRowIndex_ThrowsException) {
 }
 
 TEST_F(TextBufferMultiLine, ClearTextBuffer_Call_HasVectorOfSizeOneWithEmptyString) {
-  textBuffer.ClearTextBuffer();
+  textBuffer.ClearAllLines();
 
-  EXPECT_THAT(textBuffer.GetTextBuffer(), AllOf(SizeIs(1), Contains("")));
+  EXPECT_THAT(textBuffer.GetAllLines(), AllOf(SizeIs(1), Contains("")));
 }
