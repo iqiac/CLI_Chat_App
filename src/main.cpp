@@ -38,9 +38,25 @@ int main(int argc, char* argv[]) {
   file.close();
 
   // Initialize the components
-  const auto     textBuffer{std::make_shared<TextBuffer>(lines)};
-  const auto     cursorManager{std::make_shared<CursorManager>(textBuffer)};
-  ScreenRenderer screenRenderer{textBuffer, cursorManager};
+  TextBuffer            textBuffer{lines};
+  CursorManager         cursorManager{textBuffer};
+  ScreenRenderer        screenRenderer{textBuffer, cursorManager};
+  std::function<void()> screenRendererUpdate = [&screenRenderer]() { screenRenderer.Update(); };
+  textBuffer.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
+  cursorManager.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
+  screenRenderer.Update();
+
+  // Run TextEditor
+  bool running{true};
+  while (running) {
+    char input;
+    std::cin >> input;
+    if (input == 'q') {
+      running = false;
+    }
+    // Sleep for short duration to prevent high CPU usage
+    usleep(100000);
+  }
 
   return 0;
 }

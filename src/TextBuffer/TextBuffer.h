@@ -1,7 +1,7 @@
 #pragma once
 
+#include "ISubject.h"
 #include "ITextBuffer.h"
-#include "ObserverPattern.h"
 
 #include <map>
 class TextBuffer : public ITextBuffer, ISubject {

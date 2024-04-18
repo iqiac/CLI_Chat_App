@@ -1,8 +1,8 @@
 #pragma once
 
 #include "ICursorManager.h"
+#include "ISubject.h"
 #include "ITextBuffer.h"
-#include "ObserverPattern.h"
 
 #include <map>
 #include <memory>

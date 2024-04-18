@@ -1,25 +1,26 @@
 #pragma once
 
-#include "CursorManagerInterfaces.h"
-#include "ObserverPattern.h"
-#include "TextBufferInterfaces.h"
+#include "ICursorManager.h"
+#include "IObserver.h"
+#include "ITextBuffer.h"
 
 #include <memory>
 
 class ScreenRenderer : public IObserver {
 public:
-  ScreenRenderer(std::shared_ptr<ITextBufferContent> textBufferContent,
-                 std::shared_ptr<ICursorManagerInfo> cursorManagerInfo) :
-  _textBufferContent(textBufferContent),
-  _cursorManagerInfo(cursorManagerInfo) {}
+  ScreenRenderer(const ITextBuffer& textBuffer, const ICursorManager& cursorManager) :
+  _textBuffer(textBuffer),
+  _cursorManager(cursorManager) {}
 
   void Update() override;
+
+  std::string GetObserverName() const override;
 
 private:
   void RenderText();
   void RenderCursor();
 
-  std::shared_ptr<ITextBufferContent> _textBufferContent;
-  std::shared_ptr<ICursorManagerInfo> _cursorManagerInfo;
-  std::string                         _observerName{"ScreenRenderer"};
+  const ITextBuffer&    _textBuffer;
+  const ICursorManager& _cursorManager;
+  std::string           _observerName{"ScreenRenderer"};
 };
