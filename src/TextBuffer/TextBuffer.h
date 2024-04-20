@@ -1,11 +1,8 @@
 #pragma once
 
-#include "TextBufferInterfaces.h"
+#include "ITextBuffer.h"
 
-#include <string>
-#include <vector>
-
-class TextBuffer : public ITextBufferModification, ITextBufferInfo {
+class TextBuffer : public ITextBuffer {
 public:
   TextBuffer();
   TextBuffer(const std::string& line);

@@ -3,17 +3,9 @@
 #include <string>
 #include <vector>
 
-class ITextBufferInfo {
+class ITextBuffer {
 public:
-  virtual ~ITextBufferInfo() = default;
-
-  virtual std::size_t GetNumberOfLines() const                        = 0;
-  virtual std::size_t GetLineLength(const std::size_t rowIndex) const = 0;
-};
-
-class ITextBufferModification {
-public:
-  virtual ~ITextBufferModification() = default;
+  ~ITextBuffer() = default;
 
   virtual void InsertText(const std::pair<std::size_t, std::size_t> position, const std::string& text)     = 0;
   virtual void InsertText(const std::size_t rowIndex, const std::size_t colIndex, const std::string& text) = 0;
@@ -33,7 +25,9 @@ public:
   virtual void DeleteLine(const std::size_t rowIndex)                           = 0;
   virtual void ReplaceLine(const std::size_t rowIndex, const std::string& line) = 0;
 
-  virtual std::string              GetLine(const std::size_t rowIndex) const = 0;
-  virtual std::vector<std::string> GetAllLines() const                       = 0;
-  virtual void                     ClearAllLines()                           = 0;
+  virtual std::size_t              GetNumberOfLines() const                        = 0;
+  virtual std::size_t              GetLineLength(const std::size_t rowIndex) const = 0;
+  virtual std::string              GetLine(const std::size_t rowIndex) const       = 0;
+  virtual std::vector<std::string> GetAllLines() const                             = 0;
+  virtual void                     ClearAllLines()                                 = 0;
 };

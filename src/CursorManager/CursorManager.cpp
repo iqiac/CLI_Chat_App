@@ -25,10 +25,10 @@ void CursorManager::MoveCursorRight() {
 }
 
 void CursorManager::SetCursorPosition(const std::size_t rowIndex, const std::size_t colIndex) {
-  const auto numberOfLines{_textBufferInfo.GetNumberOfLines()};
+  const auto numberOfLines{_textBuffer.GetNumberOfLines()};
   const auto validRowIndex{std::min(rowIndex, numberOfLines - 1)};
 
-  const auto numberOfCols{_textBufferInfo.GetLineLength(validRowIndex)};
+  const auto numberOfCols{_textBuffer.GetLineLength(validRowIndex)};
   const auto validColIndex{std::min(colIndex, numberOfCols)};
 
   _rowIndex = validRowIndex;

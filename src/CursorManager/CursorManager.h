@@ -1,13 +1,13 @@
 #pragma once
 
-#include "CursorManagerInterfaces.h"
-#include "TextBufferInterfaces.h"
+#include "ICursorManager.h"
+#include "ITextBuffer.h"
 
 #include <utility>
 
-class CursorManager : public ICursorManagerInfo, ICursorManagerMovement {
+class CursorManager : public ICursorManager {
 public:
-  explicit CursorManager(ITextBufferInfo& textBuffer) : _textBufferInfo(textBuffer) {}
+  explicit CursorManager(const ITextBuffer& textBuffer) : _textBuffer(textBuffer) {}
 
   void MoveCursorUp() override;
   void MoveCursorDown() override;
@@ -19,7 +19,7 @@ public:
   std::pair<std::size_t, std::size_t> GetCursorPosition() const override;
 
 private:
-  std::size_t      _rowIndex;
-  std::size_t      _colIndex;
-  ITextBufferInfo& _textBufferInfo;
+  std::size_t        _rowIndex;
+  std::size_t        _colIndex;
+  const ITextBuffer& _textBuffer;
 };

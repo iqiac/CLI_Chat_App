@@ -2,16 +2,9 @@
 
 #include <utility>
 
-class ICursorManagerInfo {
+class ICursorManager {
 public:
-  virtual ~ICursorManagerInfo() = default;
-
-  virtual std::pair<std::size_t, std::size_t> GetCursorPosition() const = 0;
-};
-
-class ICursorManagerMovement {
-public:
-  virtual ~ICursorManagerMovement() = default;
+  virtual ~ICursorManager() = default;
 
   virtual void MoveCursorUp()    = 0;
   virtual void MoveCursorDown()  = 0;
@@ -19,4 +12,6 @@ public:
   virtual void MoveCursorRight() = 0;
 
   virtual void SetCursorPosition(const std::size_t row, const std::size_t col) = 0;
+
+  virtual std::pair<std::size_t, std::size_t> GetCursorPosition() const = 0;
 };
