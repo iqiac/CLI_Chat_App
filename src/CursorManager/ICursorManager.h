@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utility>
+#include "CommonTypes.h"
 
 class ICursorManager {
 public:
@@ -11,7 +11,7 @@ public:
   virtual void MoveCursorLeft()  = 0;
   virtual void MoveCursorRight() = 0;
 
-  virtual void SetCursorPosition(const std::size_t row, const std::size_t col) = 0;
+  virtual void SetCursorPosition(const Position position) = 0;
 
-  virtual std::pair<std::size_t, std::size_t> GetCursorPosition() const = 0;
+  virtual Position GetCursorPosition() const = 0;
 };

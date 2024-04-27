@@ -14,9 +14,9 @@ public:
   void MoveCursorLeft() override;
   void MoveCursorRight() override;
 
-  void SetCursorPosition(const std::size_t rowIndex, const std::size_t colIndex) override;
+  void SetCursorPosition(const Position position) override;
 
-  std::pair<std::size_t, std::size_t> GetCursorPosition() const override;
+  Position GetCursorPosition() const override;
 
 private:
   std::size_t        _rowIndex;

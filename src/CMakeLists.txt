@@ -1,16 +1,14 @@
 # Setup libraries from subdirectories
 add_library(TextBuffer SHARED TextBuffer/TextBuffer.cpp)
-add_library(CursorManager SHARED CursorManager/CursorManager.cpp)
-target_include_directories(CursorManager PUBLIC TextBuffer)
-
-# Setup interfaces
-add_library(Interfaces INTERFACE)
-target_include_directories(
-  Interfaces INTERFACE
-  ${CMAKE_CURRENT_SOURCE_DIR}/Interfaces
+target_include_directories(TextBuffer PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
-target_link_libraries(TextBuffer PRIVATE Interfaces)
-target_link_libraries(CursorManager PRIVATE Interfaces)
+
+add_library(CursorManager SHARED CursorManager/CursorManager.cpp)
+target_include_directories(CursorManager PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  TextBuffer
+)
 
 # Setup main executable
 add_executable(${CMAKE_PROJECT_NAME})
@@ -21,7 +19,6 @@ target_sources(
 
 target_link_libraries(
   ${CMAKE_PROJECT_NAME} PRIVATE
-  Interfaces
   TextBuffer
   CursorManager
 )
@@ -55,7 +52,6 @@ target_link_libraries(
   ${TEST_NAME} PRIVATE
   GTest::gtest_main
   GTest::gmock_main
-  Interfaces
   TextBuffer
   CursorManager
 )
