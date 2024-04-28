@@ -1,6 +1,6 @@
 #include "CursorManager.h"
 
-#include "Testutils/TextBufferMock.h"
+#include "Mocks/TextBufferMock.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
