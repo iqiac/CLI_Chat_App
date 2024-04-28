@@ -1,13 +1,12 @@
 #pragma once
 
-#include "ISubject.h"
 #include "ITextBuffer.h"
+#include "Subject.h"
 
-#include <map>
-class TextBuffer : public ITextBuffer, ISubject {
+class TextBuffer : public ITextBuffer, public Subject {
 public:
   TextBuffer();
-  TextBuffer(const Line& line);
+  explicit TextBuffer(const Line& line);
   TextBuffer(const std::vector<Line>& lines);
 
   void InsertText(const Position position, const std::string& text) override;
@@ -29,8 +28,6 @@ public:
   std::vector<Line> GetAllLines() const override;
   void              ClearAllLines() override;
 
-  void Attach(const std::string observerName, const std::function<void()> updateFunction) override;
-  void Detach(const std::string observerName) override;
   void Notify() const override;
 
 private:

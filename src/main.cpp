@@ -8,11 +8,13 @@
 #include "ScreenRenderer.h"
 #include "TextBuffer.h"
 
+#include <chrono>
 #include <fstream>
+#include <functional>
 #include <iostream>
-#include <memory>
+#include <ncurses.h>
 #include <string>
-#include <vector>
+#include <thread>
 
 int main(int argc, char* argv[]) {
   // Get filepath as argument
@@ -37,14 +39,19 @@ int main(int argc, char* argv[]) {
   }
   file.close();
 
+  // Setup ncurses
+  initscr();                              // Init ncurses
+  curs_set(1);                            // Turn on cursor blinking
+  start_color();                          // Enable color support
+  init_pair(1, COLOR_WHITE, COLOR_BLACK); // Initialize color pairs
+
   // Initialize the components
-  TextBuffer            textBuffer{lines};
-  CursorManager         cursorManager{textBuffer};
-  ScreenRenderer        screenRenderer{textBuffer, cursorManager};
-  std::function<void()> screenRendererUpdate = [&screenRenderer]() { screenRenderer.Update(); };
+  TextBuffer     textBuffer{};
+  CursorManager  cursorManager{textBuffer};
+  ScreenRenderer screenRenderer{};
+  UpdateFunction screenRendererUpdate = std::bind(&ScreenRenderer::Update, &screenRenderer, std::placeholders::_1);
   textBuffer.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
   cursorManager.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
-  screenRenderer.Update();
 
   // Run TextEditor
   bool running{true};
@@ -55,8 +62,11 @@ int main(int argc, char* argv[]) {
       running = false;
     }
     // Sleep for short duration to prevent high CPU usage
-    usleep(100000);
+    std::this_thread::sleep_for(std::chrono::milliseconds(100));
   }
+
+  // Clean up and close ncurses
+  endwin();
 
   return 0;
 }
