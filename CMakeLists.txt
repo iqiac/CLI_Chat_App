@@ -42,5 +42,6 @@ add_compile_options(
   -Werror
 )
 
-# Process src directory
+# Process subdirectories
 add_subdirectory(src)
+add_subdirectory(test)
