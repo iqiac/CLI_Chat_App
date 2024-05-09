@@ -7,7 +7,7 @@
 
 using namespace testing;
 
-class CursorManagerTests : public testing::Test {
+class CursorManagerTests : public Test {
 protected:
   const std::size_t    numRows{20}, numCols{30};
   const std::size_t    validRowIndex{numRows / 2}, validColIndex{numCols / 2};

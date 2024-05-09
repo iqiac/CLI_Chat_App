@@ -36,7 +36,7 @@ TEST(TextBufferConstructor, TextBuffer_EmptyVectorArgument_ThrowsException) {
   EXPECT_THROW(const TextBuffer textBuffer{emptyVector}, std::invalid_argument);
 }
 
-class TextBufferSingleLine : public testing::Test {
+class TextBufferSingleLine : public Test {
 protected:
   const std::size_t validRowIndex{0}, invalidRowIndex{200};
   TextBuffer        textBuffer{line1};
