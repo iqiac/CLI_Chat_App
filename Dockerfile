@@ -17,9 +17,7 @@ RUN apt update && apt install -y \
   gdb \
   clang-format \
   cppcheck \
-  git \
-  libncurses5-dev \
-  libncursesw5-dev
+  git
 
 RUN apt upgrade -y && rm -rf /var/lib/apt/lists/*
 

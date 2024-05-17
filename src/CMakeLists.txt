@@ -1,29 +1,33 @@
 # Setup libraries from subdirectories
-add_library(ObserverPattern SHARED ObserverPattern/Subject.cpp ObserverPattern/Observer.cpp)
+add_library(ObserverPattern STATIC ObserverPattern/Subject.cpp ObserverPattern/Observer.cpp)
 target_include_directories(ObserverPattern PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
 )
 
-add_library(TextBuffer SHARED TextBuffer/TextBuffer.cpp)
+add_library(TextBuffer STATIC TextBuffer/TextBuffer.cpp)
 target_include_directories(TextBuffer PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
 )
 
-add_library(CursorManager SHARED CursorManager/CursorManager.cpp)
+add_library(CursorManager STATIC CursorManager/CursorManager.cpp)
 target_include_directories(CursorManager PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
   TextBuffer
 )
 
-add_library(ScreenRenderer SHARED ScreenRenderer/ScreenRenderer.cpp)
+add_library(ScreenRenderer STATIC ScreenRenderer/ScreenRenderer.cpp)
 target_include_directories(ScreenRenderer PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
 )
-target_link_libraries(ScreenRenderer PRIVATE ncurses)
+target_link_libraries(ScreenRenderer PUBLIC
+  ftxui::component
+  ftxui::dom
+  ftxui::screen
+)
 
 # Setup main executable
 add_executable(${CMAKE_PROJECT_NAME})
@@ -34,7 +38,6 @@ target_sources(
 
 target_link_libraries(
   ${CMAKE_PROJECT_NAME} PRIVATE
-  ncurses
   ObserverPattern
   TextBuffer
   CursorManager

@@ -12,9 +12,10 @@
 #include <fstream>
 #include <functional>
 #include <iostream>
-#include <ncurses.h>
 #include <string>
 #include <thread>
+
+using namespace ftxui;
 
 int main(int argc, char* argv[]) {
   // Get filepath as argument
@@ -31,6 +32,11 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  // Setup screen
+  const auto [dimX, dimY]{Terminal::Size()};
+  auto screen = ScreenInteractive::FixedSize(dimX, dimY);
+  screen.TrackMouse(false);
+
   // Store file content into appropriate format
   std::vector<std::string> lines;
   std::string              line;
@@ -39,34 +45,16 @@ int main(int argc, char* argv[]) {
   }
   file.close();
 
-  // Setup ncurses
-  initscr();                              // Init ncurses
-  curs_set(1);                            // Turn on cursor blinking
-  start_color();                          // Enable color support
-  init_pair(1, COLOR_WHITE, COLOR_BLACK); // Initialize color pairs
-
   // Initialize the components
-  TextBuffer     textBuffer{};
+  TextBuffer     textBuffer{lines};
   CursorManager  cursorManager{textBuffer};
-  ScreenRenderer screenRenderer{};
+  ScreenRenderer screenRenderer{screen};
   UpdateFunction screenRendererUpdate = std::bind(&ScreenRenderer::Update, &screenRenderer, std::placeholders::_1);
   textBuffer.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
   cursorManager.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
 
   // Run TextEditor
-  bool running{true};
-  while (running) {
-    char input;
-    std::cin >> input;
-    if (input == 'q') {
-      running = false;
-    }
-    // Sleep for short duration to prevent high CPU usage
-    std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  }
-
-  // Clean up and close ncurses
-  endwin();
+  screenRenderer.Loop();
 
   return 0;
 }

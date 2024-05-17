@@ -3,15 +3,21 @@
 #include "IScreenRenderer.h"
 #include "Observer.h"
 
+#include <ftxui/component/screen_interactive.hpp>
+
 class ScreenRenderer : public IScreenRenderer, public Observer {
 public:
-  ScreenRenderer() {
+  ScreenRenderer(ftxui::ScreenInteractive& screen) : _screen(screen) {
     _observerName = "ScreenRenderer";
   }
 
   void Update(const EventMessage eventMessage) override;
+  void Loop() override;
 
 private:
-  void RenderText(const std::vector<Line>& allLines) override;
-  void RenderCursor(const Position& cursorPosition) override;
+  void UpdateText(const std::vector<Line>& allLines) override;
+  void UpdateCursor(const Position& cursorPosition) override;
+
+  ftxui::ScreenInteractive& _screen;
+  ftxui::Component          _textBox;
 };

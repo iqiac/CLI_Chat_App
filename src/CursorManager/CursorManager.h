@@ -23,7 +23,7 @@ public:
   void Notify() const override;
 
 private:
-  std::size_t        _rowIndex;
-  std::size_t        _colIndex;
+  std::size_t        _rowIndex{0};
+  std::size_t        _colIndex{0};
   const ITextBuffer& _textBuffer;
 };
