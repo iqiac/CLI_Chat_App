@@ -1,5 +1,7 @@
 #include "TextBuffer.h"
 
+#include "Mocks/ObserverMock.h"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <stdexcept>
@@ -34,6 +36,15 @@ TEST(TextBufferConstructor, TextBuffer_VectorWithStringsArgument_HasSameVectorOf
 TEST(TextBufferConstructor, TextBuffer_EmptyVectorArgument_ThrowsException) {
   const auto emptyVector{std::vector<std::string>()};
   EXPECT_THROW(const TextBuffer textBuffer{emptyVector}, std::invalid_argument);
+}
+
+TEST(TextBufferSubject, Notify_Call_ObserverUpdateCalled) {
+  ObserverMock observerMock{};
+  TextBuffer   textBuffer{};
+  textBuffer.Attach(observerMock.GetObserverName(), std::bind(&ObserverMock::Update, &observerMock, std::placeholders::_1));
+  EXPECT_CALL(observerMock, Update(_)).Times(1);
+
+  textBuffer.Notify();
 }
 
 class TextBufferSingleLine : public Test {

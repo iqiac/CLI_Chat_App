@@ -5,6 +5,7 @@
 // 4. Screen Rendering: A component to display the text buffer and cursor in the terminal.
 
 #include "CursorManager.h"
+#include "ScreenAdapter.h"
 #include "ScreenRenderer.h"
 #include "TextBuffer.h"
 
@@ -32,11 +33,6 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
-  // Setup screen
-  const auto [dimX, dimY]{Terminal::Size()};
-  auto screen = ScreenInteractive::FixedSize(dimX, dimY);
-  screen.TrackMouse(false);
-
   // Store file content into appropriate format
   std::vector<std::string> lines;
   std::string              line;
@@ -45,10 +41,16 @@ int main(int argc, char* argv[]) {
   }
   file.close();
 
+  // Setup screen
+  const auto [dimX, dimY]{Terminal::Size()};
+  auto screen = ScreenInteractive::FixedSize(dimX, dimY); // Fixed size for now. Need to adjust components to fixed size
+  screen.TrackMouse(false);
+  ScreenAdapter screenAdapter{screen};
+
   // Initialize the components
   TextBuffer     textBuffer{lines};
   CursorManager  cursorManager{textBuffer};
-  ScreenRenderer screenRenderer{screen};
+  ScreenRenderer screenRenderer{screenAdapter};
   UpdateFunction screenRendererUpdate = std::bind(&ScreenRenderer::Update, &screenRenderer, std::placeholders::_1);
   textBuffer.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
   cursorManager.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);

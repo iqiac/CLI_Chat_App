@@ -39,8 +39,8 @@ void ScreenRenderer::UpdateCursor(const Position& cursorPosition) {
   if (rowIndex > std::numeric_limits<int>::max() || colIndex > std::numeric_limits<int>::max()) {
     throw std::overflow_error("Conversion would cause overflow");
   }
-  const int posX = static_cast<int>(colIndex);
-  const int posY = static_cast<int>(rowIndex);
+  const int posX = static_cast<int>(colIndex + 1); // +1 because of the border
+  const int posY = static_cast<int>(rowIndex + 1); // +1 because of the border
 
   const Screen::Cursor cursor{.x = posX, .y = posY, .shape = Screen::Cursor::BlockBlinking};
   _screen.SetCursor(cursor);

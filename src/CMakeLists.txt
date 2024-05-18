@@ -1,24 +1,34 @@
 # Setup libraries from subdirectories
-add_library(ObserverPattern STATIC ObserverPattern/Subject.cpp ObserverPattern/Observer.cpp)
+add_library(ObserverPattern STATIC
+  ObserverPattern/Subject.cpp
+  ObserverPattern/Observer.cpp
+)
 target_include_directories(ObserverPattern PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
 )
 
-add_library(TextBuffer STATIC TextBuffer/TextBuffer.cpp)
+add_library(TextBuffer STATIC
+  TextBuffer/TextBuffer.cpp
+)
 target_include_directories(TextBuffer PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
 )
 
-add_library(CursorManager STATIC CursorManager/CursorManager.cpp)
+add_library(CursorManager STATIC
+  CursorManager/CursorManager.cpp
+)
 target_include_directories(CursorManager PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
   TextBuffer
 )
 
-add_library(ScreenRenderer STATIC ScreenRenderer/ScreenRenderer.cpp)
+add_library(ScreenRenderer STATIC
+  ScreenRenderer/ScreenRenderer.cpp
+  ScreenRenderer/ScreenAdapter.cpp
+)
 target_include_directories(ScreenRenderer PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern

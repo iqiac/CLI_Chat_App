@@ -1,5 +1,6 @@
 #include "CursorManager.h"
 
+#include "Mocks/ObserverMock.h"
 #include "Mocks/TextBufferMock.h"
 
 #include <gmock/gmock.h>
@@ -13,6 +14,7 @@ protected:
   const std::size_t    validRowIndex{numRows / 2}, validColIndex{numCols / 2};
   const std::size_t    invalidRowIndex{numRows * 10}, invalidColIndex{numCols * 10};
   const TextBufferMock textBufferMock{};
+  ObserverMock         observerMock{};
   CursorManager        cursorManager{textBufferMock};
 
   void SetUp() override {
@@ -162,4 +164,12 @@ TEST_F(CursorManagerTests, MoveCursorRight_CursorIsAtLeftOfLastColumn_ColIndexIn
   cursorManager.MoveCursorRight();
 
   EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, validColIndex + 1));
+}
+
+TEST_F(CursorManagerTests, Notify_Call_ObserverUpdateCalled) {
+  cursorManager.Attach(observerMock.GetObserverName(),
+                       std::bind(&ObserverMock::Update, &observerMock, std::placeholders::_1));
+  EXPECT_CALL(observerMock, Update(_)).Times(1);
+
+  cursorManager.Notify();
 }

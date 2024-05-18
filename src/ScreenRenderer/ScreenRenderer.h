@@ -1,13 +1,12 @@
 #pragma once
 
+#include "IScreen.h"
 #include "IScreenRenderer.h"
 #include "Observer.h"
 
-#include <ftxui/component/screen_interactive.hpp>
-
 class ScreenRenderer : public IScreenRenderer, public Observer {
 public:
-  ScreenRenderer(ftxui::ScreenInteractive& screen) : _screen(screen) {
+  ScreenRenderer(IScreen& screen) : _screen(screen) {
     _observerName = "ScreenRenderer";
   }
 
@@ -18,6 +17,6 @@ private:
   void UpdateText(const std::vector<Line>& allLines) override;
   void UpdateCursor(const Position& cursorPosition) override;
 
-  ftxui::ScreenInteractive& _screen;
-  ftxui::Component          _textBox;
+  IScreen&         _screen;
+  ftxui::Component _textBox;
 };
