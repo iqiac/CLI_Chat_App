@@ -5,7 +5,7 @@
 #include <ftxui/dom/elements.hpp>
 
 void ScreenRenderer::Loop() {
-  _screen.Loop(_textBox);
+  _screen.Loop();
 }
 
 void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {

@@ -10,6 +10,7 @@ target_sources(
   TextBufferTest.cpp
   CursorManagerTest.cpp
   ScreenRendererTest.cpp
+  InputHandlerTest.cpp
 )
 
 target_include_directories(
@@ -18,6 +19,7 @@ target_include_directories(
   ${CMAKE_SOURCE_DIR}/src/TextBuffer
   ${CMAKE_SOURCE_DIR}/src/CursorManager
   ${CMAKE_SOURCE_DIR}/src/ScreenRenderer
+  ${CMAKE_SOURCE_DIR}/src/InputHandler
 )
 
 target_link_libraries(
@@ -27,6 +29,7 @@ target_link_libraries(
   TextBuffer
   CursorManager
   ScreenRenderer
+  InputHandler
 )
 
 include(GoogleTest)

@@ -1,4 +1,5 @@
 #include "CursorManager.h"
+#include "InputHandler.h"
 #include "ScreenAdapter.h"
 #include "ScreenRenderer.h"
 #include "TextBuffer.h"

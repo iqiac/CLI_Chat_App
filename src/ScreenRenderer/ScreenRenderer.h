@@ -7,7 +7,9 @@
 
 class ScreenRenderer : public IScreenRenderer, public IObserver<std::vector<Line>>, public IObserver<Position> {
 public:
-  explicit ScreenRenderer(IScreen& screen) : _screen(screen) {}
+  explicit ScreenRenderer(IScreen& screen) : _screen(screen) {
+    _screen.AddComponent(_textBox);
+  }
 
   void Update(const ISubject<std::vector<Line>>& subject) override;
   void Update(const ISubject<Position>& subject) override;

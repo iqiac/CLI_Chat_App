@@ -54,7 +54,7 @@ TEST_F(ScreenRendererTests, Update_CallWithCursorManagerMessageAndInvalidPositio
 }
 
 TEST_F(ScreenRendererTests, Loop_Call_ScreenLoopCalled) {
-  EXPECT_CALL(screenMock, Loop(_)).Times(1);
+  EXPECT_CALL(screenMock, Loop()).Times(1);
 
   screenRenderer.Loop();
 }
