@@ -26,7 +26,7 @@ using DataReference = std::variant<std::reference_wrapper<const std::vector<Line
 
 struct EventMessage {
   EventSender   eventSender;
-  DataReference dataRef;
+  DataReference dataReference;
 };
 
 using UpdateFunction = std::function<void(EventMessage)>;

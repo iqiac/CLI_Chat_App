@@ -42,7 +42,8 @@ Position CursorManager::GetCursorPosition() const {
 void CursorManager::Notify() const {
   for (const auto& [_, updateFunction] : _observerUpdateFunctions) {
     const Position     newPosition{_rowIndex, _colIndex};
-    const EventMessage message{.eventSender = EventSender::CURSOR_MANAGER, .dataRef = DataReference{std::ref(newPosition)}};
+    const EventMessage message{.eventSender   = EventSender::CURSOR_MANAGER,
+                               .dataReference = DataReference{std::ref(newPosition)}};
     updateFunction(message);
   }
 }

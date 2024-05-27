@@ -24,7 +24,7 @@ TEST_F(ScreenRendererTests, GetObserverName_Call_GetCorrectName) {
 }
 
 TEST_F(ScreenRendererTests, Update_CallWithTextBufferMessage_ScreenPostEventCalled) {
-  EventMessage message{.eventSender = EventSender::TEXT_BUFFER, .dataRef = defaultLines};
+  EventMessage message{.eventSender = EventSender::TEXT_BUFFER, .dataReference = defaultLines};
   EXPECT_CALL(screenMock, SetCursor(_)).Times(0);
   EXPECT_CALL(screenMock, PostEvent(ftxui::Event::Custom)).Times(1);
 
@@ -32,7 +32,7 @@ TEST_F(ScreenRendererTests, Update_CallWithTextBufferMessage_ScreenPostEventCall
 }
 
 TEST_F(ScreenRendererTests, Update_CallWithCursorManagerMessage_ScreenPostEventAndSetCursorCalled) {
-  EventMessage message{.eventSender = EventSender::CURSOR_MANAGER, .dataRef = defaultPosition};
+  EventMessage message{.eventSender = EventSender::CURSOR_MANAGER, .dataReference = defaultPosition};
   EXPECT_CALL(screenMock, SetCursor(_)).Times(1);
   EXPECT_CALL(screenMock, PostEvent(ftxui::Event::Custom)).Times(1);
 
@@ -41,7 +41,7 @@ TEST_F(ScreenRendererTests, Update_CallWithCursorManagerMessage_ScreenPostEventA
 
 TEST_F(ScreenRendererTests, Update_CallWithCursorManagerMessageAndValidPosition_ScreenPostEventAndSetCursorCalled) {
   Position     validPosition{.rowIndex = 1, .colIndex = 1};
-  EventMessage message{.eventSender = EventSender::CURSOR_MANAGER, .dataRef = validPosition};
+  EventMessage message{.eventSender = EventSender::CURSOR_MANAGER, .dataReference = validPosition};
   EXPECT_CALL(screenMock, SetCursor(_)).Times(1);
   EXPECT_CALL(screenMock, PostEvent(ftxui::Event::Custom)).Times(1);
 
@@ -51,7 +51,7 @@ TEST_F(ScreenRendererTests, Update_CallWithCursorManagerMessageAndValidPosition_
 TEST_F(ScreenRendererTests, Update_CallWithCursorManagerMessageAndInvalidPosition_ThrowsException) {
   Index        overflowValue{static_cast<std::size_t>(std::numeric_limits<int>::max()) + 1};
   Position     invalidPosition{.rowIndex = overflowValue, .colIndex = overflowValue};
-  EventMessage message{.eventSender = EventSender::CURSOR_MANAGER, .dataRef = invalidPosition};
+  EventMessage message{.eventSender = EventSender::CURSOR_MANAGER, .dataReference = invalidPosition};
   EXPECT_CALL(screenMock, SetCursor(_)).Times(0);
   EXPECT_CALL(screenMock, PostEvent(ftxui::Event::Custom)).Times(0);
 

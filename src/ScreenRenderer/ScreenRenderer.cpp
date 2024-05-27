@@ -5,14 +5,14 @@
 #include <ftxui/dom/elements.hpp>
 #include <iostream>
 
-void ScreenRenderer::Update(const EventMessage eventMessage) {
+void ScreenRenderer::Update(const EventMessage& eventMessage) {
   switch (EventSender sender{eventMessage.eventSender}) {
     case EventSender::TEXT_BUFFER:
-      UpdateText(std::get<std::reference_wrapper<const std::vector<Line>>>(eventMessage.dataRef).get());
+      UpdateText(std::get<std::reference_wrapper<const std::vector<Line>>>(eventMessage.dataReference).get());
       break;
 
     case EventSender::CURSOR_MANAGER:
-      UpdateCursor(std::get<std::reference_wrapper<const Position>>(eventMessage.dataRef).get());
+      UpdateCursor(std::get<std::reference_wrapper<const Position>>(eventMessage.dataReference).get());
       break;
   }
 }

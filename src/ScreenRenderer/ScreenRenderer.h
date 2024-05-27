@@ -6,11 +6,11 @@
 
 class ScreenRenderer : public IScreenRenderer, public Observer {
 public:
-  ScreenRenderer(IScreen& screen) : _screen(screen) {
+  explicit ScreenRenderer(IScreen& screen) : _screen(screen) {
     _observerName = "ScreenRenderer";
   }
 
-  void Update(const EventMessage eventMessage) override;
+  void Update(const EventMessage& eventMessage) override;
   void Loop() override;
 
 private:

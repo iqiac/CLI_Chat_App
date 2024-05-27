@@ -84,7 +84,7 @@ void TextBuffer::ClearAllLines() {
 
 void TextBuffer::Notify() const {
   for (const auto& [_, updateFunction] : _observerUpdateFunctions) {
-    const EventMessage message{.eventSender = EventSender::TEXT_BUFFER, .dataRef = DataReference{std::ref(_allLines)}};
+    const EventMessage message{.eventSender = EventSender::TEXT_BUFFER, .dataReference = DataReference{std::ref(_allLines)}};
     updateFunction(message);
   }
 }

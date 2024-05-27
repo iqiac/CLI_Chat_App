@@ -7,7 +7,7 @@ class TextBuffer : public ITextBuffer, public Subject {
 public:
   TextBuffer();
   explicit TextBuffer(const Line& line);
-  TextBuffer(const std::vector<Line>& lines);
+  explicit TextBuffer(const std::vector<Line>& lines);
 
   void InsertText(const Position position, const std::string& text) override;
   void InsertText(const Index rowIndex, const Index colIndex, const std::string& text) override;
