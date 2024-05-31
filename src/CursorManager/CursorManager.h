@@ -1,13 +1,13 @@
 #pragma once
 
 #include "ICursorManager.h"
+#include "ISubject.h"
 #include "ITextBuffer.h"
-#include "Subject.h"
 
 #include <functional>
 #include <map>
 
-class CursorManager : public ICursorManager, public Subject {
+class CursorManager : public ICursorManager, public ISubject {
 public:
   explicit CursorManager(const ITextBuffer& textBuffer) : _textBuffer(textBuffer) {}
 

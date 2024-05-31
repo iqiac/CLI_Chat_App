@@ -1,7 +1,7 @@
 # Setup libraries from subdirectories
 add_library(ObserverPattern STATIC
-  ObserverPattern/Subject.cpp
-  ObserverPattern/Observer.cpp
+  ObserverPattern/ISubject.cpp
+  ObserverPattern/IObserver.cpp
 )
 target_include_directories(ObserverPattern PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}

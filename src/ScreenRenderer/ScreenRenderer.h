@@ -1,10 +1,10 @@
 #pragma once
 
+#include "IObserver.h"
 #include "IScreen.h"
 #include "IScreenRenderer.h"
-#include "Observer.h"
 
-class ScreenRenderer : public IScreenRenderer, public Observer {
+class ScreenRenderer : public IScreenRenderer, public IObserver {
 public:
   explicit ScreenRenderer(IScreen& screen) : _screen(screen) {
     _observerName = "ScreenRenderer";

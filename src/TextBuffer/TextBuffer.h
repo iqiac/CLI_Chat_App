@@ -1,9 +1,9 @@
 #pragma once
 
+#include "ISubject.h"
 #include "ITextBuffer.h"
-#include "Subject.h"
 
-class TextBuffer : public ITextBuffer, public Subject {
+class TextBuffer : public ITextBuffer, public ISubject {
 public:
   TextBuffer();
   explicit TextBuffer(const Line& line);
