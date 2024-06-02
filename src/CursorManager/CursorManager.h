@@ -7,7 +7,7 @@
 #include <functional>
 #include <map>
 
-class CursorManager : public ICursorManager, public ISubject {
+class CursorManager : public ICursorManager, public ISubject<Position> {
 public:
   explicit CursorManager(const ITextBuffer& textBuffer) : _textBuffer(textBuffer) {}
 
@@ -20,6 +20,7 @@ public:
 
   Position GetCursorPosition() const override;
 
+  Position GetData() const override;
   void Notify() const override;
 
 private:

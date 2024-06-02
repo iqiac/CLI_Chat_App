@@ -3,7 +3,7 @@
 #include "ISubject.h"
 #include "ITextBuffer.h"
 
-class TextBuffer : public ITextBuffer, public ISubject {
+class TextBuffer : public ITextBuffer, public ISubject<std::vector<Line>> {
 public:
   TextBuffer();
   explicit TextBuffer(const Line& line);
@@ -28,7 +28,8 @@ public:
   std::vector<Line> GetAllLines() const override;
   void              ClearAllLines() override;
 
-  void Notify() const override;
+  std::vector<Line> GetData() const override;
+  void              Notify() const override;
 
 private:
   std::vector<Line> _allLines;

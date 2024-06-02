@@ -38,11 +38,22 @@ TEST(TextBufferConstructor, TextBuffer_EmptyVectorArgument_ThrowsException) {
   EXPECT_THROW(const TextBuffer textBuffer{emptyVector}, std::invalid_argument);
 }
 
-TEST(TextBufferSubject, Notify_Call_ObserverUpdateCalled) {
-  ObserverMock observerMock{};
-  TextBuffer   textBuffer{};
-  textBuffer.Attach(observerMock.GetObserverName(), std::bind(&ObserverMock::Update, &observerMock, std::placeholders::_1));
-  EXPECT_CALL(observerMock, Update(_)).Times(1);
+TEST(TextBufferSubject, Attach_Call_ObserverUpdateCalled) {
+  auto       observerMock{std::make_shared<ObserverMock<std::vector<Line>>>()};
+  TextBuffer textBuffer{};
+  EXPECT_CALL(*observerMock, Update(_)).Times(1);
+
+  textBuffer.Attach(observerMock);
+}
+
+TEST(TextBufferSubject, Notify_Call_AllObserverUpdateCalled) {
+  auto       observerMock1{std::make_shared<ObserverMock<std::vector<Line>>>()};
+  auto       observerMock2{std::make_shared<ObserverMock<std::vector<Line>>>()};
+  TextBuffer textBuffer{};
+  textBuffer.Attach(observerMock1);
+  textBuffer.Attach(observerMock2);
+  EXPECT_CALL(*observerMock1, Update(_)).Times(1);
+  EXPECT_CALL(*observerMock2, Update(_)).Times(1);
 
   textBuffer.Notify();
 }

@@ -24,7 +24,6 @@ target_link_libraries(
   ${TEST_NAME} PRIVATE
   GTest::gtest_main
   GTest::gmock_main
-  ObserverPattern
   TextBuffer
   CursorManager
   ScreenRenderer

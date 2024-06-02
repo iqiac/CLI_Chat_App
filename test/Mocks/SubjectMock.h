@@ -4,9 +4,11 @@
 
 #include <gmock/gmock.h>
 
-class SubjectMock : public ISubject {
+template <typename T>
+class SubjectMock : public ISubject<T> {
 public:
-  MOCK_METHOD(void, Attach, (const std::string observerName, const UpdateFunction updateFunction), (override));
-  MOCK_METHOD(void, Detach, (const std::string observerName), (override));
+  MOCK_METHOD(void, Attach, (std::shared_ptr<IObserver<T>> observer), (override));
+  MOCK_METHOD(void, Detach, (std::shared_ptr<IObserver<T>> observer), (override));
   MOCK_METHOD(void, Notify, (), (const, override));
+  MOCK_METHOD(T, GetData, (), (const, override));
 };

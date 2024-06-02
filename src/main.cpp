@@ -48,15 +48,14 @@ int main(int argc, char* argv[]) {
   ScreenAdapter screenAdapter{screen};
 
   // Initialize the components
-  TextBuffer     textBuffer{lines};
-  CursorManager  cursorManager{textBuffer};
-  ScreenRenderer screenRenderer{screenAdapter};
-  UpdateFunction screenRendererUpdate = std::bind(&ScreenRenderer::Update, &screenRenderer, std::placeholders::_1);
-  textBuffer.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
-  cursorManager.Attach(screenRenderer.GetObserverName(), screenRendererUpdate);
+  TextBuffer    textBuffer{lines};
+  CursorManager cursorManager{textBuffer};
+  auto          screenRenderer{std::make_shared<ScreenRenderer>(screenAdapter)};
+  textBuffer.Attach(screenRenderer);
+  cursorManager.Attach(screenRenderer);
 
   // Run TextEditor
-  screenRenderer.Loop();
+  screenRenderer->Loop();
 
   return 0;
 }

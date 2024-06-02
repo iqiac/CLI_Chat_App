@@ -1,13 +1,4 @@
 # Setup libraries from subdirectories
-add_library(ObserverPattern STATIC
-  ObserverPattern/ISubject.cpp
-  ObserverPattern/IObserver.cpp
-)
-target_include_directories(ObserverPattern PUBLIC
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ObserverPattern
-)
-
 add_library(TextBuffer STATIC
   TextBuffer/TextBuffer.cpp
 )
@@ -48,7 +39,6 @@ target_sources(
 
 target_link_libraries(
   ${CMAKE_PROJECT_NAME} PRIVATE
-  ObserverPattern
   TextBuffer
   CursorManager
   ScreenRenderer

@@ -39,11 +39,10 @@ Position CursorManager::GetCursorPosition() const {
   return {_rowIndex, _colIndex};
 }
 
+Position CursorManager::GetData() const {
+  return GetCursorPosition();
+}
+
 void CursorManager::Notify() const {
-  for (const auto& [_, updateFunction] : _observerUpdateFunctions) {
-    const Position     newPosition{_rowIndex, _colIndex};
-    const EventMessage message{.eventSender   = EventSender::CURSOR_MANAGER,
-                               .dataReference = DataReference{std::ref(newPosition)}};
-    updateFunction(message);
-  }
+  ISubject::Notify();
 }

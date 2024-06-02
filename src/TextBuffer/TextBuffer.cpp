@@ -82,9 +82,10 @@ void TextBuffer::ClearAllLines() {
   _allLines.push_back("");
 }
 
+std::vector<Line> TextBuffer::GetData() const {
+  return GetAllLines();
+}
+
 void TextBuffer::Notify() const {
-  for (const auto& [_, updateFunction] : _observerUpdateFunctions) {
-    const EventMessage message{.eventSender = EventSender::TEXT_BUFFER, .dataReference = DataReference{std::ref(_allLines)}};
-    updateFunction(message);
-  }
+  ISubject<std::vector<Line>>::Notify();
 }

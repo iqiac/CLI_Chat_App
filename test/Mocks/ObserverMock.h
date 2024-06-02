@@ -3,9 +3,8 @@
 #include "IObserver.h"
 
 #include <gmock/gmock.h>
-
-class ObserverMock : public IObserver {
+template <typename T>
+class ObserverMock : public IObserver<T> {
 public:
-  MOCK_METHOD(void, Update, (const EventMessage& eventMessage), (override));
-  MOCK_METHOD(std::string, GetObserverName, (), (const, override));
+  MOCK_METHOD(void, Update, (const ISubjectDataGetter<T>&), (override));
 };
