@@ -1,7 +1,7 @@
 #include "ScreenRenderer.h"
 
 #include "Mocks/ScreenMock.h"
-#include "Mocks/SubjectDataGetterMock.h"
+#include "Mocks/SubjectMock.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -13,9 +13,9 @@ protected:
   const std::vector<Line> defaultLines{"Line1", "Line2", "Line3"};
   const Position          defaultPosition{.rowIndex = 0, .colIndex = 0};
 
-  const SubjectDataGetterMock<std::vector<Line>> textBufferMock{};
-  const SubjectDataGetterMock<Position>          cursorManagerMock{};
-  ScreenMock                                     screenMock{};
+  const SubjectMock<std::vector<Line>> textBufferMock{};
+  const SubjectMock<Position>          cursorManagerMock{};
+  ScreenMock                           screenMock{};
 
   ScreenRenderer screenRenderer{screenMock};
 };

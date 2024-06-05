@@ -2,7 +2,6 @@
 
 #include "CommonTypes.h"
 #include "IObserver.h"
-#include "ISubjectDataGetter.h"
 
 #include <functional>
 #include <memory>
@@ -10,13 +9,13 @@
 #include <string>
 
 template <typename T>
-class ISubject : public ISubjectDataGetter<T> {
+class ISubject {
 public:
   virtual ~ISubject() = default;
 
   virtual void Attach(std::shared_ptr<IObserver<T>> observer) {
     _observers.insert(observer);
-    observer->Update(dynamic_cast<ISubjectDataGetter<T>&>(*this));
+    observer->Update(*this);
   }
 
   virtual void Detach(std::shared_ptr<IObserver<T>> observer) {
@@ -25,7 +24,7 @@ public:
 
   virtual void Notify() const {
     for (auto& observer : _observers) {
-      observer->Update(dynamic_cast<const ISubjectDataGetter<T>&>(*this));
+      observer->Update(*this);
     }
   }
 

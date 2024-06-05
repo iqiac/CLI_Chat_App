@@ -6,5 +6,5 @@
 template <typename T>
 class ObserverMock : public IObserver<T> {
 public:
-  MOCK_METHOD(void, Update, (const ISubjectDataGetter<T>&), (override));
+  MOCK_METHOD(void, Update, (const ISubject<T>&), (override));
 };

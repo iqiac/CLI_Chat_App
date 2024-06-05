@@ -9,7 +9,7 @@ void ScreenRenderer::Loop() {
   _screen.Loop(_textBox);
 }
 
-void ScreenRenderer::Update(const ISubjectDataGetter<std::vector<Line>>& subject) {
+void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {
   using namespace ftxui;
 
   const auto& allLines = subject.GetData();
@@ -21,7 +21,7 @@ void ScreenRenderer::Update(const ISubjectDataGetter<std::vector<Line>>& subject
   _screen.PostEvent(Event::Custom); // Request new frame to be drawn
 }
 
-void ScreenRenderer::Update(const ISubjectDataGetter<Position>& subject) {
+void ScreenRenderer::Update(const ISubject<Position>& subject) {
 
   using namespace ftxui;
 
