@@ -1,5 +1,7 @@
 #include "TextBuffer.h"
 
+#include "Mocks/ObserverMock.h"
+
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <stdexcept>
@@ -36,7 +38,27 @@ TEST(TextBufferConstructor, TextBuffer_EmptyVectorArgument_ThrowsException) {
   EXPECT_THROW(const TextBuffer textBuffer{emptyVector}, std::invalid_argument);
 }
 
-class TextBufferSingleLine : public testing::Test {
+TEST(TextBufferSubject, Attach_Call_ObserverUpdateCalled) {
+  auto       observerMock{std::make_shared<ObserverMock<std::vector<Line>>>()};
+  TextBuffer textBuffer{};
+  EXPECT_CALL(*observerMock, Update(_)).Times(1);
+
+  textBuffer.Attach(observerMock);
+}
+
+TEST(TextBufferSubject, Notify_Call_AllObserverUpdateCalled) {
+  auto       observerMock1{std::make_shared<ObserverMock<std::vector<Line>>>()};
+  auto       observerMock2{std::make_shared<ObserverMock<std::vector<Line>>>()};
+  TextBuffer textBuffer{};
+  textBuffer.Attach(observerMock1);
+  textBuffer.Attach(observerMock2);
+  EXPECT_CALL(*observerMock1, Update(_)).Times(1);
+  EXPECT_CALL(*observerMock2, Update(_)).Times(1);
+
+  textBuffer.Notify();
+}
+
+class TextBufferSingleLine : public Test {
 protected:
   const std::size_t validRowIndex{0}, invalidRowIndex{200};
   TextBuffer        textBuffer{line1};

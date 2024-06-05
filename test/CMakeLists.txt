@@ -9,12 +9,15 @@ target_sources(
   test_main.cpp
   TextBufferTest.cpp
   CursorManagerTest.cpp
+  ScreenRendererTest.cpp
 )
 
 target_include_directories(
   ${TEST_NAME} PRIVATE
+  ${CMAKE_SOURCE_DIR}/src/ObserverPattern
   ${CMAKE_SOURCE_DIR}/src/TextBuffer
   ${CMAKE_SOURCE_DIR}/src/CursorManager
+  ${CMAKE_SOURCE_DIR}/src/ScreenRenderer
 )
 
 target_link_libraries(
@@ -23,6 +26,7 @@ target_link_libraries(
   GTest::gmock_main
   TextBuffer
   CursorManager
+  ScreenRenderer
 )
 
 include(GoogleTest)

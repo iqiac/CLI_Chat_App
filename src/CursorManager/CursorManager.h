@@ -1,11 +1,13 @@
 #pragma once
 
 #include "ICursorManager.h"
+#include "ISubject.h"
 #include "ITextBuffer.h"
 
-#include <utility>
+#include <functional>
+#include <map>
 
-class CursorManager : public ICursorManager {
+class CursorManager : public ICursorManager, public ISubject<Position> {
 public:
   explicit CursorManager(const ITextBuffer& textBuffer) : _textBuffer(textBuffer) {}
 
@@ -18,8 +20,11 @@ public:
 
   Position GetCursorPosition() const override;
 
+  Position GetData() const override;
+  void Notify() const override;
+
 private:
-  std::size_t        _rowIndex;
-  std::size_t        _colIndex;
+  std::size_t        _rowIndex{0};
+  std::size_t        _colIndex{0};
   const ITextBuffer& _textBuffer;
 };

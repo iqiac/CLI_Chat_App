@@ -1,20 +1,22 @@
 #include "CursorManager.h"
 
+#include "Mocks/ObserverMock.h"
 #include "Mocks/TextBufferMock.h"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
-#include <stdexcept>
 
 using namespace testing;
 
-class CursorManagerTests : public testing::Test {
+class CursorManagerTests : public Test {
 protected:
-  const std::size_t    numRows{20}, numCols{30};
-  const std::size_t    validRowIndex{numRows / 2}, validColIndex{numCols / 2};
-  const std::size_t    invalidRowIndex{numRows * 10}, invalidColIndex{numCols * 10};
+  const std::size_t numRows{20}, numCols{30};
+  const std::size_t validRowIndex{numRows / 2}, validColIndex{numCols / 2};
+  const std::size_t invalidRowIndex{numRows * 10}, invalidColIndex{numCols * 10};
+
   const TextBufferMock textBufferMock{};
-  CursorManager        cursorManager{textBufferMock};
+
+  CursorManager cursorManager{textBufferMock};
 
   void SetUp() override {
     ON_CALL(textBufferMock, GetNumberOfLines()).WillByDefault(Return(numRows));
@@ -163,4 +165,22 @@ TEST_F(CursorManagerTests, MoveCursorRight_CursorIsAtLeftOfLastColumn_ColIndexIn
   cursorManager.MoveCursorRight();
 
   EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, validColIndex + 1));
+}
+
+TEST_F(CursorManagerTests, Attach_Call_ObserverUpdateCalled) {
+  auto observerMock{std::make_shared<ObserverMock<Position>>()};
+  EXPECT_CALL(*observerMock, Update(_)).Times(1);
+
+  cursorManager.Attach(observerMock);
+}
+
+TEST_F(CursorManagerTests, Notify_Call_AllObserverUpdateCalled) {
+  auto observerMock1{std::make_shared<ObserverMock<Position>>()};
+  auto observerMock2{std::make_shared<ObserverMock<Position>>()};
+  cursorManager.Attach(observerMock1);
+  cursorManager.Attach(observerMock2);
+  EXPECT_CALL(*observerMock1, Update(_)).Times(1);
+  EXPECT_CALL(*observerMock2, Update(_)).Times(1);
+
+  cursorManager.Notify();
 }

@@ -1,12 +1,13 @@
 #pragma once
 
+#include "ISubject.h"
 #include "ITextBuffer.h"
 
-class TextBuffer : public ITextBuffer {
+class TextBuffer : public ITextBuffer, public ISubject<std::vector<Line>> {
 public:
   TextBuffer();
-  TextBuffer(const Line& line);
-  TextBuffer(const std::vector<Line>& lines);
+  explicit TextBuffer(const Line& line);
+  explicit TextBuffer(const std::vector<Line>& lines);
 
   void InsertText(const Position position, const std::string& text) override;
   void InsertText(const Index rowIndex, const Index colIndex, const std::string& text) override;
@@ -26,6 +27,9 @@ public:
   Line              GetLine(const Index rowIndex) const override;
   std::vector<Line> GetAllLines() const override;
   void              ClearAllLines() override;
+
+  std::vector<Line> GetData() const override;
+  void              Notify() const override;
 
 private:
   std::vector<Line> _allLines;

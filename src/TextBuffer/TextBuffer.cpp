@@ -81,3 +81,11 @@ void TextBuffer::ClearAllLines() {
   _allLines.clear();
   _allLines.push_back("");
 }
+
+std::vector<Line> TextBuffer::GetData() const {
+  return GetAllLines();
+}
+
+void TextBuffer::Notify() const {
+  ISubject<std::vector<Line>>::Notify();
+}
