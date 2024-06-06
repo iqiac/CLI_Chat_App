@@ -3,10 +3,8 @@
 #include "CommonTypes.h"
 #include "IObserver.h"
 
-#include <functional>
 #include <memory>
 #include <set>
-#include <string>
 
 template <typename T>
 class ISubject {

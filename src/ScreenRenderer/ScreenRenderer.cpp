@@ -3,7 +3,6 @@
 #include <exception>
 #include <ftxui/component/component.hpp>
 #include <ftxui/dom/elements.hpp>
-#include <iostream>
 
 void ScreenRenderer::Loop() {
   _screen.Loop(_textBox);

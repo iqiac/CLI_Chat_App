@@ -2,7 +2,6 @@
 
 #include "CommonTypes.h"
 
-#include <string>
 template <typename T>
 class ISubject;
 
