@@ -1,9 +1,6 @@
 #pragma once
 
-#include <functional>
 #include <string>
-#include <variant>
-#include <vector>
 
 using Line  = std::string;
 using Index = std::size_t;

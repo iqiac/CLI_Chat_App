@@ -3,6 +3,7 @@
 #include "IObserver.h"
 
 #include <gmock/gmock.h>
+
 template <typename T>
 class ObserverMock : public IObserver<T> {
 public:
