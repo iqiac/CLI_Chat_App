@@ -1,7 +1,9 @@
 #include "ScreenAdapter.h"
 
-void ScreenAdapter::Loop() {
-  _screen.Loop(_vbox);
+#include <stdexcept>
+
+void ScreenAdapter::Loop(ftxui::Component component) {
+  _screen.Loop(component);
 }
 
 void ScreenAdapter::SetCursor(const ftxui::Screen::Cursor cursor) {
@@ -10,8 +12,4 @@ void ScreenAdapter::SetCursor(const ftxui::Screen::Cursor cursor) {
 
 void ScreenAdapter::PostEvent(const ftxui::Event event) {
   _screen.PostEvent(event);
-}
-
-void ScreenAdapter::AddComponent(const ftxui::Component component) {
-  _vbox->Add(component);
 }

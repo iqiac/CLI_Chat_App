@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
   textBuffer.Attach(screenRenderer);
   cursorManager.Attach(screenRenderer);
 
-  // Run TextEditor
+  // // Run TextEditor
   screenRenderer->Loop();
 
   return 0;

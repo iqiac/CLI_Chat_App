@@ -5,14 +5,12 @@
 
 class ScreenAdapter : public IScreen {
 public:
-  explicit ScreenAdapter(ftxui::ScreenInteractive& screen) : _screen(screen){};
+  explicit ScreenAdapter(ftxui::ScreenInteractive& screen) : _screen(screen) {}
 
-  void Loop() override;
+  void Loop(ftxui::Component component) override;
   void SetCursor(const ftxui::Screen::Cursor cursor) override;
   void PostEvent(const ftxui::Event event) override;
-  void AddComponent(const ftxui::Component component) override;
 
 private:
   ftxui::ScreenInteractive& _screen;
-  ftxui::Component          _vbox;
 };
