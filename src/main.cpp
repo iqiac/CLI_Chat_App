@@ -41,9 +41,14 @@ int main(int argc, char* argv[]) {
   auto          screenRenderer{std::make_shared<ScreenRenderer>(screenAdapter)};
   textBuffer.Attach(screenRenderer);
   cursorManager.Attach(screenRenderer);
+  InputHandler inputHandler{textBuffer, cursorManager};
 
-  // // Run TextEditor
+  // Run TextEditor
+  inputHandler.Start();
   screenRenderer->Loop();
+
+  // Stop TextEditor
+  inputHandler.Stop();
 
   return 0;
 }

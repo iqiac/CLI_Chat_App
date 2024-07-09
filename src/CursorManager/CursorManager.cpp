@@ -33,6 +33,8 @@ void CursorManager::SetCursorPosition(const Position position) {
 
   _rowIndex = validRowIndex;
   _colIndex = validColIndex;
+
+  Notify();
 }
 
 Position CursorManager::GetCursorPosition() const {

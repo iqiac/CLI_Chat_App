@@ -42,10 +42,6 @@ target_include_directories(InputHandler PUBLIC
   TextBuffer
   CursorManager
 )
-target_link_libraries(InputHandler PUBLIC
-  ftxui::component
-)
-
 
 # Setup main executable
 add_executable(${CMAKE_PROJECT_NAME})
