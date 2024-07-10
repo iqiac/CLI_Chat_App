@@ -8,6 +8,10 @@ void ScreenRenderer::Loop() {
   _screen.Loop(_textBox);
 }
 
+void ScreenRenderer::Exit() {
+  _screen.Exit();
+}
+
 void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {
   using namespace ftxui;
 

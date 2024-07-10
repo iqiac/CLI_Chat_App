@@ -10,13 +10,6 @@
 #include <memory>
 #include <thread>
 
-enum class Key {
-  Up,
-  Down,
-  Left,
-  Right,
-};
-
 class InputHandler : public IInputHandler {
 public:
   InputHandler(ITextBuffer& textBuffer, ICursorManager& cursorManager);
@@ -31,5 +24,5 @@ private:
   std::atomic<bool> _running;
   std::thread       _pollInputThread;
 
-  std::map<Key, std::unique_ptr<ICommand>> _cursorCommandMap;
+  std::map<std::string, std::unique_ptr<ICommand>> _commandMap;
 };

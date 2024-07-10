@@ -8,6 +8,7 @@ public:
   explicit ScreenAdapter(ftxui::ScreenInteractive& screen) : _screen(screen) {}
 
   void Loop(ftxui::Component component) override;
+  void Exit() override;
   void SetCursor(const ftxui::Screen::Cursor cursor) override;
   void PostEvent(const ftxui::Event event) override;
 

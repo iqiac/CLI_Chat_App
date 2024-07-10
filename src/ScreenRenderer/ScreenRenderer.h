@@ -14,6 +14,7 @@ public:
   void Update(const ISubject<std::vector<Line>>& subject) override;
   void Update(const ISubject<Position>& subject) override;
   void Loop() override;
+  void Exit() override;
 
 private:
   IScreen&         _screen;

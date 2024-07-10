@@ -11,13 +11,6 @@ void        EnableRawMode();
 void        DisableRawMode();
 std::string ReadInput();
 
-std::map<std::string, Key> inputKeyMap{
-    {"\x1b[A", Key::Up},
-    {"\x1b[B", Key::Down},
-    {"\x1b[C", Key::Right},
-    {"\x1b[D", Key::Left},
-};
-
 void EnableRawMode() {
   struct termios term;
   tcgetattr(STDIN_FILENO, &term);
@@ -55,10 +48,10 @@ InputHandler::InputHandler(ITextBuffer& textBuffer, ICursorManager& cursorManage
 _textBuffer(textBuffer),
 _cursorManager(cursorManager),
 _running(false) {
-  _cursorCommandMap[Key::Up]    = std::make_unique<MoveCursorUp>(_cursorManager);
-  _cursorCommandMap[Key::Down]  = std::make_unique<MoveCursorDown>(_cursorManager);
-  _cursorCommandMap[Key::Left]  = std::make_unique<MoveCursorLeft>(_cursorManager);
-  _cursorCommandMap[Key::Right] = std::make_unique<MoveCursorRight>(_cursorManager);
+  _commandMap["\x1b[A"] = std::make_unique<MoveCursorUp>(_cursorManager);
+  _commandMap["\x1b[B"] = std::make_unique<MoveCursorDown>(_cursorManager);
+  _commandMap["\x1b[D"] = std::make_unique<MoveCursorLeft>(_cursorManager);
+  _commandMap["\x1b[C"] = std::make_unique<MoveCursorRight>(_cursorManager);
 }
 
 void InputHandler::Start() {
@@ -80,11 +73,8 @@ void InputHandler::HandleInput() {
     if (input.empty()) {
       continue;
     }
-    if (!inputKeyMap.contains(input)) {
-      continue;
-    }
-    if (const auto key{inputKeyMap[input]}; _cursorCommandMap.contains(key)) {
-      _cursorCommandMap[key]->Execute();
+    if (_commandMap.contains(input)) {
+      _commandMap[input]->Execute();
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(pollingInterval_ms));
   }
