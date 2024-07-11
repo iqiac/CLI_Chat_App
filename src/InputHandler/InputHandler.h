@@ -1,28 +1,27 @@
 #pragma once
 
-#include "CommandPattern/ICommand.h"
-#include "CommonTypes.h"
-#include "ICursorManager.h"
 #include "IInputHandler.h"
-#include "ITextBuffer.h"
+#include "InputHandler/CommandPattern/ICommand.h"
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <thread>
 
+using CommandMap = std::map<std::string, std::function<std::unique_ptr<ICommand>()>>;
+
 class InputHandler : public IInputHandler {
 public:
-  InputHandler(ITextBuffer& textBuffer, ICursorManager& cursorManager);
+  InputHandler(CommandMap commandMap) : _commandMap{std::move(commandMap)}, _running{false} {}
+
   void Start() override;
   void Stop() override;
 
 private:
   void HandleInput() override;
 
-  ITextBuffer&      _textBuffer;
-  ICursorManager&   _cursorManager;
   std::atomic<bool> _running;
   std::thread       _pollInputThread;
 
-  std::map<std::string, std::unique_ptr<ICommand>> _commandMap;
+  CommandMap _commandMap;
 };

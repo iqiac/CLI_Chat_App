@@ -32,15 +32,29 @@ target_link_libraries(ScreenRenderer PUBLIC
   ftxui::screen
 )
 
-# Setup InputHandler
-add_library(InputHandler STATIC
-  InputHandler/InputHandler.cpp
-  InputHandler/CommandPattern/MoveCursorCommands.cpp
+# Setup CommandPattern
+add_library(CommandPattern STATIC
+InputHandler/CommandPattern/CommandCreator.cpp
+InputHandler/CommandPattern/MoveCursorCommands.cpp
 )
-target_include_directories(InputHandler PUBLIC
+target_include_directories(CommandPattern PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
   TextBuffer
   CursorManager
+  ScreenRenderer
+)
+target_link_libraries(CommandPattern PRIVATE
+  TextBuffer
+  CursorManager
+  ScreenRenderer
+)
+
+# Setup InputHandler
+add_library(InputHandler STATIC
+  InputHandler/InputHandler.cpp
+)
+target_include_directories(InputHandler PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Setup main executable
@@ -55,6 +69,7 @@ target_link_libraries(
   TextBuffer
   CursorManager
   ScreenRenderer
+  CommandPattern
   InputHandler
 )
 

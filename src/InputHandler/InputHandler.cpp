@@ -1,7 +1,5 @@
 #include "InputHandler.h"
 
-#include "CommandPattern/MoveCursorCommands.h"
-
 #include <chrono>
 #include <termios.h>
 #include <unistd.h>
@@ -44,16 +42,6 @@ std::string ReadInput() {
 }
 } // namespace
 
-InputHandler::InputHandler(ITextBuffer& textBuffer, ICursorManager& cursorManager) :
-_textBuffer(textBuffer),
-_cursorManager(cursorManager),
-_running(false) {
-  _commandMap["\x1b[A"] = std::make_unique<MoveCursorUp>(_cursorManager);
-  _commandMap["\x1b[B"] = std::make_unique<MoveCursorDown>(_cursorManager);
-  _commandMap["\x1b[D"] = std::make_unique<MoveCursorLeft>(_cursorManager);
-  _commandMap["\x1b[C"] = std::make_unique<MoveCursorRight>(_cursorManager);
-}
-
 void InputHandler::Start() {
   EnableRawMode();
   _running         = true;
@@ -74,7 +62,8 @@ void InputHandler::HandleInput() {
       continue;
     }
     if (_commandMap.contains(input)) {
-      _commandMap[input]->Execute();
+      const auto& command = _commandMap[input]();
+      command->Execute();
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(pollingInterval_ms));
   }
