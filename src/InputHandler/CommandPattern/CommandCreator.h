@@ -1,8 +1,8 @@
 #pragma once
 
+#include "ICommand.h"
 #include "ICursorManager.h"
 #include "ITextBuffer.h"
-#include "MoveCursorCommands.h"
 #include "ScreenRenderer.h"
 
 #include <functional>

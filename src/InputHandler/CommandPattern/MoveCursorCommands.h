@@ -5,8 +5,7 @@
 
 class MoveCursorUp : public ICommand {
 public:
-  MoveCursorUp(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
-
+  explicit MoveCursorUp(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
   void Execute() const override;
 
 private:
@@ -15,8 +14,7 @@ private:
 
 class MoveCursorDown : public ICommand {
 public:
-  MoveCursorDown(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
-
+  explicit MoveCursorDown(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
   void Execute() const override;
 
 private:
@@ -25,8 +23,7 @@ private:
 
 class MoveCursorLeft : public ICommand {
 public:
-  MoveCursorLeft(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
-
+  explicit MoveCursorLeft(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
   void Execute() const override;
 
 private:
@@ -35,8 +32,7 @@ private:
 
 class MoveCursorRight : public ICommand {
 public:
-  MoveCursorRight(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
-
+  explicit MoveCursorRight(ICursorManager& cursorManager) : _cursorManager(cursorManager) {}
   void Execute() const override;
 
 private:

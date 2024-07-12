@@ -34,8 +34,9 @@ target_link_libraries(ScreenRenderer PUBLIC
 
 # Setup CommandPattern
 add_library(CommandPattern STATIC
-InputHandler/CommandPattern/CommandCreator.cpp
-InputHandler/CommandPattern/MoveCursorCommands.cpp
+  InputHandler/CommandPattern/CommandCreator.cpp
+  InputHandler/CommandPattern/MoveCursorCommands.cpp
+  InputHandler/CommandPattern/EditorControlCommands.cpp
 )
 target_include_directories(CommandPattern PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
