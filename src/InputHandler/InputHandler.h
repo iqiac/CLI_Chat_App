@@ -3,6 +3,7 @@
 #include "IInputHandler.h"
 #include "InputHandler/CommandPattern/ICommand.h"
 
+#include <atomic>
 #include <functional>
 #include <map>
 #include <memory>
@@ -12,7 +13,7 @@ using CommandMap = std::map<std::string, std::function<std::unique_ptr<ICommand>
 
 class InputHandler : public IInputHandler {
 public:
-  InputHandler(CommandMap commandMap) : _commandMap{std::move(commandMap)}, _running{false} {}
+  InputHandler(CommandMap commandMap) : _commandMap{std::move(commandMap)}, _isRunning{false} {}
 
   void Start() override;
   void Stop() override;
@@ -20,7 +21,7 @@ public:
 private:
   void HandleInput() override;
 
-  std::atomic<bool> _running;
+  std::atomic<bool> _isRunning;
   std::thread       _pollInputThread;
 
   CommandMap _commandMap;

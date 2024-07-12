@@ -5,8 +5,8 @@
 
 class TextBuffer : public ITextBuffer, public ISubject<std::vector<Line>> {
 public:
-  TextBuffer();
-  explicit TextBuffer(const Line& line);
+  TextBuffer() : _allLines({""}) {}
+  explicit TextBuffer(const Line& line) : _allLines({line}) {}
   explicit TextBuffer(const std::vector<Line>& lines);
 
   void InsertText(const Position position, const std::string& text) override;

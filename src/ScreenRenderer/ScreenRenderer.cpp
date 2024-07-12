@@ -19,7 +19,7 @@ void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {
   auto        convert  = [](const Line& line) { return text(line); };
   auto        elements = Elements();
   std::transform(allLines.begin(), allLines.end(), std::back_inserter(elements), convert);
-  _textBox = CatchEvent(Renderer([elements] { return vbox(elements) | border; }), [](Event event) { return true; });
+  _textBox = Renderer([elements] { return vbox(elements) | border; });
 
   _screen.PostEvent(Event::Custom); // Request new frame to be drawn
 }

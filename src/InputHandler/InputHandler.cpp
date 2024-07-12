@@ -24,39 +24,34 @@ void DisableRawMode() {
 }
 
 std::string ReadInput() {
-  std::string inputSequence{};
-  char        c;
-  if (read(STDIN_FILENO, &c, 1) < 1) {
-    return inputSequence;
+  std::string inputSequence;
+  char        buffer[4];
+
+  ssize_t bytesRead = read(STDIN_FILENO, buffer, sizeof(buffer));
+  if (bytesRead == -1) {
+    return "";
   }
-  inputSequence += c;
-  if (c == '\x1b') { // Escape character
-    // Read the next two characters of the escape sequence
-    for (auto i = 0; i < 2; ++i) {
-      if (read(STDIN_FILENO, &c, 1) > 0) {
-        inputSequence += c;
-      }
-    }
-  }
+  inputSequence.append(buffer, bytesRead);
+
   return inputSequence;
 }
 } // namespace
 
 void InputHandler::Start() {
   EnableRawMode();
-  _running         = true;
+  _isRunning.store(true);
   _pollInputThread = std::thread(&InputHandler::HandleInput, this);
 }
 
 void InputHandler::Stop() {
-  _running = false;
+  _isRunning.store(false);
   _pollInputThread.join();
   DisableRawMode();
 }
 
 void InputHandler::HandleInput() {
-  const auto pollingInterval_ms{100};
-  while (_running) {
+  constexpr auto pollingInterval_ms{100};
+  while (_isRunning.load()) {
     const auto input{ReadInput()};
     if (input.empty()) {
       continue;

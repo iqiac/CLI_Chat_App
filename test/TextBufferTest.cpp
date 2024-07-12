@@ -157,7 +157,7 @@ TEST_F(TextBufferMultiLine, GetNumberOfLines_MultiLine_ReturnsCorrectNumberOfLin
 }
 
 TEST_F(TextBufferMultiLine, GetLineLength_MultiLineAndValidIndices_ReturnsCorrectValues) {
-  for (auto i{0}; i < textBuffer.GetNumberOfLines(); i++) {
+  for (auto i{0}; i < textBuffer.GetNumberOfLines(); ++i) {
     EXPECT_THAT(textBuffer.GetLineLength(i), Eq(lines.at(i).size()));
   }
 }

@@ -30,6 +30,7 @@ target_link_libraries(
   CursorManager
   ScreenRenderer
   InputHandler
+  CommandPattern
 )
 
 include(GoogleTest)

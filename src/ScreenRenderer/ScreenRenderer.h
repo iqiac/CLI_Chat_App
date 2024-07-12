@@ -5,8 +5,6 @@
 #include "IScreenRenderer.h"
 #include "ISubject.h"
 
-#include <iostream>
-
 class ScreenRenderer : public IScreenRenderer, public IObserver<std::vector<Line>>, public IObserver<Position> {
 public:
   explicit ScreenRenderer(IScreen& screen) : _screen(screen) {}

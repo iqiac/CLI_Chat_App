@@ -11,7 +11,7 @@ target_include_directories(TextBuffer PUBLIC
 add_library(CursorManager STATIC
   CursorManager/CursorManager.cpp
 )
-target_include_directories(CursorManager PUBLIC
+target_include_directories(CursorManager PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
   TextBuffer
@@ -22,7 +22,7 @@ add_library(ScreenRenderer STATIC
   ScreenRenderer/ScreenRenderer.cpp
   ScreenRenderer/ScreenAdapter.cpp
 )
-target_include_directories(ScreenRenderer PUBLIC
+target_include_directories(ScreenRenderer PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
 )
@@ -37,6 +37,7 @@ add_library(CommandPattern STATIC
   InputHandler/CommandPattern/CommandCreator.cpp
   InputHandler/CommandPattern/MoveCursorCommands.cpp
   InputHandler/CommandPattern/EditorControlCommands.cpp
+  InputHandler/CommandPattern/ModifyTextCommands.cpp
 )
 target_include_directories(CommandPattern PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
