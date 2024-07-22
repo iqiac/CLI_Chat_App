@@ -1,8 +1,6 @@
 #include "ScreenRenderer.h"
 
 #include <exception>
-#include <ftxui/component/component.hpp>
-#include <ftxui/dom/elements.hpp>
 
 void ScreenRenderer::Loop() {
   _screen.Loop(_textBox);
@@ -15,12 +13,7 @@ void ScreenRenderer::Exit() {
 void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {
   using namespace ftxui;
 
-  const auto& allLines = subject.GetData();
-  auto        convert  = [](const Line& line) { return text(line); };
-  auto        elements = Elements();
-  std::transform(allLines.begin(), allLines.end(), std::back_inserter(elements), convert);
-  _textBox = Renderer([elements] { return vbox(elements) | border; });
-
+  _allLines = subject.GetData();
   _screen.PostEvent(Event::Custom); // Request new frame to be drawn
 }
 
@@ -38,4 +31,12 @@ void ScreenRenderer::Update(const ISubject<Position>& subject) {
   _screen.SetCursor(cursor);
 
   _screen.PostEvent(Event::Custom); // Request new frame to be drawn
+}
+
+ftxui::Element ScreenRenderer::RenderText() const {
+  ftxui::Elements elements;
+  for (const auto& line : _allLines) {
+    elements.push_back(ftxui::text(line));
+  }
+  return ftxui::vbox(elements) | ftxui::border;
 }
