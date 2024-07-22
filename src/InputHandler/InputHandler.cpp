@@ -4,39 +4,6 @@
 #include <termios.h>
 #include <unistd.h>
 
-namespace {
-void        EnableRawMode();
-void        DisableRawMode();
-std::string ReadInput();
-
-void EnableRawMode() {
-  struct termios term;
-  tcgetattr(STDIN_FILENO, &term);
-  term.c_lflag &= ~(ICANON | ECHO);
-  tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
-
-void DisableRawMode() {
-  struct termios term;
-  tcgetattr(STDIN_FILENO, &term);
-  term.c_lflag |= ICANON | ECHO;
-  tcsetattr(STDIN_FILENO, TCSANOW, &term);
-}
-
-std::string ReadInput() {
-  std::string inputSequence;
-  char        buffer[4];
-
-  ssize_t bytesRead = read(STDIN_FILENO, buffer, sizeof(buffer));
-  if (bytesRead == -1) {
-    return "";
-  }
-  inputSequence.append(buffer, bytesRead);
-
-  return inputSequence;
-}
-} // namespace
-
 void InputHandler::Start() {
   EnableRawMode();
   _isRunning.store(true);
@@ -62,4 +29,30 @@ void InputHandler::HandleInput() {
     }
     std::this_thread::sleep_for(std::chrono::milliseconds(pollingInterval_ms));
   }
+}
+void InputHandler::EnableRawMode() {
+  struct termios term;
+  tcgetattr(STDIN_FILENO, &term);
+  term.c_lflag &= ~(ICANON | ECHO);
+  tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+void InputHandler::DisableRawMode() {
+  struct termios term;
+  tcgetattr(STDIN_FILENO, &term);
+  term.c_lflag |= ICANON | ECHO;
+  tcsetattr(STDIN_FILENO, TCSANOW, &term);
+}
+
+std::string InputHandler::ReadInput() {
+  std::string inputSequence;
+  char        buffer[4];
+
+  ssize_t bytesRead = read(STDIN_FILENO, buffer, sizeof(buffer));
+  if (bytesRead == -1) {
+    return "";
+  }
+  inputSequence.append(buffer, bytesRead);
+
+  return inputSequence;
 }

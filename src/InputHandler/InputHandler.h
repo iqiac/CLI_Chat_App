@@ -19,10 +19,12 @@ public:
   void Stop() override;
 
 private:
-  void HandleInput() override;
+  void        HandleInput() override;
+  void        EnableRawMode();
+  void        DisableRawMode();
+  std::string ReadInput();
 
   std::atomic<bool> _isRunning;
   std::thread       _pollInputThread;
-
-  CommandMap _commandMap;
+  CommandMap        _commandMap;
 };

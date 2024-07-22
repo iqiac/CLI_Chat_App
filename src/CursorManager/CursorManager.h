@@ -8,10 +8,10 @@ class CursorManager : public ICursorManager, public ISubject<Position> {
 public:
   explicit CursorManager(const ITextBuffer& textBuffer) : _textBuffer(textBuffer) {}
 
-  void MoveCursorUp() override;
-  void MoveCursorDown() override;
-  void MoveCursorLeft() override;
-  void MoveCursorRight() override;
+  void MoveCursorUp(const std::size_t amount = 1) override;
+  void MoveCursorDown(const std::size_t amount = 1) override;
+  void MoveCursorLeft(const std::size_t amount = 1) override;
+  void MoveCursorRight(const std::size_t amount = 1) override;
 
   void SetCursorPosition(const Position position) override;
 
