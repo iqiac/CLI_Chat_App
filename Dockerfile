@@ -16,6 +16,7 @@ RUN apt update && apt install -y \
   tree \
   gdb \
   clang-format \
+  clang-tidy \
   cppcheck \
   git
 

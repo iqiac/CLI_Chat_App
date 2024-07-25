@@ -6,9 +6,9 @@
 #include <unistd.h>
 
 namespace {
-void        EnableTerminalRawMode();
-void        DisableTerminalRawMode();
-std::string ReadInput();
+void                      EnableTerminalRawMode();
+void                      DisableTerminalRawMode();
+[[nodiscard]] std::string ReadInput();
 
 enum class TerminalMode {
   CANONICAL_MODE = ICANON, // Determines whether terminal input waits for newline

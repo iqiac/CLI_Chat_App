@@ -27,7 +27,7 @@ void CursorManager::MoveCursorRight(const std::size_t amount) {
 }
 
 void CursorManager::SetCursorPosition(const Position position) {
-  const auto& [rowIndex, colIndex]{position};
+  const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
 
   const auto numberOfLines{_textBuffer.GetNumberOfLines()};
   const auto validRowIndex{std::min(rowIndex, numberOfLines - 1)};
@@ -41,11 +41,11 @@ void CursorManager::SetCursorPosition(const Position position) {
   Notify();
 }
 
-Position CursorManager::GetCursorPosition() const {
+auto CursorManager::GetCursorPosition() const -> Position {
   return {_rowIndex, _colIndex};
 }
 
-Position CursorManager::GetData() const {
+auto CursorManager::GetData() const -> Position {
   return GetCursorPosition();
 }
 

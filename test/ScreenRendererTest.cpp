@@ -11,7 +11,7 @@ using namespace testing;
 class ScreenRendererTests : public Test {
 protected:
   const std::vector<Line> defaultLines{"Line1", "Line2", "Line3"};
-  const Position          defaultPosition{.rowIndex = 0, .colIndex = 0};
+  const Position          defaultPosition;
 
   const SubjectMock<std::vector<Line>> textBufferMock{};
   const SubjectMock<Position>          cursorManagerMock{};
@@ -35,7 +35,7 @@ TEST_F(ScreenRendererTests, Update_CallWithCursorManagerSubject_ScreenPostEventA
 }
 
 TEST_F(ScreenRendererTests, Update_CallWithCursorManagerSubjectAndValidPosition_ScreenPostEventAndSetCursorCalled) {
-  constexpr Position validPosition{.rowIndex = 1, .colIndex = 1};
+  const Position validPosition{1, 1};
   EXPECT_CALL(cursorManagerMock, GetData()).WillOnce(Return(validPosition));
   EXPECT_CALL(screenMock, SetCursor(_)).Times(1);
   EXPECT_CALL(screenMock, PostEvent(ftxui::Event::Custom)).Times(1);
@@ -45,7 +45,7 @@ TEST_F(ScreenRendererTests, Update_CallWithCursorManagerSubjectAndValidPosition_
 
 TEST_F(ScreenRendererTests, Update_CallWithCursorManagerMessageAndInvalidPosition_ThrowsException) {
   const Index    overflowValue{static_cast<std::size_t>(std::numeric_limits<int>::max()) + 1};
-  const Position invalidPosition{.rowIndex = overflowValue, .colIndex = overflowValue};
+  const Position invalidPosition{overflowValue, overflowValue};
   EXPECT_CALL(cursorManagerMock, GetData()).WillOnce(Return(invalidPosition));
   EXPECT_CALL(screenMock, SetCursor(_)).Times(0);
   EXPECT_CALL(screenMock, PostEvent(ftxui::Event::Custom)).Times(0);

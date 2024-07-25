@@ -10,7 +10,7 @@ TextBuffer::TextBuffer(const std::vector<Line>& lines) {
 }
 
 void TextBuffer::InsertText(const Position position, const std::string& text) {
-  const auto& [rowIndex, colIndex]{position};
+  const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
   InsertText(rowIndex, colIndex, text);
 }
 
@@ -20,7 +20,7 @@ void TextBuffer::InsertText(const Index rowIndex, const Index colIndex, const st
 }
 
 void TextBuffer::DeleteText(const Position position, const std::size_t length) {
-  const auto& [rowIndex, colIndex]{position};
+  const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
   DeleteText(rowIndex, colIndex, length);
 }
 
@@ -30,7 +30,7 @@ void TextBuffer::DeleteText(const Index rowIndex, const Index colIndex, const st
 }
 
 void TextBuffer::ReplaceText(const Position position, const std::size_t length, const std::string& text) {
-  const auto& [rowIndex, colIndex]{position};
+  const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
   ReplaceText(rowIndex, colIndex, length, text);
 }
 
@@ -67,7 +67,7 @@ std::size_t TextBuffer::GetLineLength(const Index rowIndex) const {
   return _allLines.at(rowIndex).size();
 }
 
-std::string TextBuffer::GetLine(const Index rowIndex) const {
+[[nodiscard]] Line TextBuffer::GetLine(const Index rowIndex) const {
   return _allLines.at(rowIndex);
 }
 
@@ -77,7 +77,7 @@ std::vector<Line> TextBuffer::GetAllLines() const {
 
 void TextBuffer::ClearAllLines() {
   _allLines.clear();
-  _allLines.push_back("");
+  _allLines.emplace_back("");
   Notify();
 }
 

@@ -104,7 +104,8 @@ TEST_F(TextBufferSingleLine, DeleteText_DeleteAtEnd_TextDeleted) {
 }
 
 TEST_F(TextBufferSingleLine, DeleteText_LengthGoesOutOfBounds_TextDeletedFromGivenPosition) {
-  constexpr auto colIndex{5}, length{200};
+  constexpr auto colIndex{5};
+  constexpr auto length{200};
 
   textBuffer.DeleteText({validRowIndex, colIndex}, length);
 
@@ -112,7 +113,8 @@ TEST_F(TextBufferSingleLine, DeleteText_LengthGoesOutOfBounds_TextDeletedFromGiv
 }
 
 TEST_F(TextBufferSingleLine, ReplaceText_ReplaceSubstring_SubstringReplaced) {
-  constexpr auto colIndex{1}, length{2};
+  constexpr auto colIndex{1};
+  constexpr auto length{2};
 
   textBuffer.ReplaceText({validRowIndex, colIndex}, length, line2);
 
@@ -132,7 +134,8 @@ TEST_F(TextBufferSingleLine, ReplaceText_ReplaceWholeString_StringReplaced) {
 }
 
 TEST_F(TextBufferSingleLine, ReplaceText_LengthGoesOutOfBounds_TextReplacedFromGivenPosition) {
-  const auto colIndex{3}, length{200};
+  constexpr auto colIndex{3};
+  constexpr auto length{200};
 
   textBuffer.ReplaceText({validRowIndex, colIndex}, length, line2);
 
@@ -163,7 +166,7 @@ TEST_F(TextBufferMultiLine, GetLineLength_MultiLineAndValidIndices_ReturnsCorrec
 }
 
 TEST_F(TextBufferMultiLine, GetLineLength_InvalidRowIndex_ThrowsException) {
-  EXPECT_THROW(textBuffer.GetLineLength(invalidRowIndex), std::out_of_range);
+  EXPECT_THROW(static_cast<void>(textBuffer.GetLineLength(invalidRowIndex)), std::out_of_range);
 }
 
 TEST_F(TextBufferMultiLine, GetLine_MultiLineAndValidIndex_ReturnsCorrectLine) {
@@ -171,7 +174,7 @@ TEST_F(TextBufferMultiLine, GetLine_MultiLineAndValidIndex_ReturnsCorrectLine) {
 }
 
 TEST_F(TextBufferMultiLine, GetLine_InvalidRowIndex_ThrowsException) {
-  EXPECT_THROW(textBuffer.GetLine(invalidRowIndex), std::out_of_range);
+  EXPECT_THROW(static_cast<void>(textBuffer.GetLine(invalidRowIndex)), std::out_of_range);
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InsertAtBeginning_LineInserted) {

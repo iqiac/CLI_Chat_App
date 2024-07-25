@@ -1,0 +1,13 @@
+Checks: '-*,
+        readability-*,
+        modernize-*,
+          -modernize-use-trailing-return-type,
+        # bugprone-*,
+        # clang-analyzer-*,
+        # concurrency-*,
+        # cppcoreguidelines-*,
+        # misc-*
+        '
+WarningsAsErrors: '*'
+HeaderFilterRegex: 'src/|test/'
+FormatStyle: none

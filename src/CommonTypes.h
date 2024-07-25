@@ -5,11 +5,26 @@
 using Line  = std::string;
 using Index = std::size_t;
 
-struct Position {
-  Index rowIndex;
-  Index colIndex;
+class Position {
+public:
+  Position() : _rowIndex(0), _colIndex(0) {}
+  Position(Index rowIndex, Index colIndex) : _rowIndex(rowIndex), _colIndex(colIndex) {}
 
-  bool operator==(const Position& other) const {
-    return (rowIndex == other.rowIndex && colIndex == other.colIndex);
+  [[nodiscard]] Index GetRowIndex() const {
+    return _rowIndex;
   }
+  [[nodiscard]] Index GetColIndex() const {
+    return _colIndex;
+  }
+
+  [[nodiscard]] std::pair<Index, Index> GetRowAndColIndices() const {
+    return {_rowIndex, _colIndex};
+  }
+  bool operator==(const Position& other) const {
+    return (_rowIndex == other._rowIndex && _colIndex == other._colIndex);
+  }
+
+private:
+  const Index _rowIndex;
+  const Index _colIndex;
 };
