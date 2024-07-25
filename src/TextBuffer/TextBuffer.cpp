@@ -43,13 +43,13 @@ void TextBuffer::InsertLine(const Index rowIndex, const Line& line) {
   if (rowIndex > _allLines.size()) {
     throw std::out_of_range("The row index must be in range.");
   }
-  const auto iterator{std::next(_allLines.begin(), rowIndex)};
+  const auto iterator{std::next(_allLines.begin(), static_cast<std::ptrdiff_t>(rowIndex))};
   _allLines.insert(iterator, line);
   Notify();
 }
 
 void TextBuffer::DeleteLine(const Index rowIndex) {
-  const auto iterator{std::next(_allLines.begin(), rowIndex)};
+  const auto iterator{std::next(_allLines.begin(), static_cast<std::ptrdiff_t>(rowIndex))};
   _allLines.erase(iterator);
   Notify();
 }
