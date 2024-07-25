@@ -16,14 +16,14 @@ enum class TerminalMode {
 };
 
 void ActivateTerminalMode(TerminalMode mode) {
-  struct termios term;
+  struct termios term {};
   tcgetattr(STDIN_FILENO, &term);
   term.c_lflag |= static_cast<int>(mode);
   tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 void DeactivateTerminalMode(TerminalMode mode) {
-  struct termios term;
+  struct termios term {};
   tcgetattr(STDIN_FILENO, &term);
   term.c_lflag &= ~static_cast<int>(mode);
   tcsetattr(STDIN_FILENO, TCSANOW, &term);

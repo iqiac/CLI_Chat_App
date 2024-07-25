@@ -25,6 +25,6 @@ public:
   }
 
 private:
-  const Index _rowIndex;
-  const Index _colIndex;
+  Index _rowIndex;
+  Index _colIndex;
 };

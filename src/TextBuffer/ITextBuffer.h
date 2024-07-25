@@ -6,7 +6,7 @@
 
 class ITextBuffer {
 public:
-  ~ITextBuffer() = default;
+  virtual ~ITextBuffer() = default;
 
   virtual void InsertText(Position position, const std::string& text)              = 0;
   virtual void InsertText(Index rowIndex, Index colIndex, const std::string& text) = 0;

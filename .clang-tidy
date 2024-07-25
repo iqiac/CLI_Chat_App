@@ -6,7 +6,11 @@ Checks: '-*,
           -bugprone-easily-swappable-parameters,
         # clang-analyzer-*,
         # concurrency-*,
-        # cppcoreguidelines-*,
+        cppcoreguidelines-*,
+          -cppcoreguidelines-avoid-const-or-ref-data-members,
+          -cppcoreguidelines-special-member-functions,
+          -cppcoreguidelines-non-private-member-variables-in-classes,
+          -cppcoreguidelines-pro-bounds-pointer-arithmetic,
         # misc-*
         '
 WarningsAsErrors: '*'
