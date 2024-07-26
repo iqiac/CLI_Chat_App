@@ -12,177 +12,177 @@ using namespace testing;
 
 class CursorManagerTests : public Test {
 protected:
-  const std::size_t numRows{20}, numCols{30};
-  const std::size_t validRowIndex{numRows / 2}, validColIndex{numCols / 2};
-  const std::size_t invalidRowIndex{numRows * 10}, invalidColIndex{numCols * 10};
+  const std::size_t _numRows{20}, _numCols{30};
+  const std::size_t _validRowIndex{_numRows / 2}, _validColIndex{_numCols / 2};
+  const std::size_t _invalidRowIndex{_numRows * 10}, _invalidColIndex{_numCols * 10};
 
-  const TextBufferMock textBufferMock{};
+  const TextBufferMock _textBufferMock{};
 
-  CursorManager cursorManager{textBufferMock};
+  CursorManager _cursorManager{_textBufferMock};
 
   void SetUp() override {
-    ON_CALL(textBufferMock, GetNumberOfLines()).WillByDefault(Return(numRows));
-    ON_CALL(textBufferMock, GetLineLength(_)).WillByDefault(Return(numCols));
+    ON_CALL(_textBufferMock, GetNumberOfLines()).WillByDefault(Return(_numRows));
+    ON_CALL(_textBufferMock, GetLineLength(_)).WillByDefault(Return(_numCols));
   }
 
   void TearDown() override {}
 };
 
 TEST_F(CursorManagerTests, GetPosition_InitialPosition_ReturnsZeroZero) {
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, 0));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(0, 0));
 }
 
 TEST_F(CursorManagerTests, SetPosition_ValidIndices_SetsPosition) {
-  EXPECT_CALL(textBufferMock, GetNumberOfLines()).Times(1);
-  EXPECT_CALL(textBufferMock, GetLineLength(_)).Times(1);
+  EXPECT_CALL(_textBufferMock, GetNumberOfLines()).Times(1);
+  EXPECT_CALL(_textBufferMock, GetLineLength(_)).Times(1);
 
-  cursorManager.SetCursorPosition({validRowIndex, validColIndex});
+  _cursorManager.SetCursorPosition({_validRowIndex, _validColIndex});
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex, validColIndex));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex, _validColIndex));
 }
 
 TEST_F(CursorManagerTests, SetPosition_OutOfBoundsRowIndex_PositionedAtLastRowIndex) {
-  cursorManager.SetCursorPosition({invalidRowIndex, validColIndex});
+  _cursorManager.SetCursorPosition({_invalidRowIndex, _validColIndex});
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(numRows - 1, validColIndex));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_numRows - 1, _validColIndex));
 }
 
 TEST_F(CursorManagerTests, SetPosition_OutOfBoundsColIndex_PositionedAtLineLengthIndex) {
-  cursorManager.SetCursorPosition({validRowIndex, invalidColIndex});
+  _cursorManager.SetCursorPosition({_validRowIndex, _invalidColIndex});
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex, numCols));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex, _numCols));
 }
 
 TEST_F(CursorManagerTests, SetPosition_OutOfBoundsRowAndColIndex_PositionedAtLastPossibleRowAndCol) {
-  cursorManager.SetCursorPosition({invalidRowIndex, invalidColIndex});
+  _cursorManager.SetCursorPosition({_invalidRowIndex, _invalidColIndex});
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(numRows - 1, numCols));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_numRows - 1, _numCols));
 }
 
 TEST_F(CursorManagerTests, MoveCursorUp_CursorIsAtFirstRow_RowIndexStays) {
-  cursorManager.SetCursorPosition({0, 0});
+  _cursorManager.SetCursorPosition({0, 0});
 
-  cursorManager.MoveCursorUp();
+  _cursorManager.MoveCursorUp();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, 0));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(0, 0));
 }
 
 TEST_F(CursorManagerTests, MoveCursorUp_CursorIsBelowFirstRow_RowIndexDecrements) {
-  cursorManager.SetCursorPosition({validRowIndex, 0});
+  _cursorManager.SetCursorPosition({_validRowIndex, 0});
 
-  cursorManager.MoveCursorUp();
+  _cursorManager.MoveCursorUp();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex - 1, 0));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex - 1, 0));
 }
 
 TEST_F(CursorManagerTests, MoveCursorUp_CursorAtEndAndAboveRowIsShorter_CursorIsAtEndOfAboveLine) {
-  cursorManager.SetCursorPosition({validRowIndex, numCols});
-  const auto aboveRowLength{numCols - 5};
-  EXPECT_CALL(textBufferMock, GetLineLength(_)).WillOnce(Return(aboveRowLength));
+  _cursorManager.SetCursorPosition({_validRowIndex, _numCols});
+  const auto aboveRowLength{_numCols - 5};
+  EXPECT_CALL(_textBufferMock, GetLineLength(_)).WillOnce(Return(aboveRowLength));
 
-  cursorManager.MoveCursorUp();
+  _cursorManager.MoveCursorUp();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex - 1, aboveRowLength));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex - 1, aboveRowLength));
 }
 
 TEST_F(CursorManagerTests, MoveCursorUp_CursorAtEndAndAboveRowIsLonger_CursorIsAtSameColIndexOnLineAbove) {
-  cursorManager.SetCursorPosition({validRowIndex, numCols});
-  const auto aboveRowLength{numCols + 5};
-  EXPECT_CALL(textBufferMock, GetLineLength(_)).WillOnce(Return(aboveRowLength));
+  _cursorManager.SetCursorPosition({_validRowIndex, _numCols});
+  const auto aboveRowLength{_numCols + 5};
+  EXPECT_CALL(_textBufferMock, GetLineLength(_)).WillOnce(Return(aboveRowLength));
 
-  cursorManager.MoveCursorUp();
+  _cursorManager.MoveCursorUp();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex - 1, numCols));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex - 1, _numCols));
 }
 
 TEST_F(CursorManagerTests, MoveCursorDown_CursorIsAtLastRow_RowIndexStays) {
-  cursorManager.SetCursorPosition({numRows - 1, 0});
-  EXPECT_CALL(textBufferMock, GetNumberOfLines()).Times(1);
+  _cursorManager.SetCursorPosition({_numRows - 1, 0});
+  EXPECT_CALL(_textBufferMock, GetNumberOfLines()).Times(1);
 
-  cursorManager.MoveCursorDown();
+  _cursorManager.MoveCursorDown();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(numRows - 1, 0));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_numRows - 1, 0));
 }
 
 TEST_F(CursorManagerTests, MoveCursorDown_CursorIsAboveLastRow_RowIndexIncrements) {
-  cursorManager.SetCursorPosition({validRowIndex, 0});
-  EXPECT_CALL(textBufferMock, GetNumberOfLines()).Times(1);
+  _cursorManager.SetCursorPosition({_validRowIndex, 0});
+  EXPECT_CALL(_textBufferMock, GetNumberOfLines()).Times(1);
 
-  cursorManager.MoveCursorDown();
+  _cursorManager.MoveCursorDown();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex + 1, 0));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex + 1, 0));
 }
 
 TEST_F(CursorManagerTests, MoveCursorDown_CursorAtEndAndBelowRowIsShorter_CursorIsAtEndOfBelowLine) {
-  cursorManager.SetCursorPosition({validRowIndex, numCols});
-  const auto belowRowLength{numCols - 5};
-  EXPECT_CALL(textBufferMock, GetNumberOfLines()).Times(1);
-  EXPECT_CALL(textBufferMock, GetLineLength(_)).WillOnce(Return(belowRowLength));
+  _cursorManager.SetCursorPosition({_validRowIndex, _numCols});
+  const auto belowRowLength{_numCols - 5};
+  EXPECT_CALL(_textBufferMock, GetNumberOfLines()).Times(1);
+  EXPECT_CALL(_textBufferMock, GetLineLength(_)).WillOnce(Return(belowRowLength));
 
-  cursorManager.MoveCursorDown();
+  _cursorManager.MoveCursorDown();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex + 1, belowRowLength));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex + 1, belowRowLength));
 }
 
 TEST_F(CursorManagerTests, MoveCursorDown_CursorAtEndAndBelowRowIsLonger_CursorIsAtSameColIndexOnLineBelow) {
-  cursorManager.SetCursorPosition({validRowIndex, numCols});
-  const auto belowRowLength{numCols + 5};
-  EXPECT_CALL(textBufferMock, GetNumberOfLines()).Times(1);
-  EXPECT_CALL(textBufferMock, GetLineLength(_)).WillOnce(Return(belowRowLength));
+  _cursorManager.SetCursorPosition({_validRowIndex, _numCols});
+  const auto belowRowLength{_numCols + 5};
+  EXPECT_CALL(_textBufferMock, GetNumberOfLines()).Times(1);
+  EXPECT_CALL(_textBufferMock, GetLineLength(_)).WillOnce(Return(belowRowLength));
 
-  cursorManager.MoveCursorDown();
+  _cursorManager.MoveCursorDown();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(validRowIndex + 1, numCols));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(_validRowIndex + 1, _numCols));
 }
 
 TEST_F(CursorManagerTests, MoveCursorLeft_CursorIsAtFirstColumn_ColIndexStays) {
-  cursorManager.SetCursorPosition({0, 0});
+  _cursorManager.SetCursorPosition({0, 0});
 
-  cursorManager.MoveCursorLeft();
+  _cursorManager.MoveCursorLeft();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, 0));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(0, 0));
 }
 
 TEST_F(CursorManagerTests, MoveCursorLeft_CursorIsAtRightOfFirstColumn_ColIndexDecrements) {
-  cursorManager.SetCursorPosition({0, validColIndex});
+  _cursorManager.SetCursorPosition({0, _validColIndex});
 
-  cursorManager.MoveCursorLeft();
+  _cursorManager.MoveCursorLeft();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, validColIndex - 1));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(0, _validColIndex - 1));
 }
 
 TEST_F(CursorManagerTests, MoveCursorRight_CursorIsAtLastColumn_ColIndexStays) {
-  cursorManager.SetCursorPosition({0, numCols});
-  EXPECT_CALL(textBufferMock, GetLineLength(_)).Times(1);
+  _cursorManager.SetCursorPosition({0, _numCols});
+  EXPECT_CALL(_textBufferMock, GetLineLength(_)).Times(1);
 
-  cursorManager.MoveCursorRight();
+  _cursorManager.MoveCursorRight();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, numCols));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(0, _numCols));
 }
 
 TEST_F(CursorManagerTests, MoveCursorRight_CursorIsAtLeftOfLastColumn_ColIndexIncrements) {
-  cursorManager.SetCursorPosition({0, validColIndex});
-  EXPECT_CALL(textBufferMock, GetLineLength(_)).Times(1);
+  _cursorManager.SetCursorPosition({0, _validColIndex});
+  EXPECT_CALL(_textBufferMock, GetLineLength(_)).Times(1);
 
-  cursorManager.MoveCursorRight();
+  _cursorManager.MoveCursorRight();
 
-  EXPECT_THAT(cursorManager.GetCursorPosition(), Position(0, validColIndex + 1));
+  EXPECT_THAT(_cursorManager.GetCursorPosition(), Position(0, _validColIndex + 1));
 }
 
 TEST_F(CursorManagerTests, Attach_Call_ObserverUpdateCalled) {
   auto observerMock{std::make_shared<ObserverMock<Position>>()};
   EXPECT_CALL(*observerMock, Update(_)).Times(1);
 
-  cursorManager.Attach(observerMock);
+  _cursorManager.Attach(observerMock);
 }
 
 TEST_F(CursorManagerTests, Notify_Call_AllObserverUpdateCalled) {
   auto observerMock1{std::make_shared<ObserverMock<Position>>()};
   auto observerMock2{std::make_shared<ObserverMock<Position>>()};
-  cursorManager.Attach(observerMock1);
-  cursorManager.Attach(observerMock2);
+  _cursorManager.Attach(observerMock1);
+  _cursorManager.Attach(observerMock2);
   EXPECT_CALL(*observerMock1, Update(_)).Times(1);
   EXPECT_CALL(*observerMock2, Update(_)).Times(1);
 
-  cursorManager.Notify();
+  _cursorManager.Notify();
 }

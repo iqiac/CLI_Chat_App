@@ -44,7 +44,7 @@ void DisableTerminalRawMode() {
 
 std::string ReadInput() {
   std::string         inputSequence;
-  std::array<char, 4> buffer;
+  std::array<char, 4> buffer{};
 
   const ssize_t bytesRead{read(STDIN_FILENO, buffer.data(), buffer.size())};
   if (constexpr auto readError{-1}; bytesRead == readError) {
