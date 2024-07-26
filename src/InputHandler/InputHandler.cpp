@@ -2,7 +2,10 @@
 
 #include <array>
 #include <chrono>
+#include <string>
+#include <sys/types.h>
 #include <termios.h>
+#include <thread>
 #include <unistd.h>
 
 namespace {

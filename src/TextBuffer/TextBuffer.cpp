@@ -1,6 +1,13 @@
 #include "TextBuffer.h"
 
+#include "CommonTypes.h"
+#include "ISubject.h"
+
+#include <cstddef>
+#include <iterator>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 TextBuffer::TextBuffer(const std::vector<Line>& lines) {
   if (lines.empty()) {

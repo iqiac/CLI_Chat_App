@@ -6,6 +6,12 @@
 #include "TextBuffer.h"
 
 #include <fstream>
+#include <ftxui/component/screen_interactive.hpp>
+#include <ftxui/screen/terminal.hpp>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
 
 int main(int argc, char* argv[]) {
   // Get filepath as argument
@@ -15,8 +21,8 @@ int main(int argc, char* argv[]) {
   }
 
   // Open file
-  std::string   filepath{argv[1]};
-  std::ifstream file(filepath);
+  const std::string filepath{argv[1]};
+  std::ifstream     file(filepath);
   if (!file.is_open()) {
     std::cerr << "Failed to open file: " << filepath << "\n";
     return 1;
@@ -42,8 +48,8 @@ int main(int argc, char* argv[]) {
   auto          screenRenderer{std::make_shared<ScreenRenderer>(screenAdapter)};
   textBuffer.Attach(screenRenderer);
   cursorManager.Attach(screenRenderer);
-  CommandCreator commandCreator{textBuffer, cursorManager, *screenRenderer};
-  InputHandler   inputHandler{commandCreator.GetCommandMap()};
+  const CommandCreator commandCreator{textBuffer, cursorManager, *screenRenderer};
+  InputHandler         inputHandler{commandCreator.GetCommandMap()};
 
   // Run TextEditor
   inputHandler.Start();

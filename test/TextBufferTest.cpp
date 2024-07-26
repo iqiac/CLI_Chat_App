@@ -1,10 +1,15 @@
 #include "TextBuffer.h"
 
+#include "CommonTypes.h"
 #include "Mocks/ObserverMock.h"
 
+#include <cstddef>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace testing;
 

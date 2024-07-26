@@ -3,8 +3,10 @@
 #include "Mocks/ObserverMock.h"
 #include "Mocks/TextBufferMock.h"
 
+#include <cstddef>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <memory>
 
 using namespace testing;
 

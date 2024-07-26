@@ -11,7 +11,8 @@ Checks: '-*,
           -cppcoreguidelines-special-member-functions,
           -cppcoreguidelines-non-private-member-variables-in-classes,
           -cppcoreguidelines-pro-bounds-pointer-arithmetic,
-        # misc-*
+        misc-*,
+          -misc-non-private-member-variables-in-classes,
         '
 WarningsAsErrors: '*'
 HeaderFilterRegex: 'src/|test/'

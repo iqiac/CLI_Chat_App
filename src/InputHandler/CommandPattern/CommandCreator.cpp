@@ -1,10 +1,16 @@
 #include "CommandCreator.h"
 
 #include "EditorControlCommands.h"
+#include "ICursorManager.h"
+#include "ITextBuffer.h"
 #include "ModifyTextCommands.h"
 #include "MoveCursorCommands.h"
+#include "ScreenRenderer.h"
 
+#include <memory>
 #include <numeric>
+#include <string>
+#include <vector>
 
 CommandCreator::CommandCreator(ITextBuffer& textBuffer, ICursorManager& cursorManager, ScreenRenderer& screenRenderer) :
 _commandMap({}) {

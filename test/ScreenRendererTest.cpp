@@ -1,10 +1,15 @@
 #include "ScreenRenderer.h"
 
+#include "CommonTypes.h"
 #include "Mocks/ScreenMock.h"
 #include "Mocks/SubjectMock.h"
 
+#include <cstddef>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <limits>
+#include <stdexcept>
+#include <vector>
 
 using namespace testing;
 

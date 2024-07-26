@@ -1,6 +1,13 @@
 #include "ScreenRenderer.h"
 
-#include <exception>
+#include "CommonTypes.h"
+#include "ISubject.h"
+
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/screen/screen.hpp>
+#include <limits>
+#include <stdexcept>
+#include <vector>
 
 void ScreenRenderer::Loop() {
   _screen.Loop(_textBox);

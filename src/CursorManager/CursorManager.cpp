@@ -1,5 +1,10 @@
 #include "CursorManager.h"
 
+#include "ISubject.h"
+
+#include <algorithm>
+#include <cstddef>
+
 void CursorManager::MoveCursorUp(const std::size_t amount) {
   if (amount > _rowIndex) {
     SetCursorPosition({0, _colIndex});
