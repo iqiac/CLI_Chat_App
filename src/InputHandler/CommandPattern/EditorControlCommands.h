@@ -1,13 +1,13 @@
 #pragma once
 
 #include "ICommand.h"
-#include "ScreenRenderer.h"
+#include "IScreenRenderer.h"
 
 class ExitEditor : public ICommand {
 public:
-  explicit ExitEditor(ScreenRenderer& screenRenderer) : _screenRenderer(screenRenderer) {}
+  explicit ExitEditor(IScreenRenderer& screenRenderer) : _screenRenderer(screenRenderer) {}
   void Execute() const override;
 
 private:
-  ScreenRenderer& _screenRenderer;
+  IScreenRenderer& _screenRenderer;
 };
