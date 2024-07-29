@@ -5,35 +5,38 @@ This project is for practicing and enhancing software skills in modern C++, TDD,
 - Language: C++
 - Unit Testing Framework: GoogleTest
 
-## Possible Process for MVP (AI generated)
-### 1. Core Components:
-  - Text Buffer: This is where the text content is stored. It should support operations like insert, delete, and update text.
-  - Cursor Management: Manages the position of the cursor in the text buffer. It should allow moving the cursor up, down, left, and right.
-  - Command Processing: Interprets user input as commands. Commands could include opening a file, saving a file, moving the cursor, inserting text, etc.
-  - Screen Rendering: Updates the terminal display to reflect the current state of the text buffer and cursor position.
-### 2. Basic Features:
-  - Opening and Saving Files: Allow users to open existing files and save their work.
-  - Cursor Movement: Implement navigation keys for moving the cursor within the text.
-  - Editing Text: Support for inserting and deleting text at the cursor's position.
-  - Command Mode: A mode for entering commands, separate from the text editing mode.
-### 3. Development Steps:
-  - Design and Plan: Outline the architecture and functionality of your text editor. Decide on the design patterns and data structures to use.
-  - Implement Core Components: Start by implementing the core components like the text buffer, cursor management, and command processing.
-  - Develop Basic Features: Implement the basic features like file handling, cursor movement, and text editing.
-  - Testing: Write unit tests for each component and feature to ensure they work as expected.
-  - Iterate and Refine: Based on testing feedback, iterate and refine your implementation. Add new features and improve existing ones.
-### 4. Tools and Libraries:
-  - CMake: For managing the build process and dependencies.
-  - GoogleTest: For writing and running unit tests.
-  - Docker: For creating a consistent development environment.
-  - NCURSES: A library for creating text-based user interfaces in a terminal. It's crucial for rendering the text editor in a terminal.
-### 5. Design Patterns:
-  - Command Pattern: Use the Command pattern for implementing undo/redo functionality and handling user commands.
-  - Observer Pattern: Use the Observer pattern to notify the screen rendering component of changes in the text buffer or cursor position.
-### 6. Modern C++ Practices:
-  - Utilize modern C++ features like smart pointers, range-based for loops, and STL containers.
-  - Follow Object-Oriented Programming (OOP) principles to structure your code.
-### 7. Final Steps:
-  - User Interface: Enhance the text editor with a more user-friendly interface, including status bars, menus, or command line prompts.
-  - Advanced Features: Consider adding more advanced features like syntax highlighting, auto-completion, and custom commands.
-  - Documentation: Write documentation for your text editor, including usage instructions and API documentation.
+## Core Components:
+- Text Buffer: This is where the text content is stored.
+- Cursor Management: Manages the position of the cursor in the text buffer.
+- Input Handling: Interprets user input as commands.
+- Screen Rendering: Updates the terminal display to reflect the current state of the text buffer and cursor position.
+
+## Applied Technologies and Methodologies
+### Design Patterns
+- Observer Pattern: To implement the communication between `TextBuffer`, `CursorManager` and `ScreenRenderer`.
+- Command Pattern: To make the commands scalable without modifying `InputHandler`.
+- Adapter Pattern: To be able to replace the 3rd party renderering library without modifying `ScreenRenderer` too much.
+### C++
+- Abstract Classes & Interfaces: For SOLID principles and to enhance testability.
+- Templates: To ease the implementation of Observer Pattern
+- Smart Pointers: For automatic resource management
+- Multithreading: To run the rendering of the screen and the detection of user input.
+### Unit-Testing
+- TDD, GoogleTest, GoogleMock, Arrange-Act-Assert Pattern
+### Build & Code Quality Tools
+- CMake, CMake Presets, Clang-Format, Clang-Tidy
+### Environemnt Management Tools
+- Docker, Docker Compose, Dev Container
+### Continuous Integration
+- Github Actions
+
+## Learnings & Possible Improvements
+- Separating test and source files enables cleaner project structure, but introduces a small navigation overhead when practicing TDD.
+- Thinking about SOLID principles really helps designing a class, improving testability, and decoupling objects
+- Should have integrated clang-tidy and GithubActions at beginning of the project.
+- Dev Container for development is very handy
+- Design patterns are very useful for many problems. Problems probably can be solved without such patterns, but then the code quality is likely to suffer.
+- It is intuitive to implement one component after another, but it might have turned out qualitatively better, if I did slices across all components (agile development).
+- Smart Pointers for heap allocated objects and references for stack-allocated
+- At least one more abstraction layer between main function and text editor application. Could create a class TextEditor containing the components, instead of putting everything together in the main function (Facade pattern).
+- A configuration file to specify e.g. if it has border, uses Mouse tracking, etc.
