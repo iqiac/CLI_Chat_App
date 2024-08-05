@@ -5,26 +5,20 @@
 
 #include <atomic>
 #include <functional>
-#include <map>
 #include <memory>
 #include <thread>
 
-using CommandMap = std::map<std::string, std::function<std::unique_ptr<ICommand>()>>;
-
 class InputHandler : public IInputHandler {
 public:
-  InputHandler(CommandMap commandMap) : _commandMap{std::move(commandMap)}, _isRunning{false} {}
+  InputHandler(CommandPattern::CommandMap commandMap) : _commandMap{std::move(commandMap)}, _isRunning{false} {}
 
   void Start() override;
   void Stop() override;
 
 private:
-  void        HandleInput() override;
-  void        EnableRawMode();
-  void        DisableRawMode();
-  std::string ReadInput();
+  void HandleInput() override;
 
-  std::atomic<bool> _isRunning;
-  std::thread       _pollInputThread;
-  CommandMap        _commandMap;
+  std::atomic<bool>          _isRunning;
+  std::thread                _pollInputThread;
+  CommandPattern::CommandMap _commandMap;
 };

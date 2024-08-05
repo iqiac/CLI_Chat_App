@@ -34,6 +34,6 @@ _commandMap({}) {
   }
 }
 
-CommandMap CommandCreator::GetCommandMap() {
+CommandPattern::CommandMap CommandCreator::GetCommandMap() {
   return _commandMap;
 }

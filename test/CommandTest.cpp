@@ -64,6 +64,7 @@ TEST_F(CommandTest, ExecuteExitEditor_Call_CorrectFunctionsCalled) {
 TEST_F(CommandTest, ExecuteInsertText_Call_CorrectFunctionsCalled) {
   const InsertText command{textBufferMock, cursorManagerMock, arbitraryText};
   EXPECT_CALL(textBufferMock, InsertText(arbitraryPosition, arbitraryText)).Times(1);
+  EXPECT_CALL(cursorManagerMock, MoveCursorRight(arbitraryText.size())).Times(1);
 
   command.Execute();
 }
