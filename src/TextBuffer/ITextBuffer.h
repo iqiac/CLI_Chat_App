@@ -6,24 +6,24 @@
 
 class ITextBuffer {
 public:
-  ~ITextBuffer() = default;
+  virtual ~ITextBuffer() = default;
 
-  virtual void InsertText(const Position position, const std::string& text)                    = 0;
-  virtual void InsertText(const Index rowIndex, const Index colIndex, const std::string& text) = 0;
+  virtual void InsertText(Position position, const std::string& text)              = 0;
+  virtual void InsertText(Index rowIndex, Index colIndex, const std::string& text) = 0;
 
-  virtual void DeleteText(const Position position, const std::size_t length)                    = 0;
-  virtual void DeleteText(const Index rowIndex, const Index colIndex, const std::size_t length) = 0;
+  virtual void DeleteText(Position position, std::size_t length)              = 0;
+  virtual void DeleteText(Index rowIndex, Index colIndex, std::size_t length) = 0;
 
-  virtual void ReplaceText(const Position position, const std::size_t length, const std::string& text) = 0;
-  virtual void ReplaceText(const Index rowIndex, const Index colIndex, const std::size_t length, const std::string& text) = 0;
+  virtual void ReplaceText(Position position, std::size_t length, const std::string& text)              = 0;
+  virtual void ReplaceText(Index rowIndex, Index colIndex, std::size_t length, const std::string& text) = 0;
 
-  virtual void InsertLine(const Index rowIndex, const Line& line)  = 0;
-  virtual void DeleteLine(const Index rowIndex)                    = 0;
-  virtual void ReplaceLine(const Index rowIndex, const Line& line) = 0;
+  virtual void InsertLine(Index rowIndex, const Line& line)  = 0;
+  virtual void DeleteLine(Index rowIndex)                    = 0;
+  virtual void ReplaceLine(Index rowIndex, const Line& line) = 0;
 
-  virtual std::size_t       GetNumberOfLines() const                  = 0;
-  virtual std::size_t       GetLineLength(const Index rowIndex) const = 0;
-  virtual Line              GetLine(const Index rowIndex) const       = 0;
-  virtual std::vector<Line> GetAllLines() const                       = 0;
-  virtual void              ClearAllLines()                           = 0;
+  [[nodiscard]] virtual std::size_t       GetNumberOfLines() const            = 0;
+  [[nodiscard]] virtual std::size_t       GetLineLength(Index rowIndex) const = 0;
+  [[nodiscard]] virtual Line              GetLine(Index rowIndex) const       = 0;
+  [[nodiscard]] virtual std::vector<Line> GetAllLines() const                 = 0;
+  virtual void                            ClearAllLines()                     = 0;
 };

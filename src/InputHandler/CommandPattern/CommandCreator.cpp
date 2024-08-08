@@ -1,11 +1,17 @@
 #include "CommandCreator.h"
 
 #include "EditorControlCommands.h"
+#include "ICursorManager.h"
+#include "ITextBuffer.h"
 #include "ModifyTextCommands.h"
 #include "MoveCursorCommands.h"
+#include "ScreenRenderer.h"
 
+#include <memory>
 #include <numeric>
-#include <typeinfo>
+#include <string>
+#include <vector>
+
 CommandCreator::CommandCreator(ITextBuffer& textBuffer, ICursorManager& cursorManager, ScreenRenderer& screenRenderer) :
 _commandMap({}) {
   // Cursor movement commands
@@ -18,10 +24,14 @@ _commandMap({}) {
   _commandMap["\033"] = [&screenRenderer] { return std::make_unique<ExitEditor>(screenRenderer); };
 
   // Text modification commands
-  constexpr auto    alphabetSize{26};
-  std::vector<char> alphabetUpperCase(alphabetSize), alphabetLowerCase(alphabetSize);
+  constexpr auto alphabetSize{26};
+
+  std::vector<char> alphabetUpperCase(alphabetSize);
   std::iota(alphabetUpperCase.begin(), alphabetUpperCase.end(), 'A');
+
+  std::vector<char> alphabetLowerCase(alphabetSize);
   std::iota(alphabetLowerCase.begin(), alphabetLowerCase.end(), 'a');
+
   for (auto i{0}; i < alphabetSize; ++i) {
     const std::string upperCase{alphabetUpperCase[i]};
     const std::string lowerCase{alphabetLowerCase[i]};
@@ -34,6 +44,6 @@ _commandMap({}) {
   }
 }
 
-CommandPattern::CommandMap CommandCreator::GetCommandMap() {
+CommandPattern::CommandMap CommandCreator::GetCommandMap() const {
   return _commandMap;
 }

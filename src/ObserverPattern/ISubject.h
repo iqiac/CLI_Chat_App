@@ -26,7 +26,7 @@ public:
     }
   }
 
-  virtual T GetData() const = 0;
+  [[nodiscard]] virtual T GetData() const = 0;
 
 protected:
   std::set<std::shared_ptr<IObserver<T>>> _observers;

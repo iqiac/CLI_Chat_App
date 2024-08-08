@@ -1,6 +1,13 @@
 #include "ScreenRenderer.h"
 
-#include <exception>
+#include "CommonTypes.h"
+#include "ISubject.h"
+
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/screen/screen.hpp>
+#include <limits>
+#include <stdexcept>
+#include <vector>
 
 void ScreenRenderer::Loop() {
   _screen.Loop(_textBox);
@@ -20,7 +27,7 @@ void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {
 void ScreenRenderer::Update(const ISubject<Position>& subject) {
   using namespace ftxui;
 
-  const auto& [rowIndex, colIndex]{subject.GetData()};
+  const auto& [rowIndex, colIndex]{subject.GetData().GetRowAndColIndices()};
   if (rowIndex > std::numeric_limits<int>::max() || colIndex > std::numeric_limits<int>::max()) {
     throw std::overflow_error("Conversion would cause overflow");
   }
@@ -33,7 +40,7 @@ void ScreenRenderer::Update(const ISubject<Position>& subject) {
   _screen.PostEvent(Event::Custom); // Request new frame to be drawn
 }
 
-ftxui::Element ScreenRenderer::RenderText() const {
+[[nodiscard]] ftxui::Element ScreenRenderer::RenderText() const {
   ftxui::Elements elements;
   for (const auto& line : _allLines) {
     elements.push_back(ftxui::text(line));

@@ -2,13 +2,16 @@
 
 #include <array>
 #include <chrono>
+#include <string>
+#include <sys/types.h>
 #include <termios.h>
+#include <thread>
 #include <unistd.h>
 
 namespace {
-void        EnableTerminalRawMode();
-void        DisableTerminalRawMode();
-std::string ReadInput();
+void                      EnableTerminalRawMode();
+void                      DisableTerminalRawMode();
+[[nodiscard]] std::string ReadInput();
 
 enum class TerminalMode {
   CANONICAL_MODE = ICANON, // Determines whether terminal input waits for newline
@@ -16,14 +19,14 @@ enum class TerminalMode {
 };
 
 void ActivateTerminalMode(TerminalMode mode) {
-  struct termios term;
+  struct termios term {};
   tcgetattr(STDIN_FILENO, &term);
   term.c_lflag |= static_cast<int>(mode);
   tcsetattr(STDIN_FILENO, TCSANOW, &term);
 }
 
 void DeactivateTerminalMode(TerminalMode mode) {
-  struct termios term;
+  struct termios term {};
   tcgetattr(STDIN_FILENO, &term);
   term.c_lflag &= ~static_cast<int>(mode);
   tcsetattr(STDIN_FILENO, TCSANOW, &term);
@@ -41,7 +44,7 @@ void DisableTerminalRawMode() {
 
 std::string ReadInput() {
   std::string         inputSequence;
-  std::array<char, 4> buffer;
+  std::array<char, 4> buffer{};
 
   const ssize_t bytesRead{read(STDIN_FILENO, buffer.data(), buffer.size())};
   if (constexpr auto readError{-1}; bytesRead == readError) {

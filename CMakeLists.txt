@@ -44,11 +44,21 @@ FetchContent_Declare(ftxui
 )
 FetchContent_MakeAvailable(ftxui)
 
+# Enable clang-tidy
+find_program(clangtidy NAMES "clang-tidy")
+if(clangtidy)
+  set(CMAKE_CXX_CLANG_TIDY ${clangtidy} "--config-file=${CMAKE_SOURCE_DIR}/.clang-tidy")
+  message(STATUS "Using ${clangtidy}")
+else()
+  message(NOTICE "${clangtidy} not found")
+endif(clangtidy)
+
 # Add compile options
 add_compile_options(
   -std=c++20
   -Werror
 )
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # Process subdirectories
 add_subdirectory(src)

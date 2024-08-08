@@ -12,7 +12,7 @@ class CommandCreator {
 public:
   CommandCreator(ITextBuffer& textBuffer, ICursorManager& cursorManager, ScreenRenderer& screenRenderer);
 
-  CommandPattern::CommandMap GetCommandMap();
+  [[nodiscard]] CommandPattern::CommandMap GetCommandMap() const;
 
 private:
   CommandPattern::CommandMap _commandMap;

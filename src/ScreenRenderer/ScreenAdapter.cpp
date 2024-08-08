@@ -1,5 +1,8 @@
 #include "ScreenAdapter.h"
 
+#include <ftxui/component/component_base.hpp>
+#include <ftxui/screen/screen.hpp>
+
 void ScreenAdapter::Loop(ftxui::Component component) {
   _screen.Loop(component);
 }

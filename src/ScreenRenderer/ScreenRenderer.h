@@ -20,7 +20,7 @@ public:
   void Exit() override;
 
 private:
-  ftxui::Element RenderText() const;
+  [[nodiscard]] ftxui::Element RenderText() const;
 
   IScreen&          _screen;
   ftxui::Component  _textBox;

@@ -1,6 +1,13 @@
 #include "TextBuffer.h"
 
+#include "CommonTypes.h"
+#include "ISubject.h"
+
+#include <cstddef>
+#include <iterator>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 TextBuffer::TextBuffer(const std::vector<Line>& lines) {
   if (lines.empty()) {
@@ -10,7 +17,7 @@ TextBuffer::TextBuffer(const std::vector<Line>& lines) {
 }
 
 void TextBuffer::InsertText(const Position position, const std::string& text) {
-  const auto& [rowIndex, colIndex]{position};
+  const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
   InsertText(rowIndex, colIndex, text);
 }
 
@@ -20,7 +27,7 @@ void TextBuffer::InsertText(const Index rowIndex, const Index colIndex, const st
 }
 
 void TextBuffer::DeleteText(const Position position, const std::size_t length) {
-  const auto& [rowIndex, colIndex]{position};
+  const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
   DeleteText(rowIndex, colIndex, length);
 }
 
@@ -30,7 +37,7 @@ void TextBuffer::DeleteText(const Index rowIndex, const Index colIndex, const st
 }
 
 void TextBuffer::ReplaceText(const Position position, const std::size_t length, const std::string& text) {
-  const auto& [rowIndex, colIndex]{position};
+  const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
   ReplaceText(rowIndex, colIndex, length, text);
 }
 
@@ -43,13 +50,13 @@ void TextBuffer::InsertLine(const Index rowIndex, const Line& line) {
   if (rowIndex > _allLines.size()) {
     throw std::out_of_range("The row index must be in range.");
   }
-  const auto iterator{std::next(_allLines.begin(), rowIndex)};
+  const auto iterator{std::next(_allLines.begin(), static_cast<std::ptrdiff_t>(rowIndex))};
   _allLines.insert(iterator, line);
   Notify();
 }
 
 void TextBuffer::DeleteLine(const Index rowIndex) {
-  const auto iterator{std::next(_allLines.begin(), rowIndex)};
+  const auto iterator{std::next(_allLines.begin(), static_cast<std::ptrdiff_t>(rowIndex))};
   _allLines.erase(iterator);
   Notify();
 }
@@ -67,7 +74,7 @@ std::size_t TextBuffer::GetLineLength(const Index rowIndex) const {
   return _allLines.at(rowIndex).size();
 }
 
-std::string TextBuffer::GetLine(const Index rowIndex) const {
+[[nodiscard]] Line TextBuffer::GetLine(const Index rowIndex) const {
   return _allLines.at(rowIndex);
 }
 
@@ -77,7 +84,7 @@ std::vector<Line> TextBuffer::GetAllLines() const {
 
 void TextBuffer::ClearAllLines() {
   _allLines.clear();
-  _allLines.push_back("");
+  _allLines.emplace_back("");
   Notify();
 }
 

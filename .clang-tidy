@@ -1,0 +1,28 @@
+CheckOptions:
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: '_'
+  - key: readability-identifier-naming.ProtectedMemberPrefix
+    value: '_'
+Checks: '-*,
+        readability-*,
+        modernize-*,
+          -modernize-use-trailing-return-type,
+        bugprone-*,
+          -bugprone-easily-swappable-parameters,
+        clang-analyzer-*,
+        concurrency-*,
+        cppcoreguidelines-*,
+          -cppcoreguidelines-avoid-const-or-ref-data-members,
+          -cppcoreguidelines-special-member-functions,
+          -cppcoreguidelines-non-private-member-variables-in-classes,
+          -cppcoreguidelines-pro-bounds-pointer-arithmetic,
+        misc-*,
+          -misc-non-private-member-variables-in-classes,
+        '
+FormatStyle: file
+HeaderFileExtensions: ['h']
+HeaderFilterRegex: 'src/|test/'
+ImplementationFileExtensions: ['cpp']
+SystemHeaders: false
+UseColor: true
+WarningsAsErrors: '*'

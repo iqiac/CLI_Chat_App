@@ -1,10 +1,15 @@
 #include "TextBuffer.h"
 
+#include "CommonTypes.h"
 #include "Mocks/ObserverMock.h"
 
+#include <cstddef>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
+#include <memory>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace testing;
 
@@ -60,63 +65,65 @@ TEST(TextBufferSubject, Notify_Call_AllObserverUpdateCalled) {
 
 class TextBufferSingleLine : public Test {
 protected:
-  const std::size_t validRowIndex{0}, invalidRowIndex{200};
-  TextBuffer        textBuffer{line1};
+  const std::size_t _validRowIndex{0}, _invalidRowIndex{200};
+  TextBuffer        _textBuffer{line1};
 };
 
 TEST_F(TextBufferSingleLine, InsertText_InsertAtBeginning_TextInserted) {
-  textBuffer.InsertText({validRowIndex, 0}, line2);
+  _textBuffer.InsertText({_validRowIndex, 0}, line2);
 
-  EXPECT_THAT(textBuffer.GetLine(validRowIndex), StrEq(line2 + line1));
+  EXPECT_THAT(_textBuffer.GetLine(_validRowIndex), StrEq(line2 + line1));
 }
 
 TEST_F(TextBufferSingleLine, InsertText_InsertAtEnd_TextInserted) {
-  const auto colIndex{textBuffer.GetLineLength(validRowIndex)};
+  const auto colIndex{_textBuffer.GetLineLength(_validRowIndex)};
 
-  textBuffer.InsertText({validRowIndex, colIndex}, line2);
+  _textBuffer.InsertText({_validRowIndex, colIndex}, line2);
 
-  EXPECT_THAT(textBuffer.GetLine(validRowIndex), StrEq(line1 + line2));
+  EXPECT_THAT(_textBuffer.GetLine(_validRowIndex), StrEq(line1 + line2));
 }
 
 TEST_F(TextBufferSingleLine, InsertText_RowIndexGoesOutOfBounds_ThrowsException) {
-  EXPECT_THROW(textBuffer.InsertText({invalidRowIndex, 0}, line2), std::out_of_range);
+  EXPECT_THROW(_textBuffer.InsertText({_invalidRowIndex, 0}, line2), std::out_of_range);
 }
 
 TEST_F(TextBufferSingleLine, InsertText_ColIndexGoesOutOfBounds_ThrowsException) {
-  EXPECT_THROW(textBuffer.InsertText({validRowIndex, 200}, line2), std::out_of_range);
+  EXPECT_THROW(_textBuffer.InsertText({_validRowIndex, 200}, line2), std::out_of_range);
 }
 
 TEST_F(TextBufferSingleLine, DeleteText_DeleteAtBeginning_TextDeleted) {
   constexpr auto length{2};
 
-  textBuffer.DeleteText({validRowIndex, 0}, length);
+  _textBuffer.DeleteText({_validRowIndex, 0}, length);
 
-  EXPECT_THAT(textBuffer.GetLine(validRowIndex), StrEq(line1.substr(length)));
+  EXPECT_THAT(_textBuffer.GetLine(_validRowIndex), StrEq(line1.substr(length)));
 }
 
 TEST_F(TextBufferSingleLine, DeleteText_DeleteAtEnd_TextDeleted) {
   constexpr auto length{2};
-  const auto     colIndex{textBuffer.GetLineLength(validRowIndex)};
+  const auto     colIndex{_textBuffer.GetLineLength(_validRowIndex)};
 
-  textBuffer.DeleteText({validRowIndex, colIndex}, length);
+  _textBuffer.DeleteText({_validRowIndex, colIndex}, length);
 
-  EXPECT_THAT(textBuffer.GetLine(validRowIndex), StrEq(line1));
+  EXPECT_THAT(_textBuffer.GetLine(_validRowIndex), StrEq(line1));
 }
 
 TEST_F(TextBufferSingleLine, DeleteText_LengthGoesOutOfBounds_TextDeletedFromGivenPosition) {
-  constexpr auto colIndex{5}, length{200};
+  constexpr auto colIndex{5};
+  constexpr auto length{200};
 
-  textBuffer.DeleteText({validRowIndex, colIndex}, length);
+  _textBuffer.DeleteText({_validRowIndex, colIndex}, length);
 
-  EXPECT_THAT(textBuffer.GetLine(validRowIndex), StrEq(line1.substr(0, colIndex)));
+  EXPECT_THAT(_textBuffer.GetLine(_validRowIndex), StrEq(line1.substr(0, colIndex)));
 }
 
 TEST_F(TextBufferSingleLine, ReplaceText_ReplaceSubstring_SubstringReplaced) {
-  constexpr auto colIndex{1}, length{2};
+  constexpr auto colIndex{1};
+  constexpr auto length{2};
 
-  textBuffer.ReplaceText({validRowIndex, colIndex}, length, line2);
+  _textBuffer.ReplaceText({_validRowIndex, colIndex}, length, line2);
 
-  const auto actualLine{textBuffer.GetLine(validRowIndex)};
+  const auto actualLine{_textBuffer.GetLine(_validRowIndex)};
   EXPECT_THAT(actualLine, StartsWith(line1.substr(0, colIndex)));
   EXPECT_THAT(actualLine, HasSubstr(line2));
   EXPECT_THAT(actualLine, EndsWith(line1.substr(colIndex + length)));
@@ -124,115 +131,116 @@ TEST_F(TextBufferSingleLine, ReplaceText_ReplaceSubstring_SubstringReplaced) {
 
 TEST_F(TextBufferSingleLine, ReplaceText_ReplaceWholeString_StringReplaced) {
   constexpr auto colIndex{0};
-  const auto     length(textBuffer.GetLineLength(validRowIndex));
+  const auto     length(_textBuffer.GetLineLength(_validRowIndex));
 
-  textBuffer.ReplaceText({validRowIndex, colIndex}, length, line2);
+  _textBuffer.ReplaceText({_validRowIndex, colIndex}, length, line2);
 
-  EXPECT_THAT(textBuffer.GetLine(validRowIndex), StrEq(line2));
+  EXPECT_THAT(_textBuffer.GetLine(_validRowIndex), StrEq(line2));
 }
 
 TEST_F(TextBufferSingleLine, ReplaceText_LengthGoesOutOfBounds_TextReplacedFromGivenPosition) {
-  const auto colIndex{3}, length{200};
+  constexpr auto colIndex{3};
+  constexpr auto length{200};
 
-  textBuffer.ReplaceText({validRowIndex, colIndex}, length, line2);
+  _textBuffer.ReplaceText({_validRowIndex, colIndex}, length, line2);
 
-  const auto actualLine{textBuffer.GetLine(validRowIndex)};
+  const auto actualLine{_textBuffer.GetLine(_validRowIndex)};
   EXPECT_THAT(actualLine, StartsWith(line1.substr(0, colIndex)));
   EXPECT_THAT(actualLine, EndsWith(line2));
 }
 
 TEST_F(TextBufferSingleLine, ReplaceText_RowIndexGoesOutOfBounds_ThrowsException) {
-  EXPECT_THROW(textBuffer.InsertText({invalidRowIndex, 0}, line2), std::out_of_range);
+  EXPECT_THROW(_textBuffer.InsertText({_invalidRowIndex, 0}, line2), std::out_of_range);
 }
 
 class TextBufferMultiLine : public testing::Test {
 protected:
-  const std::size_t validRowIndex{1}, invalidRowIndex{200};
-  const std::string line{"Random line here?"};
-  TextBuffer        textBuffer{lines};
+  const std::size_t _validRowIndex{1}, _invalidRowIndex{200};
+  const std::string _line{"Random line here?"};
+  TextBuffer        _textBuffer{lines};
 };
 
 TEST_F(TextBufferMultiLine, GetNumberOfLines_MultiLine_ReturnsCorrectNumberOfLines) {
-  EXPECT_THAT(textBuffer.GetNumberOfLines(), Eq(lines.size()));
+  EXPECT_THAT(_textBuffer.GetNumberOfLines(), Eq(lines.size()));
 }
 
 TEST_F(TextBufferMultiLine, GetLineLength_MultiLineAndValidIndices_ReturnsCorrectValues) {
-  for (auto i{0}; i < textBuffer.GetNumberOfLines(); ++i) {
-    EXPECT_THAT(textBuffer.GetLineLength(i), Eq(lines.at(i).size()));
+  for (auto i{0}; i < _textBuffer.GetNumberOfLines(); ++i) {
+    EXPECT_THAT(_textBuffer.GetLineLength(i), Eq(lines.at(i).size()));
   }
 }
 
 TEST_F(TextBufferMultiLine, GetLineLength_InvalidRowIndex_ThrowsException) {
-  EXPECT_THROW(textBuffer.GetLineLength(invalidRowIndex), std::out_of_range);
+  EXPECT_THROW(static_cast<void>(_textBuffer.GetLineLength(_invalidRowIndex)), std::out_of_range);
 }
 
 TEST_F(TextBufferMultiLine, GetLine_MultiLineAndValidIndex_ReturnsCorrectLine) {
-  EXPECT_THAT(textBuffer.GetLine(validRowIndex), StrEq(lines.at(validRowIndex)));
+  EXPECT_THAT(_textBuffer.GetLine(_validRowIndex), StrEq(lines.at(_validRowIndex)));
 }
 
 TEST_F(TextBufferMultiLine, GetLine_InvalidRowIndex_ThrowsException) {
-  EXPECT_THROW(textBuffer.GetLine(invalidRowIndex), std::out_of_range);
+  EXPECT_THROW(static_cast<void>(_textBuffer.GetLine(_invalidRowIndex)), std::out_of_range);
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InsertAtBeginning_LineInserted) {
-  textBuffer.InsertLine(0, line);
+  _textBuffer.InsertLine(0, _line);
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(_line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InsertAtEnd_LineInserted) {
-  textBuffer.InsertLine(textBuffer.GetNumberOfLines(), line);
+  _textBuffer.InsertLine(_textBuffer.GetNumberOfLines(), _line);
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(_line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InsertAtValidIndex_LineInserted) {
-  textBuffer.InsertLine(validRowIndex, line);
+  _textBuffer.InsertLine(_validRowIndex, _line);
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(_line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, InsertLine_InvalidRowIndex_ThrowsException) {
-  EXPECT_THROW(textBuffer.InsertLine(invalidRowIndex, line), std::out_of_range);
+  EXPECT_THROW(_textBuffer.InsertLine(_invalidRowIndex, _line), std::out_of_range);
 }
 
 TEST_F(TextBufferMultiLine, DeleteLine_DeleteAtBeginning_LineDeleted) {
-  textBuffer.DeleteLine(0);
+  _textBuffer.DeleteLine(0);
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line1).Times(0));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(line1).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, DeleteLine_DeletetAtEnd_LineDeleted) {
-  textBuffer.DeleteLine(textBuffer.GetNumberOfLines());
+  _textBuffer.DeleteLine(_textBuffer.GetNumberOfLines());
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line3).Times(0));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(line3).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, DeleteLine_DeleteAtValidIndex_LineDeleted) {
-  textBuffer.DeleteLine(validRowIndex);
+  _textBuffer.DeleteLine(_validRowIndex);
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(lines.at(validRowIndex)).Times(0));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(lines.at(_validRowIndex)).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, DeleteLine_InvalidRowIndex_LineDeletedAtEnd) {
-  textBuffer.DeleteLine(invalidRowIndex);
+  _textBuffer.DeleteLine(_invalidRowIndex);
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line3).Times(0));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(line3).Times(0));
 }
 
 TEST_F(TextBufferMultiLine, ReplaceLine_ValidRowIndex_LineReplaced) {
-  textBuffer.ReplaceLine(validRowIndex, line);
+  _textBuffer.ReplaceLine(_validRowIndex, _line);
 
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(lines.at(validRowIndex)).Times(0));
-  EXPECT_THAT(textBuffer.GetAllLines(), Contains(line).Times(1));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(lines.at(_validRowIndex)).Times(0));
+  EXPECT_THAT(_textBuffer.GetAllLines(), Contains(_line).Times(1));
 }
 
 TEST_F(TextBufferMultiLine, ReplaceLine_InvalidRowIndex_ThrowsException) {
-  EXPECT_THROW(textBuffer.ReplaceLine(invalidRowIndex, line), std::out_of_range);
+  EXPECT_THROW(_textBuffer.ReplaceLine(_invalidRowIndex, _line), std::out_of_range);
 }
 
 TEST_F(TextBufferMultiLine, ClearTextBuffer_Call_HasVectorOfSizeOneWithEmptyString) {
-  textBuffer.ClearAllLines();
+  _textBuffer.ClearAllLines();
 
-  EXPECT_THAT(textBuffer.GetAllLines(), AllOf(SizeIs(1), Contains("")));
+  EXPECT_THAT(_textBuffer.GetAllLines(), AllOf(SizeIs(1), Contains("")));
 }
