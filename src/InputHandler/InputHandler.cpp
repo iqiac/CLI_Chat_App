@@ -66,6 +66,7 @@ void InputHandler::Stop() {
 }
 
 void InputHandler::HandleInput() {
+  // TODO: Non-polling input handler
   constexpr auto pollingInterval_ms{100};
   while (_isRunning.load()) {
     const auto input{ReadInput()};
