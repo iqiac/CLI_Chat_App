@@ -1,4 +1,6 @@
 #include "CursorManager.h"
+#include "InputHandler.h"
+#include "InputHandler/CommandPattern/CommandCreator.h"
 #include "ScreenAdapter.h"
 #include "ScreenRenderer.h"
 #include "TextBuffer.h"
@@ -40,9 +42,15 @@ int main(int argc, char* argv[]) {
   auto          screenRenderer{std::make_shared<ScreenRenderer>(screenAdapter)};
   textBuffer.Attach(screenRenderer);
   cursorManager.Attach(screenRenderer);
+  CommandCreator commandCreator{textBuffer, cursorManager, *screenRenderer};
+  InputHandler   inputHandler{commandCreator.GetCommandMap()};
 
   // Run TextEditor
+  inputHandler.Start();
   screenRenderer->Loop();
+
+  // Stop TextEditor
+  inputHandler.Stop();
 
   return 0;
 }

@@ -1,25 +1,29 @@
 #include "CursorManager.h"
 
-void CursorManager::MoveCursorUp() {
-  if (_rowIndex == 0) {
+void CursorManager::MoveCursorUp(const std::size_t amount) {
+  if (amount > _rowIndex) {
+    SetCursorPosition({0, _colIndex});
     return;
   }
-  SetCursorPosition({_rowIndex - 1, _colIndex});
+  SetCursorPosition({_rowIndex - amount, _colIndex});
 }
 
-void CursorManager::MoveCursorDown() {
-  SetCursorPosition({_rowIndex + 1, _colIndex});
+void CursorManager::MoveCursorDown(const std::size_t amount) {
+  // TODO: Don't write outside borders
+  SetCursorPosition({_rowIndex + amount, _colIndex});
 }
 
-void CursorManager::MoveCursorLeft() {
-  if (_colIndex == 0) {
+void CursorManager::MoveCursorLeft(const std::size_t amount) {
+  if (amount > _colIndex) {
+    SetCursorPosition({_rowIndex, 0});
     return;
   }
-  SetCursorPosition({_rowIndex, _colIndex - 1});
+  SetCursorPosition({_rowIndex, _colIndex - amount});
 }
 
-void CursorManager::MoveCursorRight() {
-  SetCursorPosition({_rowIndex, _colIndex + 1});
+void CursorManager::MoveCursorRight(const std::size_t amount) {
+  // TODO: Don't write outside borders
+  SetCursorPosition({_rowIndex, _colIndex + amount});
 }
 
 void CursorManager::SetCursorPosition(const Position position) {
@@ -33,6 +37,8 @@ void CursorManager::SetCursorPosition(const Position position) {
 
   _rowIndex = validRowIndex;
   _colIndex = validColIndex;
+
+  Notify();
 }
 
 Position CursorManager::GetCursorPosition() const {

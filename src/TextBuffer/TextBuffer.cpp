@@ -2,14 +2,6 @@
 
 #include <stdexcept>
 
-TextBuffer::TextBuffer() {
-  _allLines.push_back("");
-};
-
-TextBuffer::TextBuffer(const Line& line) {
-  _allLines.push_back(line);
-}
-
 TextBuffer::TextBuffer(const std::vector<Line>& lines) {
   if (lines.empty()) {
     throw std::invalid_argument("The vector cannot be empty.");
@@ -24,6 +16,7 @@ void TextBuffer::InsertText(const Position position, const std::string& text) {
 
 void TextBuffer::InsertText(const Index rowIndex, const Index colIndex, const std::string& text) {
   _allLines.at(rowIndex).insert(colIndex, text);
+  Notify();
 }
 
 void TextBuffer::DeleteText(const Position position, const std::size_t length) {
@@ -33,6 +26,7 @@ void TextBuffer::DeleteText(const Position position, const std::size_t length) {
 
 void TextBuffer::DeleteText(const Index rowIndex, const Index colIndex, const std::size_t length) {
   _allLines.at(rowIndex).erase(colIndex, length);
+  Notify();
 }
 
 void TextBuffer::ReplaceText(const Position position, const std::size_t length, const std::string& text) {
@@ -42,6 +36,7 @@ void TextBuffer::ReplaceText(const Position position, const std::size_t length, 
 
 void TextBuffer::ReplaceText(const Index rowIndex, const Index colIndex, const std::size_t length, const std::string& text) {
   _allLines.at(rowIndex).replace(colIndex, length, text);
+  Notify();
 }
 
 void TextBuffer::InsertLine(const Index rowIndex, const Line& line) {
@@ -50,15 +45,18 @@ void TextBuffer::InsertLine(const Index rowIndex, const Line& line) {
   }
   const auto iterator{std::next(_allLines.begin(), rowIndex)};
   _allLines.insert(iterator, line);
+  Notify();
 }
 
 void TextBuffer::DeleteLine(const Index rowIndex) {
   const auto iterator{std::next(_allLines.begin(), rowIndex)};
   _allLines.erase(iterator);
+  Notify();
 }
 
 void TextBuffer::ReplaceLine(const Index rowIndex, const Line& line) {
   _allLines.at(rowIndex) = line;
+  Notify();
 }
 
 std::size_t TextBuffer::GetNumberOfLines() const {
@@ -80,6 +78,7 @@ std::vector<Line> TextBuffer::GetAllLines() const {
 void TextBuffer::ClearAllLines() {
   _allLines.clear();
   _allLines.push_back("");
+  Notify();
 }
 
 std::vector<Line> TextBuffer::GetData() const {

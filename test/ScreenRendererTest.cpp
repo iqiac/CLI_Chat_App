@@ -58,3 +58,9 @@ TEST_F(ScreenRendererTests, Loop_Call_ScreenLoopCalled) {
 
   screenRenderer.Loop();
 }
+
+TEST_F(ScreenRendererTests, Exit_Call_ScreenExitCalled) {
+  EXPECT_CALL(screenMock, Exit()).Times(1);
+
+  screenRenderer.Exit();
+}

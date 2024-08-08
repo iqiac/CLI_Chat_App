@@ -78,6 +78,7 @@
     "charconv": "cpp",
     "csignal": "cpp",
     "format": "cpp",
-    "span": "cpp"
+    "span": "cpp",
+    "cinttypes": "cpp"
   }
 }

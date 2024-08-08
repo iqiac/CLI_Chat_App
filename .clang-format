@@ -52,8 +52,8 @@ BreakInheritanceList: AfterColon
 BreakStringLiterals: true
 
 # Initializers & arguments
-BinPackArguments: false
-BinPackParameters: false
+BinPackArguments: true
+BinPackParameters: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 0
 Cpp11BracedListStyle: true

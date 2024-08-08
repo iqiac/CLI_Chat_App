@@ -1,4 +1,4 @@
-# Setup libraries from subdirectories
+# Setup TextBuffer
 add_library(TextBuffer STATIC
   TextBuffer/TextBuffer.cpp
 )
@@ -7,20 +7,22 @@ target_include_directories(TextBuffer PUBLIC
   ObserverPattern
 )
 
+# Setup CursorManager
 add_library(CursorManager STATIC
   CursorManager/CursorManager.cpp
 )
-target_include_directories(CursorManager PUBLIC
+target_include_directories(CursorManager PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
   TextBuffer
 )
 
+# Setup ScreenRenderer
 add_library(ScreenRenderer STATIC
   ScreenRenderer/ScreenRenderer.cpp
   ScreenRenderer/ScreenAdapter.cpp
 )
-target_include_directories(ScreenRenderer PUBLIC
+target_include_directories(ScreenRenderer PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}
   ObserverPattern
 )
@@ -28,6 +30,33 @@ target_link_libraries(ScreenRenderer PUBLIC
   ftxui::component
   ftxui::dom
   ftxui::screen
+)
+
+# Setup CommandPattern
+add_library(CommandPattern STATIC
+  InputHandler/CommandPattern/CommandCreator.cpp
+  InputHandler/CommandPattern/MoveCursorCommands.cpp
+  InputHandler/CommandPattern/EditorControlCommands.cpp
+  InputHandler/CommandPattern/ModifyTextCommands.cpp
+)
+target_include_directories(CommandPattern PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
+  TextBuffer
+  CursorManager
+  ScreenRenderer
+)
+target_link_libraries(CommandPattern PRIVATE
+  TextBuffer
+  CursorManager
+  ScreenRenderer
+)
+
+# Setup InputHandler
+add_library(InputHandler STATIC
+  InputHandler/InputHandler.cpp
+)
+target_include_directories(InputHandler PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 # Setup main executable
@@ -42,11 +71,13 @@ target_link_libraries(
   TextBuffer
   CursorManager
   ScreenRenderer
+  CommandPattern
+  InputHandler
 )
 
-target_include_directories(
-  ${CMAKE_PROJECT_NAME} PRIVATE
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/TextBuffer
   ${CMAKE_CURRENT_SOURCE_DIR}/CursorManager
   ${CMAKE_CURRENT_SOURCE_DIR}/ScreenRenderer
+  ${CMAKE_CURRENT_SOURCE_DIR}/InputHandler
 )

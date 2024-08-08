@@ -8,4 +8,5 @@ public:
   virtual ~IScreenRenderer() = default;
 
   virtual void Loop() = 0;
+  virtual void Exit() = 0;
 };
