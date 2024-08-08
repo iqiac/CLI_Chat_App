@@ -1,0 +1,42 @@
+name: CI
+run-name: Run static code analysis and unit tests for ${{ github.repository }}.
+
+on: [push, pull_request]  # Run when pushed to branch or pull request created
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            --target dev \
+            -t text-editor .
+
+      - name: Run container and build project
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            text-editor \
+            /bin/bash -c "
+              cmake -B build . && \
+              cmake --build build
+            "
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: build/test/Testing/Temporary/LastTest.log
+
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: build/
