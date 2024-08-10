@@ -9,6 +9,6 @@ public:
 
   virtual void Loop(ftxui::Component component)        = 0;
   virtual void Exit()                                  = 0;
-  virtual void SetCursor(ftxui::Screen::Cursor cursor) = 0;
+  virtual void SetCursor(Position position) = 0;
   virtual void PostEvent(ftxui::Event event)           = 0;
 };

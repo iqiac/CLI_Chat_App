@@ -9,7 +9,7 @@ public:
 
   void Loop(ftxui::Component component) override;
   void Exit() override;
-  void SetCursor(ftxui::Screen::Cursor cursor) override;
+  void SetCursor(Position position) override;
   void PostEvent(ftxui::Event event) override;
 
 private:

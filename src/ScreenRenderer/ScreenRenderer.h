@@ -10,7 +10,7 @@
 
 class ScreenRenderer : public IScreenRenderer, public IObserver<std::vector<Line>>, public IObserver<Position> {
 public:
-  explicit ScreenRenderer(IScreen& screen) : _screen(screen) {
+  explicit ScreenRenderer(IScreen& screen) : _screenAdapter(screen) {
     _textBox = ftxui::Renderer([this] { return this->RenderText(); });
   }
 
@@ -22,7 +22,7 @@ public:
 private:
   [[nodiscard]] ftxui::Element RenderText() const;
 
-  IScreen&          _screen;
+  IScreen&          _screenAdapter;
   ftxui::Component  _textBox;
   std::vector<Line> _allLines;
 };
