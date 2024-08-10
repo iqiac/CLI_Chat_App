@@ -3,47 +3,22 @@
 #include "CommonTypes.h"
 #include "ISubject.h"
 
-#include <ftxui/dom/elements.hpp>
-#include <ftxui/screen/screen.hpp>
-#include <limits>
-#include <stdexcept>
 #include <vector>
 
-void ScreenRenderer::Loop() {
-  _screen.Loop(_textBox);
+void ScreenRenderer::Start() {
+  _screenAdapter.Start();
 }
 
-void ScreenRenderer::Exit() {
-  _screen.Exit();
+void ScreenRenderer::Stop() {
+  _screenAdapter.Stop();
 }
 
 void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {
-  using namespace ftxui;
-
-  _allLines = subject.GetData();
-  _screen.PostEvent(Event::Custom); // Request new frame to be drawn
+  const auto allLines = subject.GetData();
+  _screenAdapter.SetText(allLines);
 }
 
 void ScreenRenderer::Update(const ISubject<Position>& subject) {
-  using namespace ftxui;
-
-  const auto& [rowIndex, colIndex]{subject.GetData().GetRowAndColIndices()};
-  if (rowIndex > std::numeric_limits<int>::max() || colIndex > std::numeric_limits<int>::max()) {
-    throw std::overflow_error("Conversion would cause overflow");
-  }
-  const int posX = static_cast<int>(colIndex + 1); // +1 because of border, cast because ftxui::Cursor expects int
-  const int posY = static_cast<int>(rowIndex + 1); // +1 because of border, cast because ftxui::Cursor expects int
-
-  const Screen::Cursor cursor{.x = posX, .y = posY, .shape = Screen::Cursor::BlockBlinking};
-  _screen.SetCursor(cursor);
-
-  _screen.PostEvent(Event::Custom); // Request new frame to be drawn
-}
-
-[[nodiscard]] ftxui::Element ScreenRenderer::RenderText() const {
-  ftxui::Elements elements;
-  for (const auto& line : _allLines) {
-    elements.push_back(ftxui::text(line));
-  }
-  return ftxui::vbox(elements) | ftxui::border;
+  const auto cursorPosition{subject.GetData()};
+  _screenAdapter.SetCursor(cursorPosition);
 }

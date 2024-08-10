@@ -6,6 +6,6 @@
 
 class ScreenRendererMock : public IScreenRenderer {
 public:
-  MOCK_METHOD(void, Loop, (), (override));
-  MOCK_METHOD(void, Exit, (), (override));
+  MOCK_METHOD(void, Start, (), (override));
+  MOCK_METHOD(void, Stop, (), (override));
 };
