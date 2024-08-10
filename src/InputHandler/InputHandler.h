@@ -4,8 +4,6 @@
 #include "InputHandler/CommandPattern/ICommand.h"
 
 #include <atomic>
-#include <functional>
-#include <memory>
 #include <thread>
 
 class InputHandler : public IInputHandler {
@@ -19,6 +17,6 @@ private:
   void HandleInput() override;
 
   std::atomic<bool>          _isRunning;
-  std::thread                _pollInputThread;
+  std::thread                _handleInputThread;
   CommandPattern::CommandMap _commandMap;
 };

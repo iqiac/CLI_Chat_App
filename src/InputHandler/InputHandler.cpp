@@ -1,7 +1,6 @@
 #include "InputHandler.h"
 
 #include <array>
-#include <chrono>
 #include <string>
 #include <sys/types.h>
 #include <termios.h>
@@ -46,7 +45,7 @@ std::string ReadInput() {
   std::string         inputSequence;
   std::array<char, 4> buffer{};
 
-  const ssize_t bytesRead{read(STDIN_FILENO, buffer.data(), buffer.size())};
+  const ssize_t bytesRead{read(STDIN_FILENO, buffer.data(), buffer.size())}; // read() is blocking
   if (constexpr auto readError{-1}; bytesRead == readError) {
     return "";
   }
@@ -59,27 +58,20 @@ std::string ReadInput() {
 void InputHandler::Start() {
   EnableTerminalRawMode();
   _isRunning.store(true);
-  _pollInputThread = std::thread(&InputHandler::HandleInput, this);
+  _handleInputThread = std::thread(&InputHandler::HandleInput, this);
 }
 
 void InputHandler::Stop() {
   _isRunning.store(false);
-  _pollInputThread.join();
+  _handleInputThread.join();
   DisableTerminalRawMode();
 }
 
 void InputHandler::HandleInput() {
-  // TODO: Non-polling input handler
-  constexpr auto pollingInterval_ms{100};
   while (_isRunning.load()) {
-    const auto input{ReadInput()};
-    if (input.empty()) {
-      continue;
-    }
-    if (_commandMap.contains(input)) {
+    if (const auto input{ReadInput()}; _commandMap.contains(input)) {
       const auto& command = _commandMap[input]();
       command->Execute();
     }
-    std::this_thread::sleep_for(std::chrono::milliseconds(pollingInterval_ms));
   }
 }

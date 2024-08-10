@@ -5,9 +5,6 @@
 #include "ITextBuffer.h"
 #include "ScreenRenderer.h"
 
-#include <functional>
-#include <memory>
-
 class CommandCreator {
 public:
   CommandCreator(ITextBuffer& textBuffer, ICursorManager& cursorManager, ScreenRenderer& screenRenderer);
