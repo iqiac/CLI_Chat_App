@@ -1,14 +1,15 @@
 #pragma once
+
 #include "CommonTypes.h"
 
-#include <ftxui/component/component.hpp>
+#include <vector>
 
 class IScreen {
 public:
   virtual ~IScreen() = default;
 
-  virtual void Loop(ftxui::Component component)        = 0;
+  virtual void Loop()                                  = 0;
   virtual void Exit()                                  = 0;
-  virtual void SetCursor(Position position) = 0;
-  virtual void PostEvent(ftxui::Event event)           = 0;
+  virtual void SetCursor(const Position& position)     = 0;
+  virtual void SetText(const std::vector<Line>& lines) = 0;
 };

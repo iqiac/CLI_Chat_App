@@ -3,19 +3,21 @@
 #include "CommonTypes.h"
 
 #include <ftxui/component/component_base.hpp>
+#include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
 #include <limits>
 #include <stdexcept>
+#include <vector>
 
-void ScreenAdapter::Loop(ftxui::Component component) {
-  _screen.Loop(component);
+void ScreenAdapter::Loop() {
+  _screen.Loop(_textBox);
 }
 
 void ScreenAdapter::Exit() {
   _screen.Exit();
 }
 
-void ScreenAdapter::SetCursor(const Position position) {
+void ScreenAdapter::SetCursor(const Position& position) {
   using namespace ftxui;
 
   const auto& [rowIndex, colIndex]{position.GetRowAndColIndices()};
@@ -31,6 +33,17 @@ void ScreenAdapter::SetCursor(const Position position) {
   _screen.PostEvent(Event::Custom); // Request new frame to be drawn
 }
 
-void ScreenAdapter::PostEvent(const ftxui::Event event) {
-  _screen.PostEvent(event);
+void ScreenAdapter::SetText(const std::vector<Line>& lines) {
+  using namespace ftxui;
+
+  _allLines = lines;
+  _screen.PostEvent(Event::Custom); // Request new frame to be drawn
+}
+
+[[nodiscard]] ftxui::Element ScreenAdapter::RenderText() const {
+  ftxui::Elements elements;
+  for (const auto& line : _allLines) {
+    elements.push_back(ftxui::text(line));
+  }
+  return ftxui::vbox(elements) | ftxui::border;
 }

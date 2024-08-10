@@ -22,9 +22,10 @@ protected:
   ScreenRenderer _screenRenderer{_screenMock};
 };
 
-TEST_F(ScreenRendererTests, Update_CallWithTextBufferSubject_ScreenPostEventCalled) {
-  EXPECT_CALL(_screenMock, SetCursor(_)).Times(0);
-  EXPECT_CALL(_screenMock, PostEvent(ftxui::Event::Custom)).Times(1);
+TEST_F(ScreenRendererTests, Update_CallWithTextBufferSubject_ScreenSetTextCalled) {
+  EXPECT_CALL(_cursorManagerMock, GetData()).Times(0);
+  EXPECT_CALL(_textBufferMock, GetData()).Times(1);
+  EXPECT_CALL(_screenMock, SetText(_)).Times(1);
 
   _screenRenderer.Update(_textBufferMock);
 }
@@ -38,7 +39,7 @@ TEST_F(ScreenRendererTests, Update_CallWithCursorManagerSubject_ScreenSetCursorC
 }
 
 TEST_F(ScreenRendererTests, Loop_Call_ScreenLoopCalled) {
-  EXPECT_CALL(_screenMock, Loop(_)).Times(1);
+  EXPECT_CALL(_screenMock, Loop()).Times(1);
 
   _screenRenderer.Loop();
 }
