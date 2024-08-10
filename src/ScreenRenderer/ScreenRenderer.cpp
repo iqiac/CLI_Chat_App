@@ -5,12 +5,12 @@
 
 #include <vector>
 
-void ScreenRenderer::Loop() {
-  _screenAdapter.Loop();
+void ScreenRenderer::Start() {
+  _screenAdapter.Start();
 }
 
-void ScreenRenderer::Exit() {
-  _screenAdapter.Exit();
+void ScreenRenderer::Stop() {
+  _screenAdapter.Stop();
 }
 
 void ScreenRenderer::Update(const ISubject<std::vector<Line>>& subject) {

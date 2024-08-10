@@ -60,7 +60,7 @@ TEST_F(CommandTest, ExecuteMoveCursorRight_Call_CorrectFunctionsCalled) {
 
 TEST_F(CommandTest, ExecuteExitEditor_Call_CorrectFunctionsCalled) {
   const ExitEditor command{_screenRendererMock};
-  EXPECT_CALL(_screenRendererMock, Exit()).Times(1);
+  EXPECT_CALL(_screenRendererMock, Stop()).Times(1);
 
   command.Execute();
 }

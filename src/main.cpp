@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
 
   // Run TextEditor
   inputHandler.Start();
-  screenRenderer->Loop();
+  screenRenderer->Start();
 
   // Stop TextEditor
   inputHandler.Stop();

@@ -7,6 +7,6 @@ class IScreenRenderer {
 public:
   virtual ~IScreenRenderer() = default;
 
-  virtual void Loop() = 0;
-  virtual void Exit() = 0;
+  virtual void Start() = 0;
+  virtual void Stop()  = 0;
 };

@@ -39,13 +39,13 @@ TEST_F(ScreenRendererTests, Update_CallWithCursorManagerSubject_ScreenSetCursorC
 }
 
 TEST_F(ScreenRendererTests, Loop_Call_ScreenLoopCalled) {
-  EXPECT_CALL(_screenMock, Loop()).Times(1);
+  EXPECT_CALL(_screenMock, Start()).Times(1);
 
-  _screenRenderer.Loop();
+  _screenRenderer.Start();
 }
 
 TEST_F(ScreenRendererTests, Exit_Call_ScreenExitCalled) {
-  EXPECT_CALL(_screenMock, Exit()).Times(1);
+  EXPECT_CALL(_screenMock, Stop()).Times(1);
 
-  _screenRenderer.Exit();
+  _screenRenderer.Stop();
 }

@@ -9,11 +9,11 @@
 #include <stdexcept>
 #include <vector>
 
-void ScreenAdapter::Loop() {
+void ScreenAdapter::Start() {
   _screen.Loop(_textBox);
 }
 
-void ScreenAdapter::Exit() {
+void ScreenAdapter::Stop() {
   _screen.Exit();
 }
 

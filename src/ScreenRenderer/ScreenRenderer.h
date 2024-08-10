@@ -11,8 +11,8 @@ public:
 
   void Update(const ISubject<std::vector<Line>>& subject) override;
   void Update(const ISubject<Position>& subject) override;
-  void Loop() override;
-  void Exit() override;
+  void Start() override;
+  void Stop() override;
 
 private:
   IScreen& _screenAdapter;

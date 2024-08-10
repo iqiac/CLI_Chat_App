@@ -11,8 +11,8 @@ public:
     _textBox = ftxui::Renderer([this] { return this->RenderText(); });
   }
 
-  void Loop() override;
-  void Exit() override;
+  void Start() override;
+  void Stop() override;
   void SetCursor(const Position& position) override;
   void SetText(const std::vector<Line>& lines) override;
 
