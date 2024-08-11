@@ -8,7 +8,8 @@
         "ms-vscode.cpptools-extension-pack",
         "phind.phind",
         "Codeium.codeium",
-        "vscodevim.vim"
+        "vscodevim.vim",
+        "hediet.vscode-drawio"
       ]
     }
   },
