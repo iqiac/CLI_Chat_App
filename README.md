@@ -32,11 +32,12 @@ This project is for practicing and enhancing software skills in modern C++, TDD,
 
 ## Learnings & Possible Improvements
 - Separating test and source files enables cleaner project structure, but introduces a small navigation overhead when practicing TDD.
-- Thinking about SOLID principles really helps designing a class, improving testability, and decoupling objects
-- Should have integrated clang-tidy and GithubActions at beginning of the project.
-- Dev Container for development is very handy
+- Thinking about SOLID principles really helps designing a class, improving testability, and decoupling objects.
+- Should have integrated clang-tidy and GithubActions at beginning of the project. However Clang-Tidy significantly slows down the build-time.
+- Dev Container for development is very handy.
 - Design patterns are very useful for many problems. Problems probably can be solved without such patterns, but then the code quality is likely to suffer.
 - It is intuitive to implement one component after another, but it might have turned out qualitatively better, if I did slices across all components (agile development).
-- Smart Pointers for heap allocated objects and references for stack-allocated
+- Smart Pointers for heap allocated objects and references for stack-allocated.
 - At least one more abstraction layer between main function and text editor application. Could create a class TextEditor containing the components, instead of putting everything together in the main function (Facade pattern).
 - A configuration file to specify e.g. if it has border, uses Mouse tracking, etc.
+- Prettier argument-handling using 3rd party library [Argengine](https://github.com/juzzlin/Argengine). Possible to take a json configuration file.
