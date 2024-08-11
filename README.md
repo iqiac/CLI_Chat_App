@@ -6,6 +6,7 @@ This project is for practicing and enhancing software skills in modern C++, TDD,
 - Unit Testing Framework: GoogleTest
 
 ## Core Components:
+![](Structure.drawio.svg)
 - Text Buffer: This is where the text content is stored.
 - Cursor Management: Manages the position of the cursor in the text buffer.
 - Input Handling: Interprets user input as commands.
