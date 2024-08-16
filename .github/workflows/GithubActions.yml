@@ -1,7 +1,7 @@
 name: CI
 run-name: Run static code analysis and unit tests for ${{ github.repository }}.
 
-on: [push, pull_request]  # Run when pushed to branch or pull request created
+on: [pull_request]  # Run when pull request created
 
 jobs:
   build-and-test:
