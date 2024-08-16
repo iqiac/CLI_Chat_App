@@ -4,16 +4,15 @@
 #include "ICursorManager.h"
 #include "ITextBuffer.h"
 
-class InsertText : public ICommand {
+class ModifyTextCommands {
 public:
-  InsertText(ITextBuffer& textBuffer, ICursorManager& cursorManager, const std::string text) :
-  _textBuffer(textBuffer),
-  _cursorManager(cursorManager),
-  _text(text) {}
-  void Execute() const override;
+  ModifyTextCommands()                                     = delete;
+  ModifyTextCommands(const ModifyTextCommands&)            = delete;
+  ModifyTextCommands(ModifyTextCommands&&)                 = delete;
+  ModifyTextCommands& operator=(const ModifyTextCommands&) = delete;
+  ModifyTextCommands& operator=(ModifyTextCommands&&)      = delete;
+  ~ModifyTextCommands()                                    = delete;
 
-private:
-  ITextBuffer&      _textBuffer;
-  ICursorManager&   _cursorManager;
-  const std::string _text;
+  static void RegisterCommands(CommandPattern::CommandMap& commandMap, ICursorManager& cursorManager,
+                               ITextBuffer& textBuffer);
 };

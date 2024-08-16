@@ -1,5 +1,5 @@
 # Text Editor [Work in Progress]
-This project is for practicing and enhancing software skills in modern C++, TDD, OOP, and design patterns.
+This project is mainly for practicing and enhancing software skills in modern C++, TDD, OOP, and design patterns.
 - Build Tool: CMake
 - Development Environment: Docker Container
 - Language: C++
@@ -31,7 +31,7 @@ This project is for practicing and enhancing software skills in modern C++, TDD,
 ### Continuous Integration
 - Github Actions
 
-## Learnings & Possible Improvements
+## Learnings
 - Separating test and source files enables cleaner project structure, but introduces a small navigation overhead when practicing TDD.
 - Thinking about SOLID principles really helps designing a class, improving testability, and decoupling objects.
 - Should have integrated clang-tidy and GithubActions at beginning of the project. However Clang-Tidy significantly slows down the build-time.
@@ -39,6 +39,13 @@ This project is for practicing and enhancing software skills in modern C++, TDD,
 - Design patterns are very useful for many problems. Problems probably can be solved without such patterns, but then the code quality is likely to suffer.
 - It is intuitive to implement one component after another, but it might have turned out qualitatively better, if I did slices across all components (agile development).
 - Smart Pointers for heap allocated objects and references for stack-allocated.
+- Ftxui might not have been the best choice when one wants to overengineer.
+- When refactoring, make very small changes and test frequently. Multiple commits are also helpful.
+
+## Possible Improvements
 - At least one more abstraction layer between main function and text editor application. Could create a class TextEditor containing the components, instead of putting everything together in the main function (Facade pattern).
 - A configuration file to specify e.g. if it has border, uses Mouse tracking, etc.
 - Prettier argument-handling using 3rd party library [Argengine](https://github.com/juzzlin/Argengine). Possible to take a json configuration file.
+- Use Jenkins as CI/CD tool since its not limited to Github
+- Integrate additional code quality tools
+- Add more commands to use in the application

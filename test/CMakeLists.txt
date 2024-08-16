@@ -10,7 +10,9 @@ target_sources(
   TextBufferTest.cpp
   CursorManagerTest.cpp
   ScreenRendererTest.cpp
-  CommandTest.cpp
+  MoveCursorCommandsTest.cpp
+  EditorControlCommandsTest.cpp
+  ModifyTextCommandsTest.cpp
 )
 
 target_include_directories(
