@@ -39,7 +39,8 @@ This project is mainly for practicing and enhancing software skills in modern C+
 - Design patterns are very useful for many problems. Problems probably can be solved without such patterns, but then the code quality is likely to suffer.
 - It is intuitive to implement one component after another, but it might have turned out qualitatively better, if I did slices across all components (agile development).
 - Smart Pointers for heap allocated objects and references for stack-allocated.
-- Ftxui might not have been the best choice when one wants to overengineer
+- Ftxui might not have been the best choice when one wants to overengineer.
+- When refactoring, make very small changes and test frequently. Multiple commits are also helpful.
 
 ## Possible Improvements
 - At least one more abstraction layer between main function and text editor application. Could create a class TextEditor containing the components, instead of putting everything together in the main function (Facade pattern).

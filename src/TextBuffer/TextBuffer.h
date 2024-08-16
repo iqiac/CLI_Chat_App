@@ -12,8 +12,8 @@ public:
   void InsertText(Position position, const std::string& text) override;
   void InsertText(Index rowIndex, Index colIndex, const std::string& text) override;
 
-  void DeleteText(Position position, std::size_t length) override;
-  void DeleteText(Index rowIndex, Index colIndex, std::size_t length) override;
+  void DeleteText(Position position, std::size_t length = 1) override;
+  void DeleteText(Index rowIndex, Index colIndex, std::size_t length = 1) override;
 
   void ReplaceText(Position position, std::size_t length, const std::string& text) override;
   void ReplaceText(Index rowIndex, Index colIndex, std::size_t length, const std::string& text) override;

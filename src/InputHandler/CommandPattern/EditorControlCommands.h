@@ -3,11 +3,14 @@
 #include "ICommand.h"
 #include "IScreenRenderer.h"
 
-class ExitEditor : public ICommand {
+class EditorControlCommands {
 public:
-  explicit ExitEditor(IScreenRenderer& screenRenderer) : _screenRenderer(screenRenderer) {}
-  void Execute() const override;
+  EditorControlCommands()                                        = delete;
+  EditorControlCommands(const EditorControlCommands&)            = delete;
+  EditorControlCommands(EditorControlCommands&&)                 = delete;
+  EditorControlCommands& operator=(const EditorControlCommands&) = delete;
+  EditorControlCommands& operator=(EditorControlCommands&&)      = delete;
+  ~EditorControlCommands()                                       = delete;
 
-private:
-  IScreenRenderer& _screenRenderer;
+  static void RegisterCommands(CommandPattern::CommandMap& commandMap, IScreenRenderer& screenRenderer);
 };

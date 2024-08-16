@@ -11,8 +11,8 @@ public:
   virtual void InsertText(Position position, const std::string& text)              = 0;
   virtual void InsertText(Index rowIndex, Index colIndex, const std::string& text) = 0;
 
-  virtual void DeleteText(Position position, std::size_t length)              = 0;
-  virtual void DeleteText(Index rowIndex, Index colIndex, std::size_t length) = 0;
+  virtual void DeleteText(Position position, std::size_t length = 1)              = 0;
+  virtual void DeleteText(Index rowIndex, Index colIndex, std::size_t length = 1) = 0;
 
   virtual void ReplaceText(Position position, std::size_t length, const std::string& text)              = 0;
   virtual void ReplaceText(Index rowIndex, Index colIndex, std::size_t length, const std::string& text) = 0;
