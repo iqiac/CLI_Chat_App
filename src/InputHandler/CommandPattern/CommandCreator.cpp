@@ -21,7 +21,7 @@ _commandMap({}) {
   _commandMap["\x1b[C"] = [&cursorManager] { return std::make_unique<MoveCursorRight>(cursorManager); };
 
   // Editor control commands
-  _commandMap["\033"] = [&screenRenderer] { return std::make_unique<ExitEditor>(screenRenderer); };
+  _commandMap["\x1b"] = [&screenRenderer] { return std::make_unique<ExitEditor>(screenRenderer); };
 
   // Text modification commands
   constexpr auto alphabetSize{26};
@@ -42,6 +42,13 @@ _commandMap({}) {
       return std::make_unique<InsertText>(textBuffer, cursorManager, lowerCase);
     };
   }
+
+  _commandMap["\x7f"] = [&textBuffer, &cursorManager] {
+    return std::make_unique<RemoveTextBackward>(textBuffer, cursorManager, 1);
+  };
+  _commandMap["\x1b[3~"] = [&textBuffer, &cursorManager] {
+    return std::make_unique<RemoveTextForward>(textBuffer, cursorManager, 1);
+  };
 }
 
 CommandPattern::CommandMap CommandCreator::GetCommandMap() const {

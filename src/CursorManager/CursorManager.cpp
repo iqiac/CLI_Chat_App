@@ -46,11 +46,11 @@ void CursorManager::SetCursorPosition(const Position position) {
   Notify();
 }
 
-auto CursorManager::GetCursorPosition() const -> Position {
+Position CursorManager::GetCursorPosition() const {
   return {_rowIndex, _colIndex};
 }
 
-auto CursorManager::GetData() const -> Position {
+Position CursorManager::GetData() const {
   return GetCursorPosition();
 }
 
