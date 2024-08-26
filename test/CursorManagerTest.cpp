@@ -1,7 +1,7 @@
-#include "CursorManager.h"
+#include "CursorManager.hpp"
 
-#include "Mocks/ObserverMock.h"
-#include "Mocks/TextBufferMock.h"
+#include "Mocks/ObserverMock.hpp"
+#include "Mocks/TextBufferMock.hpp"
 
 #include <cstddef>
 #include <gmock/gmock.h>

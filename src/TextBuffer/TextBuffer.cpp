@@ -1,7 +1,7 @@
-#include "TextBuffer.h"
+#include "TextBuffer.hpp"
 
-#include "CommonTypes.h"
-#include "ISubject.h"
+#include "CommonTypes.hpp"
+#include "ISubject.hpp"
 
 #include <cstddef>
 #include <iterator>

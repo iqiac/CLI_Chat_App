@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ISubject.h"
+#include "ISubject.hpp"
 
 #include <gmock/gmock.h>
 

@@ -20,7 +20,7 @@ Checks: '-*,
           -misc-non-private-member-variables-in-classes,
         '
 FormatStyle: file
-HeaderFileExtensions: ['h']
+HeaderFileExtensions: ['hpp']
 HeaderFilterRegex: 'src/|test/'
 ImplementationFileExtensions: ['cpp']
 SystemHeaders: false

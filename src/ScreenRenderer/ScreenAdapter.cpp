@@ -1,6 +1,6 @@
-#include "ScreenAdapter.h"
+#include "ScreenAdapter.hpp"
 
-#include "CommonTypes.h"
+#include "CommonTypes.hpp"
 
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/dom/elements.hpp>

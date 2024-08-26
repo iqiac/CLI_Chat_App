@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ICommand.h"
-#include "ICursorManager.h"
+#include "ICommand.hpp"
+#include "ICursorManager.hpp"
 
 class MoveCursorCommands {
 public:

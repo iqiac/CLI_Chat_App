@@ -1,7 +1,7 @@
-#include "EditorControlCommands.h"
+#include "EditorControlCommands.hpp"
 
-#include "ICommand.h"
-#include "IScreenRenderer.h"
+#include "ICommand.hpp"
+#include "IScreenRenderer.hpp"
 
 #include <memory>
 

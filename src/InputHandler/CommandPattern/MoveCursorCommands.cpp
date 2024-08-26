@@ -1,7 +1,7 @@
-#include "MoveCursorCommands.h"
+#include "MoveCursorCommands.hpp"
 
-#include "ICommand.h"
-#include "ICursorManager.h"
+#include "ICommand.hpp"
+#include "ICursorManager.hpp"
 
 #include <cstddef>
 #include <memory>

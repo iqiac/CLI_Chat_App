@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CommandPattern/ICommand.h"
+#include "CommandPattern/ICommand.hpp"
 
 #include <gmock/gmock.h>
 

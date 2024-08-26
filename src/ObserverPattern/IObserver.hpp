@@ -1,6 +1,6 @@
 #pragma once
 
-#include "CommonTypes.h"
+#include "CommonTypes.hpp"
 
 template <typename T>
 class ISubject;

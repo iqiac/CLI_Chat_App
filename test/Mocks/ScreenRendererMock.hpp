@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IScreenRenderer.h"
+#include "IScreenRenderer.hpp"
 
 #include <gmock/gmock.h>
 
