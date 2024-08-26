@@ -1,6 +1,6 @@
-#include "CursorManager.h"
+#include "CursorManager.hpp"
 
-#include "ISubject.h"
+#include "ISubject.hpp"
 
 #include <algorithm>
 #include <cstddef>

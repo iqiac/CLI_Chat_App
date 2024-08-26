@@ -1,7 +1,7 @@
 #pragma once
 
-#include "IInputHandler.h"
-#include "InputHandler/CommandPattern/ICommand.h"
+#include "IInputHandler.hpp"
+#include "InputHandler/CommandPattern/ICommand.hpp"
 
 #include <atomic>
 #include <thread>

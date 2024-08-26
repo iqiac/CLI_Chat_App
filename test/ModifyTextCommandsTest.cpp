@@ -1,9 +1,9 @@
-#include "CommandPattern/ModifyTextCommands.h"
+#include "CommandPattern/ModifyTextCommands.hpp"
 
-#include "CommandPattern/ICommand.h"
-#include "CommonTypes.h"
-#include "Mocks/CursorManagerMock.h"
-#include "Mocks/TextBufferMock.h"
+#include "CommandPattern/ICommand.hpp"
+#include "CommonTypes.hpp"
+#include "Mocks/CursorManagerMock.hpp"
+#include "Mocks/TextBufferMock.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

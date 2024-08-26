@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ICommand.h"
-#include "ICursorManager.h"
-#include "ITextBuffer.h"
+#include "ICommand.hpp"
+#include "ICursorManager.hpp"
+#include "ITextBuffer.hpp"
 
 class ModifyTextCommands {
 public:

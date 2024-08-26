@@ -1,9 +1,9 @@
 #pragma once
 
-#include "ICommand.h"
-#include "ICursorManager.h"
-#include "ITextBuffer.h"
-#include "ScreenRenderer.h"
+#include "ICommand.hpp"
+#include "ICursorManager.hpp"
+#include "ITextBuffer.hpp"
+#include "ScreenRenderer.hpp"
 
 class CommandCreator {
 public:

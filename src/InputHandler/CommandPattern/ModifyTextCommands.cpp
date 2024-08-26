@@ -1,8 +1,8 @@
-#include "ModifyTextCommands.h"
+#include "ModifyTextCommands.hpp"
 
-#include "ICommand.h"
-#include "ICursorManager.h"
-#include "ITextBuffer.h"
+#include "ICommand.hpp"
+#include "ICursorManager.hpp"
+#include "ITextBuffer.hpp"
 
 #include <cstddef>
 #include <memory>

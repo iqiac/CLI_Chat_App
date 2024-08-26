@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ICursorManager.h"
+#include "ICursorManager.hpp"
 
 #include <gmock/gmock.h>
 

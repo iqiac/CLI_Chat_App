@@ -1,7 +1,7 @@
 #pragma once
 
-#include "CommonTypes.h"
-#include "IObserver.h"
+#include "CommonTypes.hpp"
+#include "IObserver.hpp"
 
 #include <memory>
 #include <set>

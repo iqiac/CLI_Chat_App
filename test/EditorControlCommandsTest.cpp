@@ -1,7 +1,7 @@
-#include "CommandPattern/EditorControlCommands.h"
+#include "CommandPattern/EditorControlCommands.hpp"
 
-#include "CommandPattern/ICommand.h"
-#include "Mocks/ScreenRendererMock.h"
+#include "CommandPattern/ICommand.hpp"
+#include "Mocks/ScreenRendererMock.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

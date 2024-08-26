@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ITextBuffer.h"
+#include "ITextBuffer.hpp"
 
 #include <gmock/gmock.h>
 
@@ -13,10 +13,8 @@ public:
   MOCK_METHOD(void, DeleteText, (const Index rowIndex, const Index colIndex, const std::size_t length), (override));
 
   MOCK_METHOD(void, ReplaceText, (const Position position, const std::size_t length, const std::string& text), (override));
-  MOCK_METHOD(void,
-              ReplaceText,
-              (const Index rowIndex, const Index colIndex, const std::size_t length, const std::string& text),
-              (override));
+  MOCK_METHOD(void, ReplaceText,
+              (const Index rowIndex, const Index colIndex, const std::size_t length, const std::string& text), (override));
 
   MOCK_METHOD(void, InsertLine, (const Index rowIndex, const Line& line), (override));
   MOCK_METHOD(void, DeleteLine, (const Index rowIndex), (override));

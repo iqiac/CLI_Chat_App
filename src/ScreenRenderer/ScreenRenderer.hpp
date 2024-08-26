@@ -1,9 +1,9 @@
 #pragma once
 
-#include "IObserver.h"
-#include "IScreen.h"
-#include "IScreenRenderer.h"
-#include "ISubject.h"
+#include "IObserver.hpp"
+#include "IScreen.hpp"
+#include "IScreenRenderer.hpp"
+#include "ISubject.hpp"
 
 class ScreenRenderer : public IScreenRenderer, public IObserver<std::vector<Line>>, public IObserver<Position> {
 public:

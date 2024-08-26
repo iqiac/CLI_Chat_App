@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ISubject.h"
-#include "ITextBuffer.h"
+#include "ISubject.hpp"
+#include "ITextBuffer.hpp"
 
 class TextBuffer : public ITextBuffer, public ISubject<std::vector<Line>> {
 public:

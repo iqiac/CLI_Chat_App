@@ -1,7 +1,7 @@
 #pragma once
 
-#include "ICommand.h"
-#include "IScreenRenderer.h"
+#include "ICommand.hpp"
+#include "IScreenRenderer.hpp"
 
 class EditorControlCommands {
 public:

@@ -1,8 +1,8 @@
 #pragma once
 
-#include "ICursorManager.h"
-#include "ISubject.h"
-#include "ITextBuffer.h"
+#include "ICursorManager.hpp"
+#include "ISubject.hpp"
+#include "ITextBuffer.hpp"
 
 class CursorManager : public ICursorManager, public ISubject<Position> {
 public:

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IObserver.h"
+#include "IObserver.hpp"
 
 #include <gmock/gmock.h>
 

@@ -1,7 +1,7 @@
-#include "TextBuffer.h"
+#include "TextBuffer.hpp"
 
-#include "CommonTypes.h"
-#include "Mocks/ObserverMock.h"
+#include "CommonTypes.hpp"
+#include "Mocks/ObserverMock.hpp"
 
 #include <cstddef>
 #include <gmock/gmock.h>

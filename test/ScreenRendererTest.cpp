@@ -1,8 +1,8 @@
-#include "ScreenRenderer.h"
+#include "ScreenRenderer.hpp"
 
-#include "CommonTypes.h"
-#include "Mocks/ScreenMock.h"
-#include "Mocks/SubjectMock.h"
+#include "CommonTypes.hpp"
+#include "Mocks/ScreenMock.hpp"
+#include "Mocks/SubjectMock.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>

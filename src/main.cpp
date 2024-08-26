@@ -1,9 +1,9 @@
-#include "CursorManager.h"
-#include "InputHandler.h"
-#include "InputHandler/CommandPattern/CommandCreator.h"
-#include "ScreenAdapter.h"
-#include "ScreenRenderer.h"
-#include "TextBuffer.h"
+#include "CursorManager.hpp"
+#include "InputHandler.hpp"
+#include "InputHandler/CommandPattern/CommandCreator.hpp"
+#include "ScreenAdapter.hpp"
+#include "ScreenRenderer.hpp"
+#include "TextBuffer.hpp"
 
 #include <fstream>
 #include <ftxui/component/screen_interactive.hpp>

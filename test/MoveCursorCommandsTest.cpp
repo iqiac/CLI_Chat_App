@@ -1,7 +1,7 @@
-#include "CommandPattern/MoveCursorCommands.h"
+#include "CommandPattern/MoveCursorCommands.hpp"
 
-#include "CommandPattern/ICommand.h"
-#include "Mocks/CursorManagerMock.h"
+#include "CommandPattern/ICommand.hpp"
+#include "Mocks/CursorManagerMock.hpp"
 
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
