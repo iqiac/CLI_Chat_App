@@ -1,4 +1,5 @@
 #pragma once
+
 #include "IScreen.hpp"
 
 #include <ftxui/component/component.hpp>

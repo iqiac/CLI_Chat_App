@@ -8,7 +8,7 @@
 
 class InputHandler : public IInputHandler {
 public:
-  InputHandler(CommandPattern::CommandMap commandMap) : _commandMap{std::move(commandMap)}, _isRunning{false} {}
+  InputHandler(CommandPattern::CommandMap commandMap) : _commandMap{std::move(commandMap)} {}
 
   void Start() override;
   void Stop() override;
@@ -16,7 +16,7 @@ public:
 private:
   void HandleInput() override;
 
-  std::atomic<bool>          _isRunning;
+  std::atomic<bool>          _isRunning{false};
   std::thread                _handleInputThread;
   CommandPattern::CommandMap _commandMap;
 };
