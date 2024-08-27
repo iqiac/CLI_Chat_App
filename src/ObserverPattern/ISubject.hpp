@@ -29,5 +29,5 @@ public:
   [[nodiscard]] virtual T GetData() const = 0;
 
 protected:
-  std::set<std::shared_ptr<IObserver<T>>> _observers;
+  std::set<std::shared_ptr<IObserver<T>>> _observers{};
 };

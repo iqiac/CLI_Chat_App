@@ -7,7 +7,7 @@ using Index = std::size_t;
 
 class Position {
 public:
-  Position() : _rowIndex(0), _colIndex(0) {}
+  Position() = default;
   Position(Index rowIndex, Index colIndex) : _rowIndex(rowIndex), _colIndex(colIndex) {}
 
   [[nodiscard]] Index GetRowIndex() const {
@@ -25,6 +25,6 @@ public:
   }
 
 private:
-  Index _rowIndex;
-  Index _colIndex;
+  Index _rowIndex{0};
+  Index _colIndex{0};
 };
