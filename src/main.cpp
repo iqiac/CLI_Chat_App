@@ -6,8 +6,6 @@
 #include "TextBuffer.hpp"
 
 #include <fstream>
-#include <ftxui/component/screen_interactive.hpp>
-#include <ftxui/screen/terminal.hpp>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -36,13 +34,8 @@ int main(int argc, char* argv[]) {
   }
   file.close();
 
-  // Setup screen
-  const auto [dimX, dimY]{ftxui::Terminal::Size()};
-  auto screen = ftxui::ScreenInteractive::FixedSize(dimX, dimY); // Fixed size for now. Need to adjust components to fixed size
-  screen.TrackMouse(false);
-  ScreenAdapter screenAdapter{screen};
-
   // Initialize the components
+  ScreenAdapter screenAdapter{};
   TextBuffer    textBuffer{lines};
   CursorManager cursorManager{textBuffer};
   auto          screenRenderer{std::make_shared<ScreenRenderer>(screenAdapter)};
