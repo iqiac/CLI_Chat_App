@@ -1,6 +1,6 @@
-FROM ubuntu:latest as base
+FROM ubuntu:latest AS base
 
-FROM base as builder
+FROM base AS builder
 
 RUN apt update && apt install -y \
   vim \
@@ -10,7 +10,7 @@ RUN apt update && apt install -y \
 
 RUN apt upgrade -y && rm -rf /var/lib/apt/lists/*
 
-FROM builder as dev
+FROM builder AS dev
 
 RUN apt update && apt install -y \
   tree \

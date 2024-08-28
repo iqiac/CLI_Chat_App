@@ -2,12 +2,20 @@
 
 #include "CommonTypes.hpp"
 
-#include <ftxui/component/component_base.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
 #include <ftxui/screen/screen.hpp>
+#include <ftxui/screen/terminal.hpp>
 #include <limits>
 #include <stdexcept>
 #include <vector>
+
+ScreenAdapter::ScreenAdapter() :
+_screen(ftxui::ScreenInteractive::FixedSize(ftxui::Terminal::Size().dimx, ftxui::Terminal::Size().dimy)) {
+  _screen.TrackMouse(false);
+  _textBox = ftxui::Renderer([this] { return this->RenderText(); });
+}
 
 void ScreenAdapter::Start() {
   _screen.Loop(_textBox);

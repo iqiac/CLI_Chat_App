@@ -8,9 +8,7 @@
 
 class ScreenAdapter : public IScreen {
 public:
-  explicit ScreenAdapter(ftxui::ScreenInteractive& screen) : _screen(screen) {
-    _textBox = ftxui::Renderer([this] { return this->RenderText(); });
-  }
+  explicit ScreenAdapter();
 
   void Start() override;
   void Stop() override;
@@ -20,7 +18,7 @@ public:
 private:
   [[nodiscard]] ftxui::Element RenderText() const;
 
-  ftxui::ScreenInteractive& _screen;
-  ftxui::Component          _textBox;
-  std::vector<Line>         _allLines;
+  ftxui::ScreenInteractive _screen;
+  ftxui::Component         _textBox;
+  std::vector<Line>        _allLines;
 };
